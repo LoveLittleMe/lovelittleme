@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Love Little Me — Because you always deserved to be loved.</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+
+  :root {
+    --bg-deep:    #0E0A02;
+    --bg-dark:    #1C1408;
+    --bg-mid:     #221A08;
+    --gold:       #C9960C;
+    --gold-light: #E3B84A;
+    --gold-dim:   #8A650A;
+    --cream:      #F5E4B0;
+    --cream-dim:  #C4B48A;
+    --white:      #FDF8F0;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-deep);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 1.5rem;
+    background: linear-gradient(to bottom, rgba(14,10,2,0.95) 0%, transparent 100%);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--cream);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--gold); }
+
+  .nav-cta {
+    background: transparent;
+    border: 1px solid var(--gold-dim);
+    color: var(--gold-light);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.55rem 1.1rem;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .nav-cta:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--bg-deep);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 6rem 1.5rem 4rem;
+    position: relative;
+    background: radial-gradient(ellipse 80% 60% at 50% 30%, #2A1E08 0%, var(--bg-deep) 70%);
+    overflow: hidden;
+  }
+
+  /* Soft radial glow */
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(500px, 90vw);
+    height: min(500px, 90vw);
+    background: radial-gradient(circle, rgba(201,150,12,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(2.6rem, 9vw, 6rem);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--cream);
+    max-width: 700px;
+    margin: 0 auto 1.2rem;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.4s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--cream-dim);
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.6s forwards;
+  }
+
+  .hero-desc {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--cream-dim);
+    max-width: 460px;
+    margin: 0 auto 3rem;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.75s forwards;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.9s forwards;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--bg-deep);
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 1rem 2.2rem;
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 30px rgba(201,150,12,0.25);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--cream-dim);
+    border: 1px solid rgba(245,228,176,0.2);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    padding: 0.9rem 2rem;
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--cream-dim);
+    color: var(--cream);
+  }
+
+  /* Scroll cue */
+  .scroll-cue {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.4s forwards;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--gold-dim), transparent);
+    animation: scrollPulse 2s ease-in-out 2s infinite;
+  }
+
+  .scroll-text {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+  }
+
+  /* ── HOW IT WORKS ── */
+  .section {
+    padding: 5rem 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--cream);
+    margin-bottom: 1rem;
+  }
+
+  .section-subtitle {
+    font-size: 0.95rem;
+    color: var(--cream-dim);
+    max-width: 480px;
+    margin-bottom: 3.5rem;
+    line-height: 1.8;
+  }
+
+  /* ── STEPS ── */
+  .steps {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 1.2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid rgba(245,228,176,0.06);
+    position: relative;
+  }
+
+  .step:last-child { border-bottom: none; }
+
+  .step-num {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--gold-dim);
+    line-height: 1;
+    padding-top: 0.15rem;
+  }
+
+  .step-body {}
+
+  .step-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+  }
+
+  .step-desc {
+    font-size: 0.88rem;
+    color: var(--cream-dim);
+    line-height: 1.75;
+  }
+
+  /* ── WOUNDS SECTION ── */
+  .wounds-section {
+    background: var(--bg-mid);
+    padding: 5rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .wounds-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
+  }
+
+  .wounds-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
+  }
+
+  .wounds-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .wounds-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1px;
+    background: rgba(245,228,176,0.06);
+    border: 1px solid rgba(245,228,176,0.06);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 3rem;
+  }
+
+  .wound-card {
+    background: var(--bg-mid);
+    padding: 1.8rem 1.5rem;
+    cursor: pointer;
+    transition: background 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .wound-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--gold);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.3s ease;
+  }
+
+  .wound-card:hover { background: rgba(201,150,12,0.05); }
+  .wound-card:hover::before { transform: scaleY(1); }
+
+  .wound-icon {
+    font-size: 1.3rem;
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+
+  .wound-name {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--cream);
+    margin-bottom: 0.3rem;
+  }
+
+  .wound-tagline {
+    font-size: 0.82rem;
+    color: var(--cream-dim);
+    line-height: 1.6;
+  }
+
+  .wound-price {
+    display: inline-block;
+    margin-top: 0.8rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold-dim);
+    padding: 0.25rem 0.6rem;
+    border-radius: 2px;
+  }
+
+  /* ── TESTIMONIAL ── */
+  .testimonial-section {
+    padding: 5rem 1.5rem;
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .quote-mark {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 5rem;
+    color: var(--gold-dim);
+    line-height: 0.5;
+    display: block;
+    margin-bottom: 1.5rem;
+  }
+
+  .quote-text {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(1.3rem, 4vw, 1.8rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--cream);
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+  }
+
+  .quote-attr {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+  }
+
+  /* ── FINAL CTA ── */
+  .final-cta {
+    padding: 5rem 1.5rem 6rem;
+    text-align: center;
+    background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(201,150,12,0.06) 0%, transparent 70%);
+    position: relative;
+  }
+
+  .final-cta-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(2rem, 7vw, 3.8rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--cream);
+    max-width: 600px;
+    margin: 0 auto 1rem;
+  }
+
+  .final-cta-sub {
+    font-size: 0.9rem;
+    color: var(--cream-dim);
+    margin-bottom: 2.5rem;
+  }
+
+  .price-badge {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .price-amount {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--gold-light);
+  }
+
+  .price-label {
+    font-size: 0.8rem;
+    color: var(--cream-dim);
+    letter-spacing: 0.08em;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 2rem 1.5rem;
+    text-align: center;
+    border-top: 1px solid rgba(245,228,176,0.06);
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1rem;
+    color: var(--cream-dim);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-tagline {
+    font-size: 0.75rem;
+    color: var(--gold-dim);
+    font-style: italic;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+
+  /* Divider ornament */
+  .ornament {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin: 1rem auto;
+    max-width: 200px;
+    justify-content: center;
+  }
+
+  .ornament-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-dim));
+  }
+
+  .ornament-line:last-child {
+    background: linear-gradient(to left, transparent, var(--gold-dim));
+  }
+
+  .ornament-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50%       { opacity: 1;   transform: scaleY(1.15); }
+  }
+
+  /* Reveal on scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (min-width: 480px) {
+    .hero-actions { flex-direction: row; }
+    .btn-primary, .btn-ghost { width: auto; }
+  }
+
+  @media (min-width: 640px) {
+    .wounds-grid { grid-template-columns: 1fr 1fr; }
+    .step { gap: 1.8rem; }
+  }
+
+  @media (min-width: 900px) {
+    .wounds-grid { grid-template-columns: 1fr 1fr 1fr; }
+    nav { padding: 1.5rem 3rem; }
+    .section { padding: 7rem 3rem; }
+    .wounds-inner { padding: 0 3rem; }
+    .wounds-section { padding: 7rem 0; }
+  }
+
+  @media (min-width: 1200px) {
+    .wounds-grid { grid-template-columns: repeat(3, 1fr); }
+    .hero { padding: 8rem 2rem 5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Love <span>Little</span> Me</a>
+  <a href="#begin" class="nav-cta">Begin Healing</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">AI-Powered Emotional Healing</p>
+  <h1 class="hero-title">
+    Healing the <em>child</em><br>you still carry
+  </h1>
+  <p class="hero-tagline">"Because you always deserved to be loved."</p>
+  <p class="hero-desc">
+    A personalized animated video of you as a child — 
+    with a loving parent figure speaking your healing script, 
+    in your own chosen voice.
+  </p>
+  <div class="hero-actions">
+    <a href="templates.html" class="btn-primary">Start Your Journey — $29</a>
+    <a href="#how" class="btn-ghost">See How It Works</a>
+  </div>
+  <div class="scroll-cue">
+    <span class="scroll-text">Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="section">
+  <p class="section-label reveal">The Process</p>
+  <h2 class="section-title reveal">Five minutes.<br>A lifetime of healing.</h2>
+  <p class="section-subtitle reveal">
+    No therapy jargon. No endless forms. Just you, 
+    a few honest answers, and a video that speaks 
+    directly to your younger self.
+  </p>
+
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-num">01</div>
+      <div class="step-body">
+        <h3 class="step-title">Choose your wound</h3>
+        <p class="step-desc">Select the childhood experience that shaped you most — abandonment, neglect, shame, the invisible child, harsh criticism, or more. Each template holds its own healing script and emotional landscape.</p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">02</div>
+      <div class="step-body">
+        <h3 class="step-title">Answer guided questions</h3>
+        <p class="step-desc">Our AI gently draws out your specific story — what you needed to hear, what you never received. Your answers shape a healing script written only for you.</p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">03</div>
+      <div class="step-body">
+        <h3 class="step-title">Upload a childhood photo</h3>
+        <p class="step-desc">A single image of you as a child. We'll animate it into a warm, Ghibli-inspired scene — the child you were, finally receiving what they deserved.</p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">04</div>
+      <div class="step-body">
+        <h3 class="step-title">Choose your guide voice</h3>
+        <p class="step-desc">Select a voice that feels like the parent figure you needed — warm, steady, and unconditional. Your script, their voice, your healing.</p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">05</div>
+      <div class="step-body">
+        <h3 class="step-title">Receive your video</h3>
+        <p class="step-desc">A fully personalized animated video delivered to you — yours to revisit whenever your inner child needs to be held.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WOUND TEMPLATES -->
+<section class="wounds-section">
+  <div class="wounds-inner">
+    <p class="section-label reveal">Healing Templates</p>
+    <h2 class="section-title reveal">Find your wound.<br>Begin your repair.</h2>
+    <p class="section-subtitle reveal">
+      Each template is a carefully crafted emotional container — 
+      built with its own questions, affirmations, and healing script.
+      New wounds added continuously.
+    </p>
+
+    <div class="wounds-grid" id="wounds-grid">
+      <!-- Populated by JS data -->
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial-section">
+  <div class="ornament reveal">
+    <div class="ornament-line"></div>
+    <div class="ornament-dot"></div>
+    <div class="ornament-line"></div>
+  </div>
+  <span class="quote-mark reveal">"</span>
+  <p class="quote-text reveal">
+    I watched it four times before I could speak. 
+    Hearing those words — finally, as a child — 
+    something shifted in me I didn't know was frozen.
+  </p>
+  <p class="quote-attr reveal">Early Access Member · Abandonment Wound</p>
+  <div class="ornament reveal">
+    <div class="ornament-line"></div>
+    <div class="ornament-dot"></div>
+    <div class="ornament-line"></div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="begin" class="final-cta">
+  <h2 class="final-cta-title reveal">
+    The child you were<br>is still waiting to be loved.
+  </h2>
+  <p class="final-cta-sub reveal">One video. One conversation. One beginning.</p>
+  <div class="price-badge reveal">
+    <span class="price-amount">$29</span>
+    <span class="price-label">one time · no subscription</span>
+  </div>
+  <br>
+  <a href="templates.html" class="btn-primary reveal" style="max-width: 320px; display: inline-block;">
+    Create My Healing Video
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-logo">Love Little Me</p>
+  <div class="ornament" style="margin: 0.8rem auto;">
+    <div class="ornament-line"></div>
+    <div class="ornament-dot"></div>
+    <div class="ornament-line"></div>
+  </div>
+  <p class="footer-tagline">"Because you always deserved to be loved."</p>
+</footer>
+
+<script>
+  // ── WOUND DATA (data-driven — add new entries here only) ──
+  const wounds = [
+    {
+      icon: "🌑",
+      name: "The Abandoned Child",
+      tagline: "For those who were left — physically or emotionally — before they could understand why.",
+    },
+    {
+      icon: "🪞",
+      name: "The Invisible Child",
+      tagline: "For those who were present but unseen, whose needs were background noise.",
+    },
+    {
+      icon: "⚡",
+      name: "The Harshly Criticized Child",
+      tagline: "For those who grew up hearing what was wrong with them, never what was right.",
+    },
+    {
+      icon: "🛡️",
+      name: "The Parentified Child",
+      tagline: "For those who had to become the adult before they were allowed to be a child.",
+    },
+    {
+      icon: "🌊",
+      name: "The Neglected Child",
+      tagline: "For those whose basic needs — physical or emotional — went consistently unmet.",
+    },
+    {
+      icon: "🔒",
+      name: "The Shamed Child",
+      tagline: "For those who were made to feel that something fundamental about them was broken.",
+    },
+    {
+      icon: "✨",
+      name: "More Coming Soon",
+      tagline: "Societal wounds, social media trauma, family system wounds — expanding continuously.",
+      coming: true,
+    }
+  ];
+
+  const grid = document.getElementById('wounds-grid');
+
+  wounds.forEach((w, i) => {
+    const card = document.createElement('div');
+    card.className = 'wound-card reveal';
+    card.style.transitionDelay = `${i * 0.07}s`;
+    card.innerHTML = `
+      <span class="wound-icon">${w.icon}</span>
+      <div class="wound-name">${w.name}</div>
+      <div class="wound-tagline">${w.tagline}</div>
+      ${w.coming ? '<span class="wound-price">Expanding</span>' : '<span class="wound-price">$29 · Select</span>'}
+    `;
+    grid.appendChild(card);
+  });
+
+  // ── SCROLL REVEAL ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
