@@ -57,7 +57,7 @@
         }
 
         h2 {
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             line-height: 1.6;
             font-weight: 500;
             color: var(--text-main);
@@ -111,7 +111,7 @@
         }
 
         button:disabled {
-            visibility: hidden; /* Hides back button on first step */
+            visibility: hidden; /* Hides back button cleanly on first step */
         }
 
         .btn-back {
@@ -149,17 +149,17 @@
 
             <div class="wizard-step" data-step="2">
                 <div class="step-counter">Step 2 of 3</div>
-                <h2>How did those experiences shape how you view yourself or how you show up in relationships today? What rules did you subconsciously create?</h2>
+                <h2>If the exact feelings are hard to recall or feel blank, notice your body right now. Where do you feel tightness, emptiness, or a heavy sensation as you think about this?</h2>
                 <div class="form-group">
-                    <textarea name="step2_response" placeholder="Take your time, let the realizations come to the surface..."></textarea>
+                    <textarea name="step2_response" placeholder="Describe what you feel in your body right now (e.g., tight chest, knot in stomach, numbness)..."></textarea>
                 </div>
             </div>
 
             <div class="wizard-step" data-step="3">
                 <div class="step-counter">Step 3 of 3</div>
-                <h2>If you could speak directly to that younger version of you in those moments, what boundaries or truths do they need to hear right now?</h2>
+                <h2>Looking back at that child from who you are today, what is the truth they needed to hear then that you are ready to stand up and give them now?</h2>
                 <div class="form-group">
-                    <textarea name="step3_response" placeholder="What words would feel like safety to your inner child?"></textarea>
+                    <textarea name="step3_response" placeholder="What words does that little version of you need to hear from you today?..."></textarea>
                 </div>
             </div>
 
@@ -178,10 +178,9 @@
         const steps = document.querySelectorAll('.wizard-step');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
-        const form = document.getElementById('wizardForm');
 
         function updateWizard() {
-            // Toggle active visibility blocks
+            // Adjust step visibility
             steps.forEach(step => {
                 step.classList.remove('active');
                 if (parseInt(step.getAttribute('data-step')) === currentStep) {
@@ -189,14 +188,14 @@
                 }
             });
 
-            // Control the visibility of the Back button
+            // Handle back button disabled state visibility
             if (currentStep === 1) {
                 prevBtn.disabled = true;
             } else {
                 prevBtn.disabled = false;
             }
 
-            // Change button text on final step
+            // Text adjustment for final step
             if (currentStep === totalSteps) {
                 nextBtn.innerText = "Finish ✨";
             } else {
@@ -209,8 +208,7 @@
                 currentStep++;
                 updateWizard();
             } else {
-                // Actions when clicking finish (e.g., submitting form or showing a completion state)
-                alert("Reflection complete. You are doing beautiful work.");
+                alert("Reflection complete. Your narrative data vectors are saved.");
             }
         });
 
