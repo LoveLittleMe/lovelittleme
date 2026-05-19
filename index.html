@@ -602,13 +602,11 @@
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">Love <span>Little</span> Me</a>
   <a href="#wounds-grid" class="nav-cta">Begin Healing</a>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <p class="hero-eyebrow">AI-Powered Emotional Healing</p>
   <h1 class="hero-title">
@@ -630,7 +628,6 @@
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
 <section id="how" class="section">
   <p class="section-label reveal">The Process</p>
   <h2 class="section-title reveal">Five minutes.<br>A lifetime of healing.</h2>
@@ -679,7 +676,6 @@
   </div>
 </section>
 
-<!-- WOUND TEMPLATES -->
 <section class="wounds-section">
   <div class="wounds-inner">
     <p class="section-label reveal">Healing Templates</p>
@@ -691,12 +687,10 @@
     </p>
 
     <div class="wounds-grid" id="wounds-grid">
-      <!-- Populated by JS data -->
-    </div>
+      </div>
   </div>
 </section>
 
-<!-- TESTIMONIAL -->
 <section class="testimonial-section">
   <div class="ornament reveal">
     <div class="ornament-line"></div>
@@ -717,7 +711,6 @@
   </div>
 </section>
 
-<!-- FINAL CTA -->
 <section id="begin" class="final-cta">
   <h2 class="final-cta-title reveal">
     The child you were<br>is still waiting to be loved.
@@ -733,7 +726,6 @@
   </a>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <p class="footer-logo">Love Little Me</p>
   <div class="ornament" style="margin: 0.8rem auto;">
@@ -799,7 +791,8 @@
         sessionStorage.setItem('selectedWound', woundId);
         sessionStorage.setItem('selectedWoundName', w.name);
         
-        window.location.href = 'questions.html';
+        // FIXED: Explicitly appends the selected wound identifier parameter to the web address link
+        window.location.href = 'questions.html?wound=' + encodeURIComponent(woundId);
       });
     }
 
