@@ -16,7 +16,6 @@
         }
 
         body {
-            /* Restored to your original clean system sans-serif font */
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
@@ -39,7 +38,6 @@
             box-sizing: border-box;
         }
 
-        /* Wizard Steps - Hidden by default except the active one */
         .wizard-step {
             display: none;
         }
@@ -114,7 +112,7 @@
         }
 
         button:disabled {
-            visibility: hidden; /* Hides back button cleanly on first step */
+            visibility: hidden;
         }
 
         .btn-back {
@@ -208,7 +206,8 @@
                 currentStep++;
                 updateWizard();
             } else {
-                alert("Reflection complete. Your narrative data vectors are saved.");
+                // Rewired to route the user instantly to the education screen
+                window.location.href = "/education.html";
             }
         });
 
