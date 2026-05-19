@@ -415,7 +415,7 @@
 </footer>
 
 <script>
-// Content locked precisely to your original copy, variable color themes dynamically injected
+// Content profiles matched with specific color theme variables
 var WOUNDS = {
   "abandonment": {
     name: "Abandonment", subtitle: "The Child Who Was Left", chakra: "Heart Chakra",
@@ -471,6 +471,7 @@ function applyDynamicWoundTheme() {
     document.getElementById('dynamic-chakra').innerText = selectedProfile.chakra;
     document.getElementById('dynamic-headline').innerText = selectedProfile.name;
     document.getElementById('dynamic-description').innerText = selectedProfile.description;
+    document.getElementById('dynamic-wound-title').innerText = selectedProfile.subtitle;
     document.getElementById('dynamic-where-from').innerText = selectedProfile.where_it_comes_from;
     
     var link = document.getElementById('continue-link');
