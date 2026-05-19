@@ -1,475 +1,118 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guided Questions — Love Little Me</title>
+{% extends 'base.html' %}
+
+{% block title %}Inner Child Reflection - Love Little Me{% endblock %}
+
+{% block extra_styles %}
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap');
-
-  :root {
-    --bg-deep:    #0E0A02;
-    --bg-dark:    #1C1408;
-    --bg-mid:     #221A08;
-    --bg-card:    #1A1206;
-    --gold:       #C9960C;
-    --gold-light: #E3B84A;
-    --gold-dim:   #8A650A;
-    --cream:      #F5E4B0;
-    --cream-dim:  #C4B48A;
-    --cream-faint:#7A6A50;
-    --white:      #FDF8F0;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg-deep);
-    color: var(--cream);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
-    line-height: 1.7;
-    overflow-x: hidden;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* Noise overlay */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-    opacity: 0.03;
-    pointer-events: none;
-    z-index: 1000;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.2rem 1.5rem;
-    background: linear-gradient(to bottom, rgba(14,10,2,0.97) 0%, transparent 100%);
-  }
-
-  .nav-logo {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 1.1rem;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    color: var(--cream);
-    text-decoration: none;
-  }
-
-  .nav-logo span { color: var(--gold); }
-
-  .nav-step {
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--cream-faint);
-  }
-
-  .nav-step strong { color: var(--gold); }
-
-  /* ── MAIN CONTENT CONTAINER ── */
-  .flow-container {
-    flex: 1;
-    max-width: 680px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 8rem 1.5rem 4rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: relative;
-  }
-
-  /* Glow backdrops */
-  .flow-container::after {
-    content: '';
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: min(500px, 100vw);
-    height: 300px;
-    background: radial-gradient(ellipse, rgba(201,150,12,0.04) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .step-indicator {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 2rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  .step-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--gold-dim);
-  }
-
-  .step-dot.active {
-    background: var(--gold);
-    box-shadow: 0 0 8px rgba(201,150,12,0.5);
-  }
-
-  .step-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-  }
-
-  /* ── QUESTION WRAPPER & TRANSITIONS ── */
-  .question-box {
-    position: relative;
-    z-index: 1;
-    min-height: 280px;
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-
-  .question-box.fade-out {
-    opacity: 0;
-    transform: translateY(-15px);
-  }
-
-  .question-box.fade-in {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-
-  .q-meta {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 0.8rem;
-    letter-spacing: 0.15em;
-    color: var(--gold-dim);
-    text-transform: uppercase;
-    margin-bottom: 0.6rem;
-  }
-
-  .q-text {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: clamp(1.5rem, 4.5vw, 2.2rem);
-    font-weight: 300;
-    line-height: 1.25;
-    color: var(--cream);
-    margin-bottom: 1.8rem;
-  }
-
-  /* ── TEXT INPUT STYLING ── */
-  .input-wrapper {
-    position: relative;
-    margin-bottom: 2.5rem;
-  }
-
-  .text-input {
-    width: 100%;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid rgba(245,228,176,0.15);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 1.05rem;
-    font-weight: 300;
-    color: var(--white);
-    padding: 0.8rem 0;
-    outline: none;
-    transition: border-color 0.4s ease;
-  }
-
-  .text-input:focus {
-    border-color: var(--gold);
-  }
-
-  /* Smooth underline accent decoration */
-  .input-bar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 1px;
-    width: 0;
-    background: var(--gold-light);
-    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .text-input:focus + .input-bar {
-    width: 100%;
-  }
-
-  .input-hint {
-    font-size: 0.75rem;
-    color: var(--cream-faint);
-    margin-top: 0.6rem;
-    font-style: italic;
-  }
-
-  /* ── BUTTON ARCHITECTURE ── */
-  .actions-row {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  .btn-primary {
-    background: var(--gold);
-    color: var(--bg-deep);
-    border: none;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 1rem 2.2rem;
-    border-radius: 2px;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .btn-primary:hover {
-    background: var(--gold-light);
-    transform: translateY(-1px);
-    box-shadow: 0 8px 25px rgba(201,150,12,0.2);
-  }
-
-  .btn-back {
-    background: transparent;
-    border: none;
-    color: var(--cream-faint);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.8rem;
-    letter-spacing: 0.05em;
-    cursor: pointer;
-    transition: color 0.2s ease;
-    padding: 0.5rem 0;
-  }
-
-  .btn-back:hover {
-    color: var(--cream);
-  }
-
-  /* ── RESPONSIVE FIXES ── */
-  @media (min-width: 768px) {
-    nav { padding: 1.5rem 3rem; }
-    .flow-container { padding: 10rem 3rem 4rem; }
-  }
+    .step-content { display: none; }
+    .step-content.active { display: block; }
 </style>
-</head>
-<body>
+{% endblock %}
 
-<!-- NAV -->
-<nav>
-  <a href="index.html" class="nav-logo">Love <span>Little</span> Me</a>
-  <span class="nav-step">Step <strong>2</strong> of 5</span>
-</nav>
-
-<!-- MAIN CONTAINER -->
-<div class="flow-container">
-  
-  <!-- Progression indicator tracking -->
-  <div class="step-indicator">
-    <div class="step-dot"></div>
-    <div class="step-dot active"></div>
-    <div class="step-dot"></div>
-    <div class="step-dot"></div>
-    <div class="step-dot"></div>
-    <span class="step-label" id="flow-label">Answering Prompt</span>
-  </div>
-
-  <!-- INTERACTIVE CONTAINER BOX -->
-  <div class="question-box" id="question-box">
-    <p class="q-meta" id="q-counter">Question 1 of 5</p>
-    <h2 class="q-text" id="q-text">Loading reflection container...</h2>
-    
-    <div class="input-wrapper">
-      <input type="text" id="answer-input" class="text-input" placeholder="Type your reflection here..." autocomplete="off">
-      <div class="input-bar"></div>
-      <p class="input-hint">Take your time. Write as little or as much as you need.</p>
+{% block content %}
+<!-- Top Progress Indicator matching index utility header -->
+<div class="w-full max-w-2xl mx-auto px-6 pt-4 flex justify-end items-center">
+    <div class="flex items-center space-x-2">
+        <span id="progress-text" class="font-sans text-xs text-muted">Step 1 of 3</span>
+        <div class="w-16 h-1 bg-divider rounded-full overflow-hidden">
+            <div id="progress-bar" class="w-1/3 h-full bg-accent transition-all duration-300"></div>
+        </div>
     </div>
-  </div>
-
-  <!-- BUTTON TRACKS -->
-  <div class="actions-row">
-    <button class="btn-primary" id="next-btn">Continue →</button>
-    <button class="btn-back" id="back-btn">← Back</button>
-  </div>
-
 </div>
 
+<div class="w-full max-w-2xl mx-auto px-6 py-8 flex-grow flex flex-col justify-center">
+    <form id="reflectionForm" action="{{ url_for('store_reflections') }}" method="POST" class="space-y-8">
+        
+        <!-- STEP 1: THE EVENT -->
+        <div id="step1" class="step-content active space-y-6">
+            <h2 class="font-sans font-light text-2xl md:text-3xl text-primary leading-snug">
+                Describe one or two specific moments or examples from your childhood that stand out the most regarding this wound. Focus simply on what happened.
+            </h2>
+            <textarea 
+                id="inputEvent" 
+                name="childhood_event" 
+                rows="6" 
+                required
+                placeholder="Pour out whatever feels heavy right now..." 
+                class="form-textarea"
+            ></textarea>
+        </div>
+
+        <!-- STEP 2: THE RESONANCE -->
+        <div id="step2" class="step-content space-y-6">
+            <h2 class="font-sans font-light text-2xl md:text-3xl text-primary leading-snug">
+                If the exact feelings are hard to recall or feel blank, notice your body right now. Where do you feel tightness, emptiness, or a heavy sensation as you think about this?
+            </h2>
+            <textarea 
+                id="inputResonance" 
+                name="somatic_resonance" 
+                rows="6" 
+                placeholder="Describe what you feel in your body right now (e.g., tight chest, knot in stomach, numbness)..." 
+                class="form-textarea"
+            ></textarea>
+        </div>
+
+        <!-- STEP 3: THE INTEGRATION -->
+        <div id="step3" class="step-content space-y-6">
+            <h2 class="font-sans font-light text-2xl md:text-3xl text-primary leading-snug">
+                Looking back at that child from who you are today, what is the truth they needed to hear then that you are ready to stand up and give them now?
+            </h2>
+            <textarea 
+                id="inputIntegration" 
+                name="cognitive_integration" 
+                rows="6" 
+                required
+                placeholder="What words does that little version of you need to hear from you today?..." 
+                class="form-textarea"
+            ></textarea>
+        </div>
+
+        <!-- Controls matching core index theme buttons -->
+        <div class="pt-6 flex justify-between items-center border-t border-divider">
+            <button type="button" id="prevBtn" class="opacity-0 pointer-events-none text-sm tracking-wide text-muted hover:text-primary transition-colors">&larr; Back</button>
+            <button type="button" id="nextBtn" class="btn btn-primary">Next &rarr;</button>
+        </div>
+
+    </form>
+</div>
+{% endblock %}
+
+{% block javascript %}
 <script>
-// ── INTUITIVE QUESTION COMPENDIUM ──
-const questionBank = {
-  "abandonment": [
-    "What is your earliest memory of feeling left behind or unprotected by an adult?",
-    "When people walk away from you today, what is the exact thought that loops in your head?",
-    "What did your younger self learn to do just to make sure people would stay?",
-    "If your inner child could ask that person *one* honest question, what would it be?",
-    "Complete this sentence truthfully: 'If I knew you would never leave me, I would finally stop...'"
-  ],
-  "neglect": [
-    "What was something you desperately needed as a kid that you eventually just stopped asking for?",
-    "In what ways did you have to grow up or look after yourself far too early?",
-    "When someone attempts to take care of or nourish you now, what does your body feel?",
-    "What is a small phrase or gesture that makes you feel deeply visible and safe today?",
-    "What would change in your life if you fully believed your core needs are not a burden?"
-  ],
-  "emotional-abuse": [
-    "What was the specific critical phrase or rule you heard most often growing up?",
-    "How does that precise voice voice itself inside your thoughts today when you make a simple mistake?",
-    "What is an area of your life where you are permanently over-achieving just to feel safe?",
-    "What did your inner child want to scream out loud back then but had to keep hidden inside?",
-    "If you didn't have to prove your worth to anyone ever again, who would you safely be?"
-  ],
-  "enmeshment": [
-    "Whose moods or feelings did you have to monitor or protect most when you were small?",
-    "When you try to set a clean boundary or say 'no' today, what type of guilt surfaces?",
-    "What is a dream, interest, or truth about yourself that you hid because it didn't fit their expectations?",
-    "Where in your life do you still lose yourself trying to make someone else comfortable?",
-    "Finish this reflection: 'My feelings belong completely to me, and I am allowed to...'"
-  ],
-  "shame": [
-    "What part of your natural self (your body, your sensitivity, your voice) were you taught to hide?",
-    "When you feel exposed or misunderstood today, where do you physically feel that in your body?",
-    "What is the secret sentence you carry that whispers you are fundamentally different or broken?",
-    "What would it feel like to bring the most hidden part of your younger self completely into the light?",
-    "If you knew with absolute certainty that you were born entirely innocent, what would you let go of?"
-  ],
-  "unsafe-home": [
-    "What was the sensory cue (a sound, a footstep, a tone) that told you home wasn't safe that day?",
-    "How does your nervous system react today when things around you become loud or unpredictable?",
-    "What was your favorite hiding spot or mental escape when the chaos grew too loud?",
-    "What does absolute, uninterrupted safety look like to you in a physical room right now?",
-    "What words does your body need to hear to finally believe that the old danger is over?"
-  ],
-  "divorce": [
-    "What was the moment you realized you were caught in the middle of their conflict?",
-    "What secret or message were you forced to hold or pass along that wasn't your job to carry?",
-    "How does the fear of choosing sides show up in your relationships or decisions today?",
-    "What did you have to give up about your own childhood just to keep things peaceful around you?",
-    "If you could hand back all of their adult responsibilities right now, what would your hands look like?"
-  ]
-};
+    let currentStep = 1;
+    const totalSteps = 3;
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const progressBar = document.getElementById('progress-bar');
+    const progressText = document.getElementById('progress-text');
+    const form = document.getElementById('reflectionForm');
 
-// Fallback pool just in case an edge case bypasses selection
-const defaultQuestions = [
-  "What is a primary memory from your childhood that still triggers an emotional reaction today?",
-  "What did you need to hear most from a parental figure back then that went unsaid?",
-  "How does that childhood landscape show up in your automatic responses today?",
-  "What is something you wish the adults around you understood about your inner life?",
-  "If your younger self was sitting directly next to you now, what would you want to tell them?"
-];
+    function updateFormUI() {
+        document.querySelectorAll('.step-content').forEach((step, idx) => {
+            step.classList.toggle('active', idx === (currentStep - 1));
+        });
+        progressText.innerText = `Step ${currentStep} of ${totalSteps}`;
+        progressBar.style.width = `${(currentStep / totalSteps) * 100}%`;
+        
+        if (currentStep === 1) { prevBtn.classList.add('opacity-0', 'pointer-events-none'); }
+        else { prevBtn.classList.remove('opacity-0', 'pointer-events-none'); }
 
-// ── APP FLOW CONTROL STATE ──
-let currentWoundId = sessionStorage.getItem('selectedWound') || 'abandonment';
-let currentWoundName = sessionStorage.getItem('selectedWoundName') || 'The Core Wound';
-let activeQuestions = questionBank[currentWoundId] || defaultQuestions;
-let currentQuestionIndex = 0;
-let userAnswers = [];
-
-// DOM Reference Pulls
-const qBox = document.getElementById('question-box');
-const qCounter = document.getElementById('q-counter');
-const qText = document.getElementById('q-text');
-const answerInput = document.getElementById('answer-input');
-const nextBtn = document.getElementById('next-btn');
-const backBtn = document.getElementById('back-btn');
-const flowLabel = document.getElementById('flow-label');
-
-// Update UI Text safely with an animated fade transition
-function renderQuestion() {
-  // Update state counts
-  qCounter.textContent = `Question ${currentQuestionIndex + 1} of 5`;
-  qText.textContent = activeQuestions[currentQuestionIndex];
-  flowLabel.textContent = `${currentWoundName} Reflection`;
-  
-  // Repopulate with existing answer if they went back
-  answerInput.value = userAnswers[currentQuestionIndex] || "";
-  answerInput.focus();
-}
-
-function transitionQuestion(direction) {
-  qBox.classList.add('fade-out');
-  
-  setTimeout(() => {
-    if (direction === 'next') {
-      currentQuestionIndex++;
-    } else if (direction === 'back') {
-      currentQuestionIndex--;
+        if (currentStep === totalSteps) { nextBtn.innerText = "Continue to Photo Upload"; }
+        else { nextBtn.innerHTML = "Next &rarr;"; }
     }
-    
-    renderQuestion();
-    qBox.classList.remove('fade-out');
-    qBox.classList.add('fade-in');
-    
-    setTimeout(() => {
-      qBox.classList.remove('fade-in');
-    }, 300);
-  }, 300);
-}
 
-// ── EVENT HANDLING TRACES ──
-nextBtn.addEventListener('click', () => {
-  const currentAnswer = answerInput.value.trim();
-  
-  // Guard clause: requires an answer to protect the validity of the final script generation
-  if (!currentAnswer) {
-    answerInput.style.borderColor = '#ff4d4d';
-    setTimeout(() => answerInput.style.borderColor = '', 1000);
-    return;
-  }
-  
-  // Capture state
-  userAnswers[currentQuestionIndex] = currentAnswer;
-  
-  if (currentQuestionIndex < 4) {
-    transitionQuestion('next');
-  } else {
-    // Process final sequence data layout handoff
-    sessionStorage.setItem('funnel_answers', JSON.stringify(userAnswers));
-    window.location.href = 'upload.html'; // Smooth step progression handoff
-  }
-});
+    nextBtn.addEventListener('click', () => {
+        const currentTextArea = document.querySelector(`#step${currentStep} textarea`);
+        if (currentTextArea.hasAttribute('required') && !currentTextArea.value.trim()) {
+            alert("Please share your thoughts before moving forward.");
+            return;
+        }
+        if (currentStep < totalSteps) { currentStep++; updateFormUI(); }
+        else { form.submit(); }
+    });
 
-backBtn.addEventListener('click', () => {
-  if (currentQuestionIndex > 0) {
-    transitionQuestion('back');
-  } else {
-    // Fall back completely to template list if backing out of step 1
-    window.location.href = 'index.html'; // Assumes selection file or your index
-  }
-});
-
-// Capture keyboard layout hooks for smooth desktop processing
-answerInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') {
-    nextBtn.click();
-  }
-});
-
-// Initialization
-window.addEventListener('DOMContentLoaded', () => {
-  renderQuestion();
-});
+    prevBtn.addEventListener('click', () => {
+        if (currentStep > 1) { currentStep--; updateFormUI(); }
+    });
 </script>
-
-</body>
-</html>
+{% endblock %}
