@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inner Child Reflection - Love Little Me</title>
+    <title>Understanding Your Narrative - Love Little Me</title>
     <style>
         :root {
             --bg-color: #fcf9f5;
@@ -27,26 +27,19 @@
             min-height: 100vh;
         }
 
-        .wizard-container {
+        .education-container {
             background: var(--card-bg);
-            max-width: 600px;
+            max-width: 650px;
             width: 90%;
-            padding: 40px;
+            padding: 50px 40px;
             border-radius: 16px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
             border: 1px solid var(--border);
             box-sizing: border-box;
+            margin: 40px 0;
         }
 
-        .wizard-step {
-            display: none;
-        }
-
-        .wizard-step.active {
-            display: block;
-        }
-
-        .step-counter {
+        .header-tag {
             font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -55,169 +48,85 @@
             margin-bottom: 16px;
         }
 
-        h2 {
-            font-size: 1.35rem;
-            line-height: 1.6;
+        h1 {
+            font-size: 1.8rem;
             font-weight: 500;
+            line-height: 1.4;
+            margin-bottom: 24px;
             color: var(--text-main);
-            margin-bottom: 30px;
         }
 
-        .form-group {
-            margin-bottom: 30px;
-        }
-
-        textarea {
-            width: 100%;
-            height: 180px;
-            padding: 16px;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            background-color: var(--bg-color);
+        p {
+            font-size: 1.05rem;
+            line-height: 1.7;
             color: var(--text-main);
-            font-size: 1rem;
-            line-height: 1.5;
-            resize: none;
-            outline: none;
-            transition: border-color 0.2s ease;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin-bottom: 20px;
         }
 
-        textarea:focus {
-            border-color: var(--accent);
-            background-color: #fff;
+        .highlight-box {
+            background-color: #fffaf5;
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            margin: 30px 0;
         }
 
-        textarea::placeholder {
-            color: #b0a79f;
+        .highlight-box p {
+            margin-bottom: 0;
             font-style: italic;
-        }
-
-        .button-group {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        button {
-            font-size: 1rem;
-            font-weight: 500;
-            padding: 12px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            border: none;
-            transition: all 0.2s ease;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        button:disabled {
-            visibility: hidden;
-        }
-
-        .btn-back {
-            background-color: transparent;
             color: var(--text-muted);
         }
 
-        .btn-back:hover {
-            color: var(--text-main);
+        .cta-wrapper {
+            text-align: center;
+            margin-top: 50px;
         }
 
-        .btn-next {
+        .btn-continue {
             background-color: var(--accent);
             color: white;
+            padding: 16px 36px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 8px;
+            display: inline-block;
             box-shadow: 0 2px 8px rgba(212, 163, 115, 0.3);
+            transition: background-color 0.2s ease, transform 0.1s ease;
         }
 
-        .btn-next:hover {
+        .btn-continue:hover {
             background-color: var(--accent-hover);
+        }
+
+        .btn-continue:active {
+            transform: scale(0.98);
         }
     </style>
 </head>
 <body>
 
-    <div class="wizard-container">
-        <form id="wizardForm">
-            
-            <div class="wizard-step active" data-step="1">
-                <div class="step-counter">Step 1 of 3</div>
-                <h2>Describe one or two specific moments or examples from your childhood that stand out the most regarding this wound. Focus simply on what happened.</h2>
-                <div class="form-group">
-                    <textarea name="step1_response" placeholder="Pour out whatever feels heavy right now..."></textarea>
-                </div>
-            </div>
+    <div class="education-container">
+        <div class="header-tag">The Science of Renewal</div>
+        <h1>Your story holds the data map to your liberation.</h1>
+        
+        <p>By naming what happened and tracking how those memories live in your body right now, you have effectively stepped out of the old narrative loops that have kept you safe, but kept you small.</p>
+        
+        <p>What you just completed wasn't simply an intake questionnaire. It is a structured linguistic map. Your left brain anchored the objective reality of the event, your right brain reconnected with the raw somatic tone, and your adult self introduced the pattern-interrupting resolution statement.</p>
 
-            <div class="wizard-step" data-step="2">
-                <div class="step-counter">Step 2 of 3</div>
-                <h2>If the exact feelings are hard to recall or feel blank, notice your body right now. Where do you feel tightness, emptiness, or a heavy sensation as you think about this?</h2>
-                <div class="form-group">
-                    <textarea name="step2_response" placeholder="Describe what you feel in your body right now (e.g., tight chest, knot in stomach, numbness)..."></textarea>
-                </div>
-            </div>
+        <div class="highlight-box">
+            <p>"Trauma isolates the child in time. Conscious narrative integration brings them home to the safety of the present."</p>
+        </div>
 
-            <div class="wizard-step" data-step="3">
-                <div class="step-counter">Step 3 of 3</div>
-                <h2>If you could speak directly to that younger version of you in those moments, what boundaries or truths do they need to hear right now?</h2>
-                <div class="form-group">
-                    <textarea name="step3_response" placeholder="What words does that little version of you need to hear from you today?..."></textarea>
-                </div>
-            </div>
+        <p>Our narrative architecture engine takes these core data coordinates to mathematically reconstruct a three-act cinematic framework customized specifically to your emotional history. This will build the visual landscape, establish the light and shadows of your subconscious boundaries, and supply the healing vocal dialogue vectors needed for your integration video.</p>
+        
+        <p>The next phase is anchoring this framework visually. We are ready to bring the child into the room.</p>
 
-            <div class="button-group">
-                <button type="button" class="btn-back" id="prevBtn" disabled>← Back</button>
-                <button type="button" class="btn-next" id="nextBtn">Next →</button>
-            </div>
+        <div class="cta-wrapper">
+            <a href="/upload.html" class="btn-continue">Continue to Photo Setup →</a>
+        </div>
 
-        </form>
     </div>
-
-    <script>
-        let currentStep = 1;
-        const totalSteps = 3;
-
-        const steps = document.querySelectorAll('.wizard-step');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-
-        function updateWizard() {
-            steps.forEach(step => {
-                step.classList.remove('active');
-                if (parseInt(step.getAttribute('data-step')) === currentStep) {
-                    step.classList.add('active');
-                }
-            });
-
-            if (currentStep === 1) {
-                prevBtn.disabled = true;
-            } else {
-                prevBtn.disabled = false;
-            }
-
-            if (currentStep === totalSteps) {
-                nextBtn.innerText = "Finish ✨";
-            } else {
-                nextBtn.innerText = "Next →";
-            }
-        }
-
-        nextBtn.addEventListener('click', () => {
-            if (currentStep < totalSteps) {
-                currentStep++;
-                updateWizard();
-            } else {
-                // Updated with an explicit root slash path to force Vercel to route cleanly
-                window.location.href = "/education.html";
-            }
-        });
-
-        prevBtn.addEventListener('click', () => {
-            if (currentStep > 1) {
-                currentStep--;
-                updateWizard();
-            }
-        });
-    </script>
 
 </body>
 </html>
