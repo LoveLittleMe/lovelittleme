@@ -16,6 +16,7 @@
         }
 
         body {
+            /* Restored to your original clean system sans-serif font */
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
@@ -82,6 +83,7 @@
             outline: none;
             transition: border-color 0.2s ease;
             box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         textarea:focus {
@@ -108,6 +110,7 @@
             cursor: pointer;
             border: none;
             transition: all 0.2s ease;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         button:disabled {
@@ -157,7 +160,7 @@
 
             <div class="wizard-step" data-step="3">
                 <div class="step-counter">Step 3 of 3</div>
-                <h2>Looking back at that child from who you are today, what is the truth they needed to hear then that you are ready to stand up and give them now?</h2>
+                <h2>If you could speak directly to that younger version of you in those moments, what boundaries or truths do they need to hear right now?</h2>
                 <div class="form-group">
                     <textarea name="step3_response" placeholder="What words does that little version of you need to hear from you today?..."></textarea>
                 </div>
@@ -180,7 +183,6 @@
         const nextBtn = document.getElementById('nextBtn');
 
         function updateWizard() {
-            // Adjust step visibility
             steps.forEach(step => {
                 step.classList.remove('active');
                 if (parseInt(step.getAttribute('data-step')) === currentStep) {
@@ -188,14 +190,12 @@
                 }
             });
 
-            // Handle back button disabled state visibility
             if (currentStep === 1) {
                 prevBtn.disabled = true;
             } else {
                 prevBtn.disabled = false;
             }
 
-            // Text adjustment for final step
             if (currentStep === totalSteps) {
                 nextBtn.innerText = "Finish ✨";
             } else {
