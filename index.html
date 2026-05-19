@@ -482,7 +482,33 @@
     color: var(--cream-dim);
     margin-bottom: 2.5rem;
   }
+wounds.forEach((w, i) => {
+    const card = document.createElement('div');
+    card.className = 'wound-card reveal';
+    card.style.transitionDelay = `${i * 0.07}s`;
+    card.innerHTML = `
+      <div class="wound-name">${w.name}</div>
+      <div class="wound-tagline">${w.tagline}</div>
+      ${w.coming ? '<span class="wound-price">Expanding</span>' : '<span class="wound-price">$29 · Select</span>'}
+    `;
+    
+    // ── ROUTING LOGIC TRIGGER ──
+    if (!w.coming) {
+      card.addEventListener('click', () => {
+        // Formats the string name safely into an ID string matching your question bank
+        const woundId = w.name.toLowerCase().replace('the ', '').replace(' child', '').trim().replace(/\s+/g, '-');
+        
+        // Save state variables for Page 2
+        sessionStorage.setItem('selectedWound', woundId);
+        sessionStorage.setItem('selectedWoundName', w.name);
+        
+        // Advance smoothly to the question layout
+        window.location.href = 'questions.html';
+      });
+    }
 
+    grid.appendChild(card);
+  });
   .price-badge {
     display: inline-flex;
     align-items: baseline;
