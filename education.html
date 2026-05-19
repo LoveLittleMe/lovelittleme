@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Understanding Your Wound - Love Little Me{% endblock %}
+
+{% block content %}
+<div class="w-full max-w-2xl mx-auto px-6 py-12 flex-grow flex flex-col justify-center space-y-8 animate-fade-in">
+    <div class="space-y-4">
+        <span class="font-sans text-xs uppercase tracking-widest text-accent font-semibold">The Core Wound Breakdown</span>
+        <!-- Dynamically injected title matching index pattern -->
+        <h1 class="font-sans font-light text-3xl md:text-4xl text-primary leading-tight">
+            {{ wound.title }}
+        </h1>
+    </div>
+
+    <div class="space-y-6 text-base md:text-lg text-body leading-relaxed border-l-2 border-divider pl-6 italic">
+        <p>
+            "{{ wound.description_quote }}"
+        </p>
+        <p>
+            "{{ wound.impact_quote }}"
+        </p>
+    </div>
+
+    <div class="bg-card border border-divider rounded-xl p-6 space-y-3 shadow-sm">
+        <h3 class="font-sans font-semibold text-sm text-primary uppercase tracking-wide">How This Tool Helps</h3>
+        <p class="text-sm text-muted leading-relaxed">
+            By answering the next three reflective questions, we will safely pinpoint the exact landscape of this childhood memory. Our cinematic AI engine will then reconstruct this narrative, allowing your adult self to visually step back into the scene, break the silence, and offer the protection your younger self always needed.
+        </p>
+    </div>
+
+    <div class="pt-4 flex justify-end">
+        <a 
+            href="{{ url_for('questions') }}" 
+            class="btn btn-primary"
+        >
+            Begin Reflection &rarr;
+        </a>
+    </div>
+</div>
+{% endblock %}
