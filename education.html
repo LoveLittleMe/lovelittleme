@@ -451,7 +451,33 @@ var WOUNDS = {
 
 function applyDynamicWoundTheme() {
   var urlParams = new URLSearchParams(window.location.search);
-  var activeWoundKey = urlParams.get('wound') || 'abandonment';
+  var rawWoundKey = urlParams.get('wound');
+  var activeWoundKey = 'abandonment';
+
+  if (rawWoundKey) {
+    // Sanitize data formats, spaces, and casing variations
+    var sanitized = rawWoundKey.trim().toLowerCase().replace(/\s+/g, '-');
+    
+    // Safety matching maps for variants passed from quiz frameworks
+    if (sanitized === 'emotionalabuse' || sanitized === 'abuse') sanitized = 'emotional-abuse';
+    if (sanitized === 'solar-plexus' || sanitized === 'solarplexus') sanitized = 'enmeshment';
+    if (sanitized === 'root') sanitized = 'neglect';
+    if (sanitized === 'heart') sanitized = 'abandonment';
+    if (sanitized === 'sacral') sanitized = 'shame';
+    if (sanitized === 'throat') sanitized = 'emotional-abuse';
+
+    if (WOUNDS[sanitized]) {
+      activeWoundKey = sanitized;
+      // Stash result inside window storage for session persistency
+      localStorage.setItem('selected_wound_fallback', sanitized);
+    }
+  } else {
+    // Fallback engine checks storage cache if raw URL param is blank
+    var savedFallback = localStorage.getItem('selected_wound_fallback');
+    if (savedFallback && WOUNDS[savedFallback]) {
+      activeWoundKey = savedFallback;
+    }
+  }
   
   var selectedProfile = WOUNDS[activeWoundKey];
   
