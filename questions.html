@@ -10,12 +10,12 @@
 {% endblock %}
 
 {% block content %}
-<!-- Top Progress Indicator matching index utility header -->
-<div class="w-full max-w-2xl mx-auto px-6 pt-4 flex justify-end items-center">
+<!-- Top Progress Indicator with hardcoded values to guarantee rendering -->
+<div class="w-full max-w-2xl mx-auto px-6 pt-6 flex justify-end items-center">
     <div class="flex items-center space-x-2">
-        <span id="progress-text" class="font-sans text-xs text-muted">Step 1 of 3</span>
-        <div class="w-16 h-1 bg-divider rounded-full overflow-hidden">
-            <div id="progress-bar" class="w-1/3 h-full bg-accent transition-all duration-300"></div>
+        <span id="progress-text" class="font-sans text-xs text-gray-500">Step 1 of 3</span>
+        <div class="w-20 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+            <div id="progress-bar" class="w-1/3 h-full bg-amber-800 transition-all duration-300"></div>
         </div>
     </div>
 </div>
@@ -25,7 +25,7 @@
         
         <!-- STEP 1: THE EVENT -->
         <div id="step1" class="step-content active space-y-6">
-            <h2 class="font-sans font-light text-2xl md:text-3xl text-primary leading-snug">
+            <h2 class="font-sans font-light text-2xl md:text-3xl text-gray-800 leading-snug">
                 Describe one or two specific moments or examples from your childhood that stand out the most regarding this wound. Focus simply on what happened.
             </h2>
             <textarea 
@@ -34,13 +34,13 @@
                 rows="6" 
                 required
                 placeholder="Pour out whatever feels heavy right now..." 
-                class="form-textarea"
+                class="w-full bg-white border border-gray-300 rounded-xl p-4 font-serif text-base text-gray-800 focus:outline-none focus:ring-1 focus:ring-amber-800 focus:border-amber-800 shadow-sm placeholder:text-gray-400 resize-none transition-all"
             ></textarea>
         </div>
 
         <!-- STEP 2: THE RESONANCE -->
         <div id="step2" class="step-content space-y-6">
-            <h2 class="font-sans font-light text-2xl md:text-3xl text-primary leading-snug">
+            <h2 class="font-sans font-light text-2xl md:text-3xl text-gray-800 leading-snug">
                 If the exact feelings are hard to recall or feel blank, notice your body right now. Where do you feel tightness, emptiness, or a heavy sensation as you think about this?
             </h2>
             <textarea 
@@ -48,13 +48,13 @@
                 name="somatic_resonance" 
                 rows="6" 
                 placeholder="Describe what you feel in your body right now (e.g., tight chest, knot in stomach, numbness)..." 
-                class="form-textarea"
+                class="w-full bg-white border border-gray-300 rounded-xl p-4 font-serif text-base text-gray-800 focus:outline-none focus:ring-1 focus:ring-amber-800 focus:border-amber-800 shadow-sm placeholder:text-gray-400 resize-none transition-all"
             ></textarea>
         </div>
 
         <!-- STEP 3: THE INTEGRATION -->
         <div id="step3" class="step-content space-y-6">
-            <h2 class="font-sans font-light text-2xl md:text-3xl text-primary leading-snug">
+            <h2 class="font-sans font-light text-2xl md:text-3xl text-gray-800 leading-snug">
                 Looking back at that child from who you are today, what is the truth they needed to hear then that you are ready to stand up and give them now?
             </h2>
             <textarea 
@@ -63,14 +63,14 @@
                 rows="6" 
                 required
                 placeholder="What words does that little version of you need to hear from you today?..." 
-                class="form-textarea"
+                class="w-full bg-white border border-gray-300 rounded-xl p-4 font-serif text-base text-gray-800 focus:outline-none focus:ring-1 focus:ring-amber-800 focus:border-amber-800 shadow-sm placeholder:text-gray-400 resize-none transition-all"
             ></textarea>
         </div>
 
         <!-- Controls matching core index theme buttons -->
-        <div class="pt-6 flex justify-between items-center border-t border-divider">
-            <button type="button" id="prevBtn" class="opacity-0 pointer-events-none text-sm tracking-wide text-muted hover:text-primary transition-colors">&larr; Back</button>
-            <button type="button" id="nextBtn" class="btn btn-primary">Next &rarr;</button>
+        <div class="pt-6 flex justify-between items-center border-t border-gray-200">
+            <button type="button" id="prevBtn" class="opacity-0 pointer-events-none text-sm tracking-wide text-gray-400 hover:text-gray-800 transition-colors">&larr; Back</button>
+            <button type="button" id="nextBtn" class="bg-amber-900 text-white font-sans text-sm tracking-wider px-8 py-3 rounded-full hover:bg-amber-950 transition-all shadow-md">Next &rarr;</button>
         </div>
 
     </form>
