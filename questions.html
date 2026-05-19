@@ -1,238 +1,304 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inner Child Reflection - Love Little Me</title>
-    <style>
-        :root {
-            --bg-color: #fcf9f5;
-            --card-bg: #ffffff;
-            --text-main: #3c3530;
-            --text-muted: #7c726a;
-            --accent: #d4a373;
-            --accent-hover: #c39262;
-            --border: #e6dfd5;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Healing Pathway — Love Little Me</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=DM+Sans:wght@300;400;500&display=swap');
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+  :root {
+    --bg: #0E0A02;
+    --bg-warm: #1C1408;
+    --bg-card: #221A08;
+    --accent: #C9960C;
+    --accent-light: #E3B84A;
+    --accent-dim: #8A650A;
+    --accent-faint: #2A1E08;
+    --text-light: #F5E4B0;
+    --text-mid: #C4B48A;
+    --text-dim: #7A6A50;
+    --cream-line: rgba(255,255,255,0.08);
+  }
 
-        .wizard-container {
-            background: var(--card-bg);
-            max-width: 600px;
-            width: 90%;
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-            border: 1px solid var(--border);
-            box-sizing: border-box;
-        }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { 
+    background: var(--bg); 
+    color: var(--text-light); 
+    font-family: 'DM Sans', sans-serif; 
+    font-weight: 300; 
+    line-height: 1.75; 
+    overflow-x: hidden; 
+    transition: background 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  body::before { 
+    content: ''; position: fixed; inset: 0; 
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E"); 
+    opacity: 0.04; pointer-events: none; z-index: 500; 
+  }
 
-        .wizard-step {
-            display: none;
-        }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; background: rgba(0,0,0,0.5); backdrop-filter: blur(16px); border-bottom: 1px solid var(--cream-line); }
+  .nav-logo { display: flex; align-items: center; text-decoration: none; }
+  .nav-logo img { height: 120px; width: auto; object-fit: contain; }
+  .nav-back { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
+  .nav-back:hover { color: var(--accent-light); }
 
-        .wizard-step.active {
-            display: block;
-        }
+  .glow-bg { position: fixed; top: 0; left: 0; right: 0; height: 70vh; background: radial-gradient(ellipse 70% 60% at 30% 40%, var(--accent-faint) 0%, transparent 70%); pointer-events: none; z-index: 0; transition: background 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
 
-        .step-counter {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--accent);
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
+  .dashboard-wrapper { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 10rem 1.5rem 6rem; }
 
-        h2 {
-            font-size: 1.35rem;
-            line-height: 1.6;
-            font-weight: 500;
-            color: var(--text-main);
-            margin-bottom: 30px;
-        }
+  .meta-tag { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.8rem; font-weight: 500; transition: color 0.3s; }
 
-        .form-group {
-            margin-bottom: 30px;
-        }
+  h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 300; line-height: 1.15; color: var(--text-light); margin-bottom: 1.5rem; }
 
-        textarea {
-            width: 100%;
-            height: 180px;
-            padding: 16px;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-size: 1rem;
-            line-height: 1.5;
-            resize: none;
-            outline: none;
-            transition: border-color 0.2s ease;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
+  .intro-text { font-size: 1.05rem; line-height: 1.85; color: var(--text-mid); max-width: 720px; margin-bottom: 3.5rem; }
 
-        textarea:focus {
-            border-color: var(--accent);
-            background-color: #fff;
-        }
+  .system-verification { background: var(--bg-card); border: 1px solid var(--cream-line); padding: 1.2rem 1.8rem; border-radius: 8px; display: flex; align-items: center; gap: 12px; margin-bottom: 4rem; }
+  .status-pulse { width: 7px; height: 7px; background-color: var(--accent); border-radius: 50%; display: inline-block; box-shadow: 0 0 10px var(--accent); }
+  .status-message { font-size: 0.82rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-mid); }
 
-        textarea::placeholder {
-            color: #b0a79f;
-            font-style: italic;
-        }
+  .archetype-callout-box { background: linear-gradient(145deg, var(--bg-warm), var(--bg-card)); border: 1px solid var(--cream-line); border-left: 4px solid var(--accent); padding: 2.5rem; border-radius: 0 12px 12px 0; margin-bottom: 5rem; transition: border-left-color 0.4s; }
+  .callout-label { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 0.6rem; }
+  .callout-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.8rem; font-weight: 400; margin-bottom: 1rem; color: var(--text-light); }
+  .callout-body { font-size: 0.95rem; line-height: 1.8; color: var(--text-mid); }
 
-        .button-group {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+  .divider { height: 1px; background: linear-gradient(to right, transparent, var(--cream-line), transparent); margin: 4rem 0; }
 
-        button {
-            font-size: 1rem;
-            font-weight: 500;
-            padding: 12px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            border: none;
-            transition: all 0.2s ease;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
+  .architecture-matrix { display: flex; flex-direction: column; gap: 2rem; margin: 3rem 0 5rem; }
+  .matrix-node { display: grid; grid-template-columns: 280px 1fr; gap: 2.5rem; border-bottom: 1px solid var(--cream-line); padding-bottom: 2.5rem; }
+  .matrix-node:last-child { border-bottom: none; }
+  .node-left { border-right: 1px solid var(--cream-line); padding-right: 1.5rem; }
+  .node-vector-id { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.4rem; }
+  .node-vector-name { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.4rem; font-weight: 400; color: var(--text-light); margin-bottom: 0.6rem; }
+  .node-vector-meta { font-size: 0.85rem; line-height: 1.6; color: var(--text-dim); }
+  .node-right { display: flex; flex-direction: column; justify-content: center; }
+  .render-tag { align-self: flex-start; background: var(--accent-faint); color: var(--accent-light); font-size: 0.65rem; font-weight: 500; padding: 4px 10px; border-radius: 4px; margin-bottom: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; }
+  .render-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.25rem; font-weight: 400; color: var(--text-light); margin-bottom: 0.5rem; }
+  .render-details { font-size: 0.9rem; line-height: 1.7; color: var(--text-mid); }
 
-        button:disabled {
-            visibility: hidden;
-        }
+  .steps-indicator { display: flex; align-items: center; justify-content: center; margin: 6rem 0 3rem; }
+  .step-item { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; flex: 1; max-width: 100px; }
+  .step-circle { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--cream-line); background: var(--bg-card); display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 0.9rem; color: var(--text-dim); transition: all 0.3s ease; }
+  .step-circle.done { background: var(--bg-warm); border-color: var(--cream-line); color: var(--text-mid); }
+  .step-circle.active { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+  .step-label-text { font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); text-align: center; }
+  .step-connector { flex: 1; height: 1px; background: var(--cream-line); margin-bottom: 1.2rem; max-width: 50px; }
 
-        .btn-back {
-            background-color: transparent;
-            color: var(--text-muted);
-        }
+  .action-container { text-align: center; }
+  .btn-prime { display: inline-block; background: var(--accent); color: var(--bg); border: none; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; padding: 1.2rem 3rem; border-radius: 4px; cursor: pointer; text-decoration: none; transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+  .btn-prime:hover { background: var(--accent-light); transform: translateY(-1px); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+  .security-disclaimer { font-size: 0.65rem; color: var(--text-dim); letter-spacing: 0.08em; margin-top: 1rem; text-transform: uppercase; }
 
-        .btn-back:hover {
-            color: var(--text-main);
-        }
+  footer { padding: 3rem 1.5rem; text-align: center; border-top: 1px solid var(--cream-line); background: var(--bg-warm); margin-top: 6rem; }
+  .footer-tagline { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 0.9rem; font-style: italic; color: var(--text-dim); }
 
-        .btn-next {
-            background-color: var(--accent);
-            color: white;
-            box-shadow: 0 2px 8px rgba(212, 163, 115, 0.3);
-        }
-
-        .btn-next:hover {
-            background-color: var(--accent-hover);
-        }
-    </style>
+  @media(max-width: 768px) {
+    .architecture-matrix { gap: 1.5rem; }
+    .matrix-node { grid-template-columns: 1fr; gap: 1.2rem; }
+    .node-left { border-right: none; border-bottom: 1px solid var(--cream-line); padding-right: 0; padding-bottom: 1.2rem; }
+    nav { padding: 0 1rem; }
+    .dashboard-wrapper { padding-top: 8rem; }
+  }
+</style>
 </head>
 <body>
 
-    <div class="wizard-container">
-        <form id="wizardForm">
-            
-            <div class="wizard-step active" data-step="1">
-                <div class="step-counter">Step 1 of 3</div>
-                <h2>Describe one or two specific moments or examples from your childhood that stand out the most regarding this wound. Focus simply on what happened.</h2>
-                <div class="form-group">
-                    <textarea name="step1_response" placeholder="Pour out whatever feels heavy right now..."></textarea>
-                </div>
-            </div>
+<div class="glow-bg" id="glow-bg"></div>
 
-            <div class="wizard-step" data-step="2">
-                <div class="step-counter">Step 2 of 3</div>
-                <h2>If the exact feelings are hard to recall or feel blank, notice your body right now. Where do you feel tightness, emptiness, or a heavy sensation as you think about this?</h2>
-                <div class="form-group">
-                    <textarea name="step2_response" placeholder="Describe what you feel in your body right now (e.g., tight chest, knot in stomach, numbness)..."></textarea>
-                </div>
-            </div>
+<nav>
+  <a href="index.html" class="nav-logo"><img src="logo.jpg" alt="Love Little Me"></a>
+  <a href="javascript:history.back()" class="nav-back">← Back to Reflection</a>
+</nav>
 
-            <div class="wizard-step" data-step="3">
-                <div class="step-counter">Step 3 of 3</div>
-                <h2>If you could speak directly to that younger version of you in those moments, what boundaries or truths do they need to hear right now?</h2>
-                <div class="form-group">
-                    <textarea name="step3_response" placeholder="What words does that little version of you need to hear from you today?..."></textarea>
-                </div>
-            </div>
+<div class="dashboard-wrapper">
+  
+  <div class="meta-tag" id="dynamic-chakra">Heart Chakra</div>
+  <h1 id="dynamic-headline">Understanding this wound</h1>
+  
+  <div class="intro-text" id="dynamic-description">
+    Preparing your space...
+  </div>
 
-            <div class="button-group">
-                <button type="button" class="btn-back" id="prevBtn" disabled>← Back</button>
-                <button type="button" class="btn-next" id="nextBtn">Next →</button>
-            </div>
+  <div class="system-verification">
+    <span class="status-pulse"></span>
+    <div class="status-message">Your reflection is held safely. Your healing blueprint is preparing below.</div>
+  </div>
 
-        </form>
+  <div class="archetype-callout-box">
+    <div class="callout-label" id="profile-badge-label">Where it comes from</div>
+    <div class="callout-title" id="dynamic-wound-title">Origins</div>
+    <div class="callout-body" id="dynamic-where-from">
+      Mapping developmental pathways...
     </div>
+  </div>
 
-    <script id="wizard-navigation-logic">
-        // 1. Core routing anchor initialization
-        const urlParams = new URLSearchParams(window.location.search);
-        let activeWound = urlParams.get('wound');
+  <div class="divider"></div>
 
-        // 2. Memory engine safety check: If URL parameter is blank, recover selection from background storage
-        if (!activeWound) {
-            const savedSession = sessionStorage.getItem('selectedWound');
-            const savedLocal = localStorage.getItem('selected_wound_fallback');
-            activeWound = savedSession || savedLocal || 'abandonment';
-        } else {
-            // If it is in the URL, save it down immediately so other pages remember it
-            sessionStorage.setItem('selectedWound', activeWound);
-            localStorage.setItem('selected_wound_fallback', activeWound);
-        }
+  <div class="architecture-matrix">
+    <div class="matrix-node">
+      <div class="node-left">
+        <div class="node-vector-id">Phase 01 // Gentle Awareness</div>
+        <div class="node-vector-name">Honoring the Past</div>
+        <div class="node-vector-meta">We look back at your childhood stories safely, so your adult self can see what really happened without getting overwhelmed.</div>
+      </div>
+      <div class="node-right">
+        <div class="render-tag">Step One // Re-envisioning</div>
+        <div class="render-title">Remembering the Environment</div>
+        <div class="render-details">We gently look at the physical spaces, distances, and memories of your early home life to understand the patterns that shaped your child heart.</div>
+      </div>
+    </div>
+    <div class="matrix-node">
+      <div class="node-left">
+        <div class="node-vector-id">Phase 02 // Heart Connection</div>
+        <div class="node-vector-name">Feeling the Body</div>
+        <div class="node-vector-meta">We listen closely to where your body holds tight or empty feelings when these old family memories come up.</div>
+      </div>
+      <div class="node-right">
+        <div class="render-tag">Step Two // Safe Space</div>
+        <div class="render-title">Holding Room for Heavy Emotions</div>
+        <div class="render-details">We create a calm, warm environment to gently acknowledge and release the deep weight or shadows that have been carried for so long.</div>
+      </div>
+    </div>
+    <div class="matrix-node">
+      <div class="node-left">
+        <div class="node-vector-id">Phase 03 // Loving Protection</div>
+        <div class="node-vector-name">Reclaiming Your Voice</div>
+        <div class="node-vector-meta">Your adult self steps in as a guardian to give your inner child the safety, boundaries, and care they always deserved.</div>
+      </div>
+      <div class="node-right">
+        <div class="render-tag">Step Three // Deep Truths</div>
+        <div class="render-title">Healing Words For Little You</div>
+        <div class="render-details">We bring loving truths, clear boundaries, and reassuring protection straight to your younger self, letting them know they are completely safe now.</div>
+      </div>
+    </div>
+  </div>
 
-        let currentStep = 1;
-        const totalSteps = 3;
+  <div class="steps-indicator">
+    <div class="step-item">
+      <div class="step-circle done">✓</div>
+      <span class="step-label-text">Intake</span>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step-item">
+      <div class="step-circle active">2</div>
+      <span class="step-label-text">Photo Setup</span>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step-item">
+      <div class="step-circle">3</div>
+      <span class="step-label-text">Your Video</span>
+    </div>
+  </div>
 
-        const steps = document.querySelectorAll('.wizard-step');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
+  <div class="action-container">
+    <a href="upload.html" id="continue-link" class="btn-prime">Continue to Photo Setup →</a>
+    <div class="security-disclaimer">Your privacy is completely protected · Love Little Me</div>
+  </div>
 
-        function updateWizard() {
-            steps.forEach(step => {
-                step.classList.remove('active');
-                if (parseInt(step.getAttribute('data-step')) === currentStep) {
-                    step.classList.add('active');
-                }
-            });
+</div>
 
-            if (currentStep === 1) {
-                prevBtn.disabled = true;
-            } else {
-                prevBtn.disabled = false;
-            }
+<footer>
+  <p class="footer-tagline">"Because you always deserved to be loved."</p>
+</footer>
 
-            if (currentStep === totalSteps) {
-                nextBtn.innerText = "Finish ✨";
-            } else {
-                nextBtn.innerText = "Next →";
-            }
-        }
+<script>
+var WOUNDS = {
+  "abandonment": {
+    name: "The Child Who Was Left", subtitle: "Abandonment Wound", chakra: "Heart Chakra",
+    bg:"#0D1F1A",bg_warm:"#122620",bg_card:"#152E28",accent:"#4CAF82",accent_light:"#7DD4A8",accent_dim:"#2E7A55",accent_faint:"#1E4D38",text_light:"#C8E6D8",text_mid:"#8FBFA8",text_dim:"#5A8A72",
+    description: "You learned early that people leave. Not as a concept — as a fact you lived in your body. Whether a parent walked out, emotionally checked out, or was physically present but completely unreachable, the message was the same: you were not enough to make them stay.",
+    where_it_comes_from: "It comes from parents who left — literally or emotionally. The father who walked out and never came back. The mother who was physically present but emotionally elsewhere, numbed by depression or consumed by her own pain. It comes from the moments you needed someone and no one came."
+  },
+  "neglect": {
+    name: "The Child Whose Needs Went Unmet", subtitle: "Neglect Wound", chakra: "Root Chakra",
+    bg:"#1A0A0A",bg_warm:"#220D0D",bg_card:"#2A1010",accent:"#C0392B",accent_light:"#E57373",accent_dim:"#8B1A1A",accent_faint:"#4A1010",text_light:"#F0C4C4",text_mid:"#C48A8A",text_dim:"#8A5555",
+    description: "Nothing dramatic happened to you. No one hit you. No one screamed. But no one showed up either. No one noticed when you were hungry, scared, sick, or sad. Your needs existed — and were consistently met with absence. That absence did as much damage as any violence.",
+    where_it_comes_from: "It comes from parents who were overwhelmed, absent, checked out, mentally ill, or simply not equipped to meet a child's needs. It comes from households where survival consumed everything and emotional attunement was a luxury no one had. It comes from being the child who learned to go quiet, stop asking, and figure it out alone."
+  },
+  "emotional-abuse": {
+    name: "The Child Who Was Hurt With Words", subtitle: "Emotional Abuse Wound", chakra: "Throat Chakra",
+    bg:"#0A0F1A",bg_warm:"#0D1422",bg_card:"#101828",accent:"#2E6DB4",accent_light:"#6AABDF",accent_dim:"#1A4A80",accent_faint:"#0F2D50",text_light:"#C4D8F0",text_mid:"#8AAED4",text_dim:"#557AA0",
+    description: "The words became a voice inside you. One that sounds like your own but is not. It tells you that you are stupid, worthless, too sensitive, a burden, a disappointment. You believe it because a child always believes what the people who are supposed to love them say. Those words were a lie. But they are still running.",
+    where_it_comes_from: "It comes from parents who weaponized language. Who criticized everything. Who held love hostage to performance. Who said things like 'I'll give you something to cry about.' Who called you stupid, fat, lazy, or dramatic, and who made you feel their unhappiness was your fault."
+  },
+  "enmeshment": {
+    name: "The Child Who Was Never Allowed to Be Themselves", subtitle: "Enmeshment Wound", chakra: "Solar Plexus Chakra",
+    bg:"#1A1700",bg_warm:"#221E00",bg_card:"#2A2500",accent:"#C9A800",accent_light:"#E8CC4A",accent_dim:"#8A7200",accent_faint:"#4A3E00",text_light:"#F0E8B0",text_mid:"#C4B870",text_dim:"#8A8040",
+    description: "You were never allowed to be a separate person. Your feelings were managed, your preferences overridden, your identity absorbed. You were made responsible for your parent's emotional or practical life, becoming the caretaker before you ever got to be a child.",
+    where_it_comes_from: "It comes from parents who could not distinguish their own emotions from their child's, or who treated their child as an emotional partner, confidant, or functional caretaker. It happens when you are forced to grow up too fast to keep the home steady, responding to the parent's vulnerabilities with quiet compliance."
+  },
+  "shame": {
+    name: "The Child Who Was Made to Feel Broken", subtitle: "Shame Wound", chakra: "Sacral Chakra",
+    bg:"#1A0D00",bg_warm:"#221200",bg_card:"#2A1800",accent:"#E07B20",accent_light:"#F0A855",accent_dim:"#A05010",accent_faint:"#4A2200",text_light:"#F0D4B0",text_mid:"#C4A070",text_dim:"#8A6840",
+    description: "This is not guilt — guilt says you did something bad. Shame says you are bad. It targets your identity, not your behavior. And it was taught to you. Through humiliation, through punishment of your natural feelings, through words and silences that told you something about you — at your core — was wrong.",
+    where_it_comes_from: "It comes from being humiliated — publicly or privately. From parents who shamed your body, your emotions, your curiosity, or your mistakes. From households where certain feelings were treated as forbidden, or where being laughed at or pushed away taught you that your true self was unsafe to show."
+  },
+  "unsafe-home": {
+    name: "The Child Who Never Felt Safe", subtitle: "Unsafe Home Wound", chakra: "Root Chakra",
+    bg:"#140808",bg_warm:"#1C0A0A",bg_card:"#240C0C",accent:"#8B1A1A",accent_light:"#C0392B",accent_dim:"#5A1010",accent_faint:"#380808",text_light:"#F0C0C0",text_mid:"#C48080",text_dim:"#8A5050",
+    description: "Home was supposed to be the one place in the world you could exhale. It was not. Whether it was violence, addiction, chaos, or the specific terror of not knowing which version of a parent you would come home to — your nervous system learned that safety was not something you got to have.",
+    where_it_comes_from: "It comes from homes where you walked on eggshells. Where you learned to read a parent's footsteps on the stairs and know within seconds what kind of night it was going to be. Where violence — or the threat of it — shaped every moment. Where chaos was the only constant and safety was a thing other people had."
+  },
+  "divorce": {
+    name: "The Child Caught in the Middle", subtitle: "Divorce & Family Rupture Wound", chakra: "Heart Chakra",
+    bg:"#1A0D10",bg_warm:"#221218",bg_card:"#2A1520",accent:"#C0527A",accent_light:"#E087A8",accent_dim:"#8A2A4A",accent_faint:"#4A1228",text_light:"#F0C4D4",text_mid:"#C488A0",text_dim:"#8A5568",
+    description: "You were too young to understand what was happening and too aware not to feel every bit of it. You loved people who could not be in the same room. And somewhere in the chaos of their ending, your own needs — your grief, your confusion, your loss — went largely unwitnessed.",
+    where_it_comes_from: "It comes from being put in the middle — explicitly or implicitly. From being used as a messenger between two people who could not speak. From having to manage a devastated parent's emotions. From feeling guilty for loving the other parent. From having to choose, over and over, in ways no child should ever have to choose."
+  }
+};
 
-        nextBtn.addEventListener('click', () => {
-            if (currentStep < totalSteps) {
-                currentStep++;
-                updateWizard();
-            } else {
-                // Direct seamless handoff using verified matrix parameters
-                window.location.href = "education.html?wound=" + encodeURIComponent(activeWound);
-            }
-        });
+function applyDynamicWoundTheme() {
+  var urlParams = new URLSearchParams(window.location.search);
+  var rawWoundKey = urlParams.get('wound');
+  var activeWoundKey = null;
 
-        prevBtn.addEventListener('click', () => {
-            if (currentStep > 1) {
-                currentStep--;
-                updateWizard();
-            }
-        });
-    </script>
+  if (rawWoundKey) {
+    var sanitized = rawWoundKey.trim().toLowerCase().replace(/\s+/g, '-');
+    if (sanitized === 'emotionalabuse' || sanitized === 'abuse' || sanitized === 'throat' || sanitized === 'harshly-criticised' || sanitized === 'harshly-criticized') sanitized = 'emotional-abuse';
+    if (sanitized === 'solar-plexus' || sanitized === 'solarplexus' || sanitized === 'parentified') sanitized = 'enmeshment';
+    if (sanitized === 'root' || sanitized === 'invisible' || sanitized === 'invisible-child') sanitized = 'neglect';
+    if (sanitized === 'heart' || sanitized === 'left' || sanitized === 'left-child') sanitized = 'abandonment';
+    if (sanitized === 'sacral' || sanitized === 'shamed') sanitized = 'shame';
+    if (sanitized === 'unsafe' || sanitized === 'unsafe-home' || sanitized === 'home') sanitized = 'unsafe-home';
+    if (sanitized === 'divorce' || sanitized === 'family' || sanitized === 'rupture') sanitized = 'divorce';
+    if (WOUNDS[sanitized]) activeWoundKey = sanitized;
+  }
+
+  if (!activeWoundKey) {
+    var saved = localStorage.getItem('selected_wound_fallback') || sessionStorage.getItem('selectedWound');
+    if (saved && WOUNDS[saved]) activeWoundKey = saved;
+  }
+
+  if (!activeWoundKey) activeWoundKey = 'abandonment';
+
+  localStorage.setItem('selected_wound_fallback', activeWoundKey);
+  sessionStorage.setItem('selectedWound', activeWoundKey);
+
+  var w = WOUNDS[activeWoundKey];
+  var root = document.documentElement;
+  root.style.setProperty('--bg', w.bg);
+  root.style.setProperty('--bg-warm', w.bg_warm);
+  root.style.setProperty('--bg-card', w.bg_card);
+  root.style.setProperty('--accent', w.accent);
+  root.style.setProperty('--accent-light', w.accent_light);
+  root.style.setProperty('--accent-dim', w.accent_dim);
+  root.style.setProperty('--accent-faint', w.accent_faint);
+  root.style.setProperty('--text-light', w.text_light);
+  root.style.setProperty('--text-mid', w.text_mid);
+  root.style.setProperty('--text-dim', w.text_dim);
+
+  document.getElementById('dynamic-chakra').innerText = w.chakra;
+  document.getElementById('dynamic-headline').innerText = w.name;
+  document.getElementById('dynamic-description').innerText = w.description;
+  document.getElementById('dynamic-wound-title').innerText = w.subtitle;
+  document.getElementById('dynamic-where-from').innerText = w.where_it_comes_from;
+  document.getElementById('continue-link').href = 'upload.html?wound=' + activeWoundKey;
+  document.title = w.name + ' — Love Little Me';
+}
+
+window.addEventListener('DOMContentLoaded', applyDynamicWoundTheme);
+</script>
 
 </body>
 </html>
