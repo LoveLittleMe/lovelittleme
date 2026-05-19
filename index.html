@@ -509,6 +509,21 @@ wounds.forEach((w, i) => {
 
     grid.appendChild(card);
   });
+      card.addEventListener('click', () => {
+        // Formats the string name safely into an ID string matching your question bank
+        const woundId = w.name.toLowerCase().replace('the ', '').replace(' child', '').trim().replace(/\s+/g, '-');
+        
+        // Save state variables for Page 2
+        sessionStorage.setItem('selectedWound', woundId);
+        sessionStorage.setItem('selectedWoundName', w.name);
+        
+        // Advance smoothly to the question layout
+        window.location.href = 'questions.html';
+      });
+    }
+
+    grid.appendChild(card);
+  });
   .price-badge {
     display: inline-flex;
     align-items: baseline;
