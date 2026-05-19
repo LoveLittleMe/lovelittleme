@@ -105,10 +105,6 @@
   .preview-label{font-size:0.78rem;color:var(--text-dim);}
   .preview-change{font-size:0.72rem;color:var(--gold-dim);cursor:pointer;text-decoration:underline;margin-top:0.3rem;display:block;}
 
-  .questions-box{background:var(--bg-warm);border:1px solid var(--cream-line);border-radius:6px;padding:1.4rem 1.6rem;margin-bottom:1.5rem;}
-  .qb-label{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.5rem;}
-  .qb-text{font-size:0.88rem;color:var(--text-mid);line-height:1.75;}
-
   .payment-box{background:var(--dark);border-radius:8px;padding:2.2rem 1.8rem;position:relative;overflow:hidden;}
   .payment-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--gold),var(--gold-light),var(--gold));}
   .payment-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;}
@@ -246,11 +242,6 @@
     <span class="preview-change" id="preview-change">Choose a different photo</span>
   </div>
 
-  <div class="questions-box reveal">
-    <p class="qb-label">After payment</p>
-    <p class="qb-text" id="questions-preview-text"></p>
-  </div>
-
   <div class="payment-box reveal">
     <div class="payment-top">
       <div>
@@ -294,7 +285,6 @@
   document.getElementById('how-it-shows-body').textContent = wound.how_it_shows_up;
   document.getElementById('why-it-matters-body').textContent = wound.why_it_matters;
   document.getElementById('receive-text').textContent = wound.what_you_receive;
-  document.getElementById('questions-preview-text').textContent = wound.questions_preview;
   document.getElementById('payment-wound-name').textContent = wound.name + ' Healing Video';
 
   var signsList = document.getElementById('signs-list');
