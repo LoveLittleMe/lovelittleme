@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Understanding Your Narrative - Love Little Me</title>
+    <title>Your Narrative Architecture - Love Little Me</title>
     <style>
         :root {
             --bg-color: #fcf9f5;
@@ -13,6 +13,7 @@
             --accent: #d4a373;
             --accent-hover: #c39262;
             --border: #e6dfd5;
+            --success: #a3b19b;
         }
 
         body {
@@ -20,110 +21,283 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             margin: 0;
-            padding: 0;
+            padding: 40px 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
         }
 
-        .education-container {
+        .dashboard-container {
             background: var(--card-bg);
-            max-width: 650px;
-            width: 90%;
-            padding: 50px 40px;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            max-width: 900px;
+            width: 100%;
+            padding: 50px;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(60, 53, 48, 0.03);
             border: 1px solid var(--border);
             box-sizing: border-box;
-            margin: 40px 0;
+        }
+
+        .brand-header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 30px;
         }
 
         .header-tag {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             color: var(--accent);
-            font-weight: 600;
-            margin-bottom: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
         }
 
         h1 {
-            font-size: 1.8rem;
+            font-size: 2.2rem;
             font-weight: 500;
-            line-height: 1.4;
-            margin-bottom: 24px;
-            color: var(--text-main);
+            line-height: 1.3;
+            margin: 0 0 16px 0;
+            letter-spacing: -0.5px;
         }
 
-        p {
-            font-size: 1.05rem;
-            line-height: 1.7;
-            color: var(--text-main);
-            margin-bottom: 20px;
-        }
-
-        .highlight-box {
-            background-color: #fffaf5;
-            border-left: 4px solid var(--accent);
-            padding: 20px;
-            border-radius: 0 12px 12px 0;
-            margin: 30px 0;
-        }
-
-        .highlight-box p {
-            margin-bottom: 0;
-            font-style: italic;
+        .subtitle {
+            font-size: 1.1rem;
             color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
         }
 
-        .cta-wrapper {
+        /* Interactive Timeline Matrix Diagram */
+        .architecture-matrix {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .matrix-row {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+            background: #fffcf9;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .matrix-row:hover {
+            border-color: var(--accent);
+            box-shadow: 0 4px 20px rgba(212, 163, 115, 0.06);
+            transform: translateY(-2px);
+        }
+
+        /* Left Column: Intake Mapping */
+        .input-vector-pane {
+            border-right: 1px dashed var(--border);
+            padding-right: 20px;
+        }
+
+        .vector-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .vector-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin: 0 0 8px 0;
+        }
+
+        .vector-science {
+            font-size: 0.88rem;
+            line-height: 1.5;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* Right Column: Output Blueprint */
+        .output-render-pane {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .output-badge {
+            display: inline-block;
+            align-self: flex-start;
+            background: #f4ebe0;
+            color: #a3704c;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .output-title {
+            font-size: 1.15rem;
+            font-weight: 500;
+            margin: 0 0 8px 0;
+            color: var(--text-main);
+        }
+
+        .output-details {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        /* Technical Data Sync Bar */
+        .system-status-bar {
+            background: #f7f9f6;
+            border: 1px solid #e1e8df;
+            padding: 16px 24px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #6b8260;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .status-text {
+            font-size: 0.9rem;
+            color: #4d5749;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        /* Bottom Action Panel */
+        .action-panel {
             text-align: center;
             margin-top: 50px;
+            border-top: 1px solid var(--border);
+            padding-top: 40px;
         }
 
-        .btn-continue {
+        .btn-prime {
             background-color: var(--accent);
             color: white;
-            padding: 16px 36px;
+            padding: 18px 44px;
             font-size: 1.1rem;
             font-weight: 500;
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 12px;
             display: inline-block;
-            box-shadow: 0 2px 8px rgba(212, 163, 115, 0.3);
-            transition: background-color 0.2s ease, transform 0.1s ease;
+            box-shadow: 0 4px 15px rgba(212, 163, 115, 0.35);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 0.5px;
+            border: none;
+            cursor: pointer;
         }
 
-        .btn-continue:hover {
+        .btn-prime:hover {
             background-color: var(--accent-hover);
+            box-shadow: 0 6px 20px rgba(212, 163, 115, 0.45);
+            transform: translateY(-1px);
         }
 
-        .btn-continue:active {
-            transform: scale(0.98);
+        @media (max-width: 768px) {
+            .matrix-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .input-vector-pane {
+                border-right: none;
+                border-bottom: 1px dashed var(--border);
+                padding-right: 0;
+                padding-bottom: 20px;
+            }
+            .dashboard-container {
+                padding: 30px 20px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="education-container">
-        <div class="header-tag">The Science of Renewal</div>
-        <h1>Your story holds the data map to your liberation.</h1>
+    <div class="dashboard-container">
         
-        <p>By naming what happened and tracking how those memories live in your body right now, you have effectively stepped out of the old narrative loops that have kept you safe, but kept you small.</p>
-        
-        <p>What you just completed wasn't simply an intake questionnaire. It is a structured linguistic map. Your left brain anchored the objective reality of the event, your right brain reconnected with the raw somatic tone, and your adult self introduced the pattern-interrupting resolution statement.</p>
-
-        <div class="highlight-box">
-            <p>"Trauma isolates the child in time. Conscious narrative integration brings them home to the safety of the present."</p>
+        <div class="brand-header">
+            <div class="header-tag">Narrative Architecture Blueprint</div>
+            <h1>Your story has been mapped.</h1>
+            <p class="subtitle">
+                We have bypassed systemic cognitive barriers to safely parse your responses into a high-fidelity cinematic framework[cite: 4, 21, 29]. Here is how your linguistic coordinates formulate your custom experience[cite: 28, 29].
+            </p>
         </div>
 
-        <p>Our narrative architecture engine takes these core data coordinates to mathematically reconstruct a three-act cinematic framework customized specifically to your emotional history. This will build the visual landscape, establish the light and shadows of your subconscious boundaries, and supply the healing vocal dialogue vectors needed for your integration video.</p>
-        
-        <p>The next phase is anchoring this framework visually. We are ready to bring the child into the room.</p>
+        <div class="system-status-bar">
+            <span class="status-dot"></span>
+            <p class="status-text">3 Primary Context Vectors Securely Analyzed. Ready for Generative Realization[cite: 29].</p>
+        </div>
 
-        <div class="cta-wrapper">
-            <a href="/upload.html" class="btn-continue">Continue to Photo Setup →</a>
+        <div class="architecture-matrix">
+            
+            <div class="matrix-row">
+                <div class="input-vector-pane">
+                    <span class="vector-badge">Vector 01 // Left Brain Anchor [cite: 6]</span>
+                    <h3 class="vector-title">The Event [cite: 6, 34]</h3>
+                    <p class="vector-science">Safely micro-samples objective environmental history to maintain stable cognitive processing boundaries[cite: 11, 12, 36].</p>
+                </div>
+                <div class="output-render-pane">
+                    <span class="output-badge">Cinematic Render: Act I [cite: 39]</span>
+                    <h4 class="output-title">The Visual Setup [cite: 39]</h4>
+                    <p class="output-details">Establishes the physical environmental spaces, background structural geometry, and concrete imagery representing early isolation loops[cite: 36, 39].</p>
+                </div>
+            </div>
+
+            <div class="matrix-row">
+                <div class="input-vector-pane">
+                    <span class="vector-badge">Vector 02 // Somatic Connection [cite: 15]</span>
+                    <h3 class="vector-title">The Resonance [cite: 15, 35]</h3>
+                    <p class="vector-science">Circumnavigates defensive verbal locks by tracking physiological memory and current bodily stress responses[cite: 21, 37].</p>
+                </div>
+                <div class="output-render-pane">
+                    <span class="output-badge">Cinematic Render: Act II [cite: 40]</span>
+                    <h4 class="output-title">Emotional Tone & Color Grading [cite: 40]</h4>
+                    <p class="output-details">Calibrates custom background harmonic tension, specific character physics, color palettes, and custom light-and-shadow variations[cite: 40].</p>
+                </div>
+            </div>
+
+            <div class="matrix-row">
+                <div class="input-vector-pane">
+                    <span class="vector-badge">Vector 03 // Adult Protector [cite: 22, 27]</span>
+                    <h3 class="vector-title">The Integration [cite: 22, 41]</h3>
+                    <p class="vector-science">Interrupts historic cognitive loops by executing deep meaning-making shifts into an empowered role[cite: 27, 42].</p>
+                </div>
+                <div class="output-render-pane">
+                    <span class="output-badge">Cinematic Render: Act III [cite: 44]</span>
+                    <h4 class="output-title">Narrative Climax & Resolution Text [cite: 44]</h4>
+                    <p class="output-details">Supplies the exact therapeutic voiceover matrices, boundary assertions, and final resolution statements delivered directly to the child[cite: 24, 42, 44].</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="action-panel">
+            <a href="/upload.html" class="btn-prime">Continue to Photo Setup →</a>
         </div>
 
     </div>
