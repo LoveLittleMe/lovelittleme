@@ -172,7 +172,11 @@
         </form>
     </div>
 
-    <script>
+    <script {id="wizard-navigation-logic"}>
+        // Pull the active wound data out of the URL parameter stream
+        const urlParams = new URLSearchParams(window.location.search);
+        const activeWound = urlParams.get('wound') || 'abandonment';
+
         let currentStep = 1;
         const totalSteps = 3;
 
@@ -206,8 +210,8 @@
                 currentStep++;
                 updateWizard();
             } else {
-                // Rewired to route the user instantly to the education screen
-                window.location.href = "/education.html";
+                // Modified redirection mapping string assignment parameters directly
+                window.location.href = "education.html?wound=" + encodeURIComponent(activeWound);
             }
         });
 
