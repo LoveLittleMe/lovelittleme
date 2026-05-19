@@ -1,76 +1,175 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Your Photo - Love Little Me</title>
+    <style>
+        :root {
+            --bg-color: #fcf9f5;
+            --card-bg: #ffffff;
+            --text-main: #3c3530;
+            --text-muted: #7c726a;
+            --accent: #d4a373;
+            --accent-hover: #c39262;
+            --border: #e6dfd5;
+        }
 
-{% block title %}Meet Your Little Self - Love Little Me{% endblock %}
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
 
-{% block content %}
-<div class="w-full max-w-2xl mx-auto px-6 py-12 flex-grow flex flex-col justify-center space-y-8 animate-fade-in">
-    <div class="space-y-3">
-        <h2 class="font-sans font-light text-2xl md:text-3xl text-primary leading-snug">
-            Upload a photo of yourself as a child.
-        </h2>
-        <p class="text-sm text-muted font-sans">
-            Select a clear photo of yourself between the ages of 3 and 10. Our custom pipeline will utilize this facial structure to generate your specific animated visual avatar.
-        </p>
+        .upload-container {
+            background: var(--card-bg);
+            max-width: 500px;
+            width: 90%;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid var(--border);
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 500;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        /* Drag & Drop Area Box */
+        .drop-zone {
+            border: 2px dashed var(--accent);
+            padding: 40px 20px;
+            border-radius: 12px;
+            background-color: #fffaf5;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 30px;
+        }
+
+        .drop-zone:hover {
+            background-color: #f7ede2;
+        }
+
+        .upload-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        /* Payment State (Hidden initially) */
+        .payment-state {
+            display: none;
+        }
+
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--accent);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .btn-pay {
+            background-color: var(--accent);
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 14px 28px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: none;
+            width: 100%;
+            margin-top: 20px;
+            box-shadow: 0 2px 8px rgba(212, 163, 115, 0.3);
+        }
+
+        .btn-pay:hover {
+            background-color: var(--accent-hover);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="upload-container">
+        
+        <div id="uploadView">
+            <h2>Bring them into the room</h2>
+            <p>Select or drop a childhood photo of yourself. This face is who we are honoring and building this story for.</p>
+            
+            <div class="drop-zone" id="dropZone">
+                <span class="upload-icon">📷</span>
+                <span style="color: var(--text-main); font-weight: 500;">Click to upload a photo</span>
+                <input type="file" id="fileInput" class="file-input" accept="image/*">
+            </div>
+        </div>
+
+        <div id="paymentView" class="payment-state">
+            <div class="loader"></div>
+            <h2>We are holding your space...</h2>
+            <p>Your photo is uploading safely to our secure narrative engine. Complete your activation below to generate your personalized story blocks.</p>
+            
+            <button type="button" class="btn-pay" id="payButton">Complete Secure Checkout ($)</button>
+        </div>
+
     </div>
 
-    <form action="{{ url_for('upload_photo') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
-        
-        <!-- File Upload Area matching index interaction pattern -->
-        <div class="border-2 border-dashed border-divider bg-card rounded-xl p-10 text-center hover:border-accent transition-all relative group cursor-pointer">
-            <input 
-                type="file" 
-                name="childhood_photo" 
-                id="photoInput" 
-                accept="image/*" 
-                required 
-                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-            >
-            <div id="uploadPlaceholder" class="space-y-3 pointer-events-none">
-                <svg class="mx-auto h-8 w-8 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 002-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                <p class="font-sans text-sm text-primary">Click to browse or drop photo here</p>
-                <p class="font-sans text-xs text-muted">PNG, JPG up to 10MB</p>
-            </div>
-            
-            <div id="imagePreviewContainer" class="hidden space-y-2">
-                <img id="imagePreview" src="#" alt="Preview" class="mx-auto max-h-40 rounded-lg shadow-sm border border-divider">
-                <p class="font-sans text-xs text-accent">Photo attached successfully</p>
-            </div>
-        </div>
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const uploadView = document.getElementById('uploadView');
+        const paymentView = document.getElementById('paymentView');
+        const payButton = document.getElementById('payButton');
 
-        <div class="pt-4 flex justify-between items-center border-t border-divider">
-            <a href="{{ url_for('questions') }}" class="font-sans text-sm tracking-wide text-muted hover:text-primary transition-colors">&larr; Back to Questions</a>
-            <button 
-                type="submit" 
-                class="btn btn-primary"
-            >
-                Prepare My Video &rarr;
-            </button>
-        </div>
+        // Click box to prompt file select
+        dropZone.addEventListener('click', () => fileInput.click());
 
-    </form>
-</div>
-{% endblock %}
-
-{% block javascript %}
-<script>
-    const photoInput = document.getElementById('photoInput');
-    const uploadPlaceholder = document.getElementById('uploadPlaceholder');
-    const imagePreviewContainer = document.getElementById('imagePreviewContainer');
-    const imagePreview = document.getElementById('imagePreview');
-
-    photoInput.addEventListener('change', function() {
-        const file = this.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                imagePreview.setAttribute('src', e.target.result);
-                uploadPlaceholder.classList.add('hidden');
-                imagePreviewContainer.classList.remove('hidden');
+        // Detect file attachment, trigger "rendering/payment" state switch
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                transitionToPayment();
             }
-            reader.readAsDataURL(file);
+        });
+
+        function transitionToPayment() {
+            uploadView.style.display = 'none';
+            paymentView.style.display = 'block';
         }
-    });
-</script>
-{% endblock %}
+
+        // Action when pay button is clicked
+        payButton.addEventListener('click', () => {
+            alert("Directing to secure payment processing ecosystem.");
+            // Example redirect: window.location.href = "https://buy.stripe.com/...";
+        });
+    </script>
+
+</body>
+</html>
