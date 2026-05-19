@@ -414,11 +414,7 @@
   }
 
   .wound-price {
-    <!-- Change this line -->
-<a href="#begin" class="btn-primary">Start Your Journey — $29</a>
-
-<!-- To this -->
-<a href="#wounds-grid" class="btn-primary">Start Your Journey — $29</a>
+    display: inline-block;
     margin-top: 0.8rem;
     font-size: 0.7rem;
     letter-spacing: 0.12em;
@@ -468,11 +464,7 @@
     padding: 5rem 1.5rem 6rem;
     text-align: center;
     background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(201,150,12,0.06) 0%, transparent 70%);
-    <!-- Change this line -->
-   <a href="#" class="btn-primary reveal" style="max-width: 320px; display: inline-block;">
-   
-   <!-- To this -->
-   <a href="#wounds-grid" class="btn-primary reveal" style="max-width: 320px; display: inline-block;">
+    position: relative;
   }
 
   .final-cta-title {
@@ -490,48 +482,7 @@
     color: var(--cream-dim);
     margin-bottom: 2.5rem;
   }
-wounds.forEach((w, i) => {
-    const card = document.createElement('div');
-    card.className = 'wound-card reveal';
-    card.style.transitionDelay = `${i * 0.07}s`;
-    card.innerHTML = `
-      <div class="wound-name">${w.name}</div>
-      <div class="wound-tagline">${w.tagline}</div>
-      ${w.coming ? '<span class="wound-price">Expanding</span>' : '<span class="wound-price">$29 · Select</span>'}
-    `;
-    
-    // ── ROUTING LOGIC TRIGGER ──
-    if (!w.coming) {
-      card.addEventListener('click', () => {
-        // Formats the string name safely into an ID string matching your question bank
-        const woundId = w.name.toLowerCase().replace('the ', '').replace(' child', '').trim().replace(/\s+/g, '-');
-        
-        // Save state variables for Page 2
-        sessionStorage.setItem('selectedWound', woundId);
-        sessionStorage.setItem('selectedWoundName', w.name);
-        
-        // Advance smoothly to the question layout
-        window.location.href = 'questions.html';
-      });
-    }
 
-    grid.appendChild(card);
-  });
-      card.addEventListener('click', () => {
-        // Formats the string name safely into an ID string matching your question bank
-        const woundId = w.name.toLowerCase().replace('the ', '').replace(' child', '').trim().replace(/\s+/g, '-');
-        
-        // Save state variables for Page 2
-        sessionStorage.setItem('selectedWound', woundId);
-        sessionStorage.setItem('selectedWoundName', w.name);
-        
-        // Advance smoothly to the question layout
-        window.location.href = 'questions.html';
-      });
-    }
-
-    grid.appendChild(card);
-  });
   .price-badge {
     display: inline-flex;
     align-items: baseline;
@@ -654,7 +605,7 @@ wounds.forEach((w, i) => {
 <!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">Love <span>Little</span> Me</a>
-  <a href="#begin" class="nav-cta">Begin Healing</a>
+  <a href="#wounds-grid" class="nav-cta">Begin Healing</a>
 </nav>
 
 <!-- HERO -->
@@ -670,7 +621,7 @@ wounds.forEach((w, i) => {
     in your own chosen voice.
   </p>
   <div class="hero-actions">
-    <a href="#begin" class="btn-primary">Start Your Journey — $29</a>
+    <a href="#wounds-grid" class="btn-primary">Start Your Journey — $29</a>
     <a href="#how" class="btn-ghost">See How It Works</a>
   </div>
   <div class="scroll-cue">
@@ -777,7 +728,7 @@ wounds.forEach((w, i) => {
     <span class="price-label">one time · no subscription</span>
   </div>
   <br>
-  <a href="#" class="btn-primary reveal" style="max-width: 320px; display: inline-block;">
+  <a href="#wounds-grid" class="btn-primary reveal" style="max-width: 320px; display: inline-block;">
     Create My Healing Video
   </a>
 </section>
@@ -794,40 +745,33 @@ wounds.forEach((w, i) => {
 </footer>
 
 <script>
-  // ── WOUND DATA (data-driven — add new entries here only) ──
+  // ── WOUND DATA (data-driven ── add new entries here only) ──
   const wounds = [
     {
-      
       name: "The Abandoned Child",
       tagline: "For those who were left — physically or emotionally — before they could understand why.",
     },
     {
-     
       name: "The Invisible Child",
       tagline: "For those who were present but unseen, whose needs were background noise.",
     },
     {
-     
       name: "The Harshly Criticized Child",
       tagline: "For those who grew up hearing what was wrong with them, never what was right.",
     },
     {
-     
       name: "The Parentified Child",
       tagline: "For those who had to become the adult before they were allowed to be a child.",
     },
     {
-      
       name: "The Neglected Child",
       tagline: "For those whose basic needs — physical or emotional — went consistently unmet.",
     },
     {
-     
       name: "The Shamed Child",
       tagline: "For those who were made to feel that something fundamental about them was broken.",
     },
     {
-      
       name: "More Coming Soon",
       tagline: "Societal wounds, social media trauma, family system wounds — expanding continuously.",
       coming: true,
@@ -845,6 +789,20 @@ wounds.forEach((w, i) => {
       <div class="wound-tagline">${w.tagline}</div>
       ${w.coming ? '<span class="wound-price">Expanding</span>' : '<span class="wound-price">$29 · Select</span>'}
     `;
+    
+    // Connect click routing seamlessly
+    if (!w.coming) {
+      card.addEventListener('click', () => {
+        // Formats name safely to match the question bank strings (e.g. "abandoned")
+        const woundId = w.name.toLowerCase().replace('the ', '').replace(' child', '').trim().replace(/\s+/g, '-');
+        
+        sessionStorage.setItem('selectedWound', woundId);
+        sessionStorage.setItem('selectedWoundName', w.name);
+        
+        window.location.href = 'questions.html';
+      });
+    }
+
     grid.appendChild(card);
   });
 
@@ -862,4 +820,4 @@ wounds.forEach((w, i) => {
 </script>
 
 </body>
-</html> 
+</html>
