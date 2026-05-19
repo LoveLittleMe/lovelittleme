@@ -38,6 +38,15 @@
             box-sizing: border-box;
         }
 
+        /* Wizard Steps - Hidden by default except the active one */
+        .wizard-step {
+            display: none;
+        }
+
+        .wizard-step.active {
+            display: block;
+        }
+
         .step-counter {
             font-size: 0.9rem;
             text-transform: uppercase;
@@ -101,6 +110,10 @@
             transition: all 0.2s ease;
         }
 
+        button:disabled {
+            visibility: hidden; /* Hides back button on first step */
+        }
+
         .btn-back {
             background-color: transparent;
             color: var(--text-muted);
@@ -124,18 +137,90 @@
 <body>
 
     <div class="wizard-container">
-        <div class="step-counter">Step 1 of 3</div>
-        <h2>Describe one or two specific moments or examples from your childhood that stand out the most regarding this wound. Focus simply on what happened.</h2>
-        
-        <div class="form-group">
-            <textarea placeholder="Pour out whatever feels heavy right now..."></textarea>
-        </div>
-        
-        <div class="button-group">
-            <button type="button" class="btn-back">← Back</button>
-            <button type="button" class="btn-next">Next →</button>
-        </div>
+        <form id="wizardForm">
+            
+            <div class="wizard-step active" data-step="1">
+                <div class="step-counter">Step 1 of 3</div>
+                <h2>Describe one or two specific moments or examples from your childhood that stand out the most regarding this wound. Focus simply on what happened.</h2>
+                <div class="form-group">
+                    <textarea name="step1_response" placeholder="Pour out whatever feels heavy right now..."></textarea>
+                </div>
+            </div>
+
+            <div class="wizard-step" data-step="2">
+                <div class="step-counter">Step 2 of 3</div>
+                <h2>How did those experiences shape how you view yourself or how you show up in relationships today? What rules did you subconsciously create?</h2>
+                <div class="form-group">
+                    <textarea name="step2_response" placeholder="Take your time, let the realizations come to the surface..."></textarea>
+                </div>
+            </div>
+
+            <div class="wizard-step" data-step="3">
+                <div class="step-counter">Step 3 of 3</div>
+                <h2>If you could speak directly to that younger version of you in those moments, what boundaries or truths do they need to hear right now?</h2>
+                <div class="form-group">
+                    <textarea name="step3_response" placeholder="What words would feel like safety to your inner child?"></textarea>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button type="button" class="btn-back" id="prevBtn" disabled>← Back</button>
+                <button type="button" class="btn-next" id="nextBtn">Next →</button>
+            </div>
+
+        </form>
     </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 3;
+
+        const steps = document.querySelectorAll('.wizard-step');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const form = document.getElementById('wizardForm');
+
+        function updateWizard() {
+            // Toggle active visibility blocks
+            steps.forEach(step => {
+                step.classList.remove('active');
+                if (parseInt(step.getAttribute('data-step')) === currentStep) {
+                    step.classList.add('active');
+                }
+            });
+
+            // Control the visibility of the Back button
+            if (currentStep === 1) {
+                prevBtn.disabled = true;
+            } else {
+                prevBtn.disabled = false;
+            }
+
+            // Change button text on final step
+            if (currentStep === totalSteps) {
+                nextBtn.innerText = "Finish ✨";
+            } else {
+                nextBtn.innerText = "Next →";
+            }
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                updateWizard();
+            } else {
+                // Actions when clicking finish (e.g., submitting form or showing a completion state)
+                alert("Reflection complete. You are doing beautiful work.");
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                updateWizard();
+            }
+        });
+    </script>
 
 </body>
 </html>
