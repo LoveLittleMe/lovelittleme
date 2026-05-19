@@ -1,175 +1,440 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Your Photo - Love Little Me</title>
-    <style>
-        :root {
-            --bg-color: #fcf9f5;
-            --card-bg: #ffffff;
-            --text-main: #3c3530;
-            --text-muted: #7c726a;
-            --accent: #d4a373;
-            --accent-hover: #c39262;
-            --border: #e6dfd5;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upload Your Photo — Love Little Me</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=DM+Sans:wght@300;400;500&display=swap');
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+  :root {
+    --bg:#0E0A02;--bg-warm:#1C1408;--bg-card:#221A08;
+    --accent:#C9960C;--accent-light:#E3B84A;--accent-dim:#8A650A;--accent-faint:#2A1E08;
+    --text-light:#F5E4B0;--text-mid:#C4B48A;--text-dim:#7A6A50;
+    --cream-line:rgba(255,255,255,0.08);
+    --success:#4CAF82;--error:#C0392B;
+  }
 
-        .upload-container {
-            background: var(--card-bg);
-            max-width: 500px;
-            width: 90%;
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-            border: 1px solid var(--border);
-            text-align: center;
-            box-sizing: border-box;
-        }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text-light);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.75;overflow-x:hidden;min-height:100vh;}
+  body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:0.04;pointer-events:none;z-index:500;}
 
-        h2 {
-            font-size: 1.4rem;
-            font-weight: 500;
-            line-height: 1.5;
-            margin-bottom: 10px;
-        }
+  .glow-bg{position:fixed;top:0;left:0;right:0;height:50vh;background:radial-gradient(ellipse 60% 50% at 50% 0%,var(--accent-faint) 0%,transparent 70%);pointer-events:none;z-index:0;}
 
-        p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;background:rgba(0,0,0,0.5);backdrop-filter:blur(16px);border-bottom:1px solid var(--cream-line);}
+  .nav-logo{display:flex;align-items:center;text-decoration:none;}
+  .nav-logo img{height:120px;width:auto;object-fit:contain;}
+  .nav-back{font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--accent-light);}
 
-        /* Drag & Drop Area Box */
-        .drop-zone {
-            border: 2px dashed var(--accent);
-            padding: 40px 20px;
-            border-radius: 12px;
-            background-color: #fffaf5;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin-bottom: 30px;
-        }
+  .page{padding:10rem 1.5rem 6rem;max-width:680px;margin:0 auto;position:relative;z-index:1;}
 
-        .drop-zone:hover {
-            background-color: #f7ede2;
-        }
+  /* STEPS */
+  .steps-indicator{display:flex;align-items:center;justify-content:center;margin-bottom:2.5rem;}
+  .step-item{display:flex;flex-direction:column;align-items:center;gap:0.4rem;flex:1;max-width:100px;}
+  .step-circle{width:34px;height:34px;border-radius:50%;border:1px solid var(--accent-faint);background:var(--bg-card);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',Georgia,serif;font-size:0.9rem;color:var(--text-dim);transition:all 0.3s;}
+  .step-circle.active{background:var(--accent);border-color:var(--accent);color:var(--bg);}
+  .step-circle.done{background:var(--accent-dim);border-color:var(--accent-dim);color:var(--text-light);}
+  .step-label-text{font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);text-align:center;}
+  .step-connector{flex:1;height:1px;background:var(--accent-faint);margin-bottom:1.2rem;max-width:50px;}
 
-        .upload-icon {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            display: block;
-        }
+  /* HEADER */
+  .page-eyebrow{font-size:0.62rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--accent);margin-bottom:0.8rem;}
+  .page-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(2.5rem,8vw,5rem);font-weight:300;line-height:1.0;color:var(--text-light);margin-bottom:0.5rem;}
+  .page-subtitle{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(1rem,2.5vw,1.2rem);font-style:italic;color:var(--accent);margin-bottom:2.5rem;}
 
-        .file-input {
-            display: none;
-        }
+  /* PHOTO SPECS */
+  .specs-box{background:var(--bg-card);border:1px solid var(--accent-faint);border-radius:8px;padding:1.5rem 1.8rem;margin-bottom:2rem;}
+  .specs-label{font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;}
+  .specs-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;}
+  .spec-item{display:flex;align-items:flex-start;gap:0.6rem;}
+  .spec-icon{color:var(--accent);font-size:0.9rem;flex-shrink:0;margin-top:0.1rem;}
+  .spec-text{font-size:0.82rem;color:var(--text-mid);line-height:1.5;}
+  .spec-text strong{color:var(--text-light);font-weight:400;display:block;}
 
-        /* Payment State (Hidden initially) */
-        .payment-state {
-            display: none;
-        }
+  /* UPLOAD ZONE */
+  .upload-zone{border:2px dashed var(--accent-faint);border-radius:12px;padding:3.5rem 2rem;text-align:center;background:var(--bg-card);cursor:pointer;transition:all 0.3s ease;position:relative;margin-bottom:1.5rem;}
+  .upload-zone:hover,.upload-zone.dragover{border-color:var(--accent);background:var(--bg-warm);box-shadow:0 0 0 4px var(--accent-faint);}
+  .upload-zone.has-photo{border-style:solid;border-color:var(--accent);}
+  .upload-zone.error{border-color:var(--error);box-shadow:0 0 0 4px rgba(192,57,43,0.15);}
+  .upload-zone input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
 
-        .loader {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid var(--accent);
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px auto;
-        }
+  .upload-icon{width:56px;height:56px;border:1px solid var(--accent-faint);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem;color:var(--accent-dim);font-size:1.4rem;transition:all 0.3s;}
+  .upload-zone:hover .upload-icon,.upload-zone.has-photo .upload-icon{border-color:var(--accent);color:var(--accent);}
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+  .upload-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.4rem;color:var(--text-light);margin-bottom:0.5rem;}
+  .upload-desc{font-size:0.85rem;color:var(--text-dim);line-height:1.65;max-width:320px;margin:0 auto 0.8rem;}
+  .upload-formats{font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);}
 
-        .btn-pay {
-            background-color: var(--accent);
-            color: white;
-            font-size: 1rem;
-            font-weight: 500;
-            padding: 14px 28px;
-            border-radius: 8px;
-            cursor: pointer;
-            border: none;
-            width: 100%;
-            margin-top: 20px;
-            box-shadow: 0 2px 8px rgba(212, 163, 115, 0.3);
-        }
+  /* PHOTO PREVIEW */
+  .photo-result{display:none;margin-bottom:1.5rem;}
+  .photo-result.visible{display:block;}
 
-        .btn-pay:hover {
-            background-color: var(--accent-hover);
-        }
-    </style>
+  .preview-card{background:var(--bg-card);border:1px solid var(--accent-faint);border-radius:8px;padding:1.5rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;}
+  .preview-card.success-card{border-color:var(--success);}
+  .preview-card.error-card{border-color:var(--error);}
+
+  .preview-img{width:90px;height:90px;object-fit:cover;border-radius:50%;border:3px solid var(--accent);flex-shrink:0;}
+
+  .preview-info{flex:1;}
+  .preview-status{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.3rem;}
+  .preview-status.success{color:var(--success);}
+  .preview-status.error{color:var(--error);}
+  .preview-message{font-size:0.9rem;color:var(--text-mid);line-height:1.6;margin-bottom:0.5rem;}
+  .preview-change{font-size:0.72rem;color:var(--accent-dim);cursor:pointer;text-decoration:underline;display:inline-block;}
+
+  /* VALIDATION CHECKLIST */
+  .validation-list{display:grid;gap:0.4rem;margin-top:0.8rem;}
+  .val-item{display:flex;align-items:center;gap:0.6rem;font-size:0.78rem;}
+  .val-dot{width:8px;height:8px;border-radius:50%;background:var(--accent-faint);flex-shrink:0;transition:background 0.3s;}
+  .val-dot.pass{background:var(--success);}
+  .val-dot.fail{background:var(--error);}
+  .val-text{color:var(--text-dim);}
+  .val-text.pass{color:var(--text-mid);}
+
+  /* DIVIDER */
+  .section-divider{height:1px;background:linear-gradient(to right,transparent,var(--accent-faint),transparent);margin:2rem 0;}
+
+  /* EMAIL INPUT */
+  .form-label{display:block;font-size:0.78rem;color:var(--text-mid);margin-bottom:0.5rem;letter-spacing:0.05em;}
+  .form-input{width:100%;background:var(--bg-card);border:1px solid var(--accent-faint);border-radius:4px;padding:0.9rem 1.1rem;color:var(--text-light);font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:300;transition:border-color 0.2s,box-shadow 0.2s;outline:none;margin-bottom:0.5rem;}
+  .form-input::placeholder{color:var(--text-dim);}
+  .form-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-faint);}
+  .form-hint{font-size:0.72rem;color:var(--text-dim);margin-bottom:1.5rem;}
+
+  /* PAYMENT BUTTON */
+  .payment-box{background:var(--bg-card);border:1px solid var(--accent-faint);border-top:3px solid var(--accent);border-radius:8px;padding:2rem 1.8rem;margin-bottom:1.5rem;}
+  .payment-summary-row{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.2rem;gap:1rem;flex-wrap:wrap;}
+  .payment-wound-name{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.1rem;color:var(--text-light);margin-bottom:0.2rem;}
+  .payment-wound-sub{font-size:0.75rem;color:var(--text-dim);}
+  .payment-price{font-family:'Cormorant Garamond',Georgia,serif;font-size:2rem;font-weight:300;color:var(--accent-light);line-height:1;}
+  .payment-price-sub{font-size:0.62rem;color:var(--text-dim);letter-spacing:0.1em;}
+
+  .rendering-note{background:var(--accent-faint);border-radius:4px;padding:0.9rem 1.1rem;margin-bottom:1.2rem;font-size:0.82rem;color:var(--text-mid);line-height:1.65;border-left:2px solid var(--accent-dim);}
+
+  .btn-pay{display:block;width:100%;background:var(--accent);color:var(--bg);border:none;font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:1.2rem 2rem;border-radius:4px;cursor:pointer;transition:all 0.3s;text-align:center;margin-bottom:0.8rem;}
+  .btn-pay:hover:not(:disabled){background:var(--accent-light);transform:translateY(-1px);box-shadow:0 8px 30px rgba(0,0,0,0.3);}
+  .btn-pay:disabled{opacity:0.35;cursor:not-allowed;transform:none;}
+
+  .security-row{display:flex;align-items:center;justify-content:center;gap:1.2rem;flex-wrap:wrap;}
+  .security-item{font-size:0.67rem;color:var(--text-dim);letter-spacing:0.08em;}
+
+  /* TIPS */
+  .tips-section{margin-top:2.5rem;}
+  .tips-label{font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;}
+  .tips-grid{display:grid;grid-template-columns:1fr;gap:0.8rem;}
+  .tip-item{display:flex;align-items:flex-start;gap:0.8rem;background:var(--bg-card);border:1px solid var(--accent-faint);border-radius:6px;padding:1rem 1.2rem;}
+  .tip-icon{color:var(--accent);flex-shrink:0;font-size:1rem;margin-top:0.1rem;}
+  .tip-text{font-size:0.83rem;color:var(--text-mid);line-height:1.6;}
+  .tip-text strong{color:var(--text-light);font-weight:400;}
+
+  footer{padding:2rem 1.5rem;text-align:center;border-top:1px solid var(--accent-faint);background:var(--bg-warm);}
+  .footer-tagline{font-family:'Cormorant Garamond',Georgia,serif;font-size:0.9rem;font-style:italic;color:var(--accent-dim);}
+
+  @media(min-width:600px){.specs-grid{grid-template-columns:1fr 1fr;}.tips-grid{grid-template-columns:1fr 1fr;}}
+  @media(min-width:768px){nav{padding:0 3rem;}.page{padding:11rem 3rem 7rem;}}
+</style>
 </head>
 <body>
 
-    <div class="upload-container">
-        
-        <div id="uploadView">
-            <h2>Bring them into the room</h2>
-            <p>Select or drop a childhood photo of yourself. This face is who we are honoring and building this story for.</p>
-            
-            <div class="drop-zone" id="dropZone">
-                <span class="upload-icon">📷</span>
-                <span style="color: var(--text-main); font-weight: 500;">Click to upload a photo</span>
-                <input type="file" id="fileInput" class="file-input" accept="image/*">
-            </div>
-        </div>
+<div class="glow-bg"></div>
 
-        <div id="paymentView" class="payment-state">
-            <div class="loader"></div>
-            <h2>We are holding your space...</h2>
-            <p>Your photo is uploading safely to our secure narrative engine. Complete your activation below to generate your personalized story blocks.</p>
-            
-            <button type="button" class="btn-pay" id="payButton">Complete Secure Checkout ($)</button>
-        </div>
+<nav>
+  <a href="index.html" class="nav-logo"><img src="logo.jpg" alt="Love Little Me"></a>
+  <a href="javascript:history.back()" class="nav-back">← Go back</a>
+</nav>
 
+<div class="page">
+
+  <!-- STEPS -->
+  <div class="steps-indicator">
+    <div class="step-item">
+      <div class="step-circle active">1</div>
+      <span class="step-label-text">Photo</span>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step-item">
+      <div class="step-circle">2</div>
+      <span class="step-label-text">Payment</span>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step-item">
+      <div class="step-circle">3</div>
+      <span class="step-label-text">Your Video</span>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <p class="page-eyebrow">Step 1 of 3</p>
+  <h1 class="page-title">Upload your<br>childhood photo</h1>
+  <p class="page-subtitle">This becomes the face in your healing video.</p>
+
+  <!-- SPECS -->
+  <div class="specs-box">
+    <p class="specs-label">Photo requirements</p>
+    <div class="specs-grid">
+      <div class="spec-item">
+        <span class="spec-icon">—</span>
+        <div class="spec-text"><strong>Clear face</strong>Your face visible and in focus</div>
+      </div>
+      <div class="spec-item">
+        <span class="spec-icon">—</span>
+        <div class="spec-text"><strong>Good lighting</strong>Avoid dark or blurry photos</div>
+      </div>
+      <div class="spec-item">
+        <span class="spec-icon">—</span>
+        <div class="spec-text"><strong>Any phone or camera</strong>JPG, PNG, or HEIC</div>
+      </div>
+      <div class="spec-item">
+        <span class="spec-icon">—</span>
+        <div class="spec-text"><strong>Max size 10MB</strong>Most phone photos qualify</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UPLOAD ZONE -->
+  <div class="upload-zone" id="upload-zone">
+    <input type="file" accept="image/jpeg,image/png,image/heic,image/heif" id="photo-input" aria-label="Upload childhood photo">
+    <div class="upload-icon" id="upload-icon">↑</div>
+    <p class="upload-title" id="upload-title">Tap to upload your photo</p>
+    <p class="upload-desc" id="upload-desc">Choose a clear childhood photo from your phone or computer. The younger the better.</p>
+    <p class="upload-formats">JPG · PNG · HEIC · Max 10MB</p>
+  </div>
+
+  <!-- PHOTO RESULT -->
+  <div class="photo-result" id="photo-result">
+    <div class="preview-card" id="preview-card">
+      <img src="" alt="Your photo" class="preview-img" id="preview-img">
+      <div class="preview-info">
+        <p class="preview-status" id="preview-status"></p>
+        <p class="preview-message" id="preview-message"></p>
+        <div class="validation-list" id="validation-list"></div>
+        <span class="preview-change" id="preview-change">Choose a different photo</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- EMAIL -->
+  <label class="form-label" for="email-input">Your email address</label>
+  <input class="form-input" type="email" id="email-input" placeholder="you@email.com" autocomplete="email">
+  <p class="form-hint">Your completed video will be delivered here. Please double-check before paying.</p>
+
+  <!-- PAYMENT BOX -->
+  <div class="payment-box">
+    <div class="payment-summary-row">
+      <div>
+        <p class="payment-wound-name" id="payment-wound-name">Healing Video</p>
+        <p class="payment-wound-sub">Personalized animated video · One time</p>
+      </div>
+      <div style="text-align:right;">
+        <p class="payment-price">$29</p>
+        <p class="payment-price-sub">one time</p>
+      </div>
     </div>
 
-    <script>
-        const dropZone = document.getElementById('dropZone');
-        const fileInput = document.getElementById('fileInput');
-        const uploadView = document.getElementById('uploadView');
-        const paymentView = document.getElementById('paymentView');
-        const payButton = document.getElementById('payButton');
+    <div class="rendering-note">
+      Your photo will continue processing while payment is completed. If your photo needs to be resubmitted, you will be notified by email with simple instructions.
+    </div>
 
-        // Click box to prompt file select
-        dropZone.addEventListener('click', () => fileInput.click());
+    <button class="btn-pay" id="pay-btn" disabled>Upload a photo to continue</button>
 
-        // Detect file attachment, trigger "rendering/payment" state switch
-        fileInput.addEventListener('change', () => {
-            if (fileInput.files.length > 0) {
-                transitionToPayment();
-            }
-        });
+    <div class="security-row">
+      <span class="security-item">Secure checkout</span>
+      <span class="security-item">Powered by Stripe</span>
+      <span class="security-item">No subscription · $29 one time</span>
+    </div>
+  </div>
 
-        function transitionToPayment() {
-            uploadView.style.display = 'none';
-            paymentView.style.display = 'block';
-        }
+  <!-- TIPS -->
+  <div class="tips-section">
+    <p class="tips-label">Tips for the best video</p>
+    <div class="tips-grid">
+      <div class="tip-item">
+        <span class="tip-icon">—</span>
+        <p class="tip-text"><strong>The younger the better.</strong> Photos from ages 3–10 tend to produce the most powerful healing videos.</p>
+      </div>
+      <div class="tip-item">
+        <span class="tip-icon">—</span>
+        <p class="tip-text"><strong>Face forward, well lit.</strong> Avoid side profiles, sunglasses, or dark/blurry images.</p>
+      </div>
+      <div class="tip-item">
+        <span class="tip-icon">—</span>
+        <p class="tip-text"><strong>Solo photo preferred.</strong> A photo of just you helps our animation focus on your face.</p>
+      </div>
+      <div class="tip-item">
+        <span class="tip-icon">—</span>
+        <p class="tip-text"><strong>Scanned photos work.</strong> Old printed photos scanned with your phone are perfectly fine.</p>
+      </div>
+    </div>
+  </div>
 
-        // Action when pay button is clicked
-        payButton.addEventListener('click', () => {
-            alert("Directing to secure payment processing ecosystem.");
-            // Example redirect: window.location.href = "https://buy.stripe.com/...";
-        });
-    </script>
+</div>
 
+<footer>
+  <p class="footer-tagline">"Because you always deserved to be loved."</p>
+</footer>
+
+<script>
+// ── WOUND PALETTES ──
+var PALETTES = {
+  "abandonment":    {accent:"#4CAF82",accent_light:"#7DD4A8",accent_dim:"#2E7A55",accent_faint:"#1E4D38",bg:"#0D1F1A",bg_warm:"#122620",bg_card:"#152E28",text_light:"#C8E6D8",text_mid:"#8FBFA8",text_dim:"#5A8A72",name:"Abandonment",sub:"The Child Who Was Left"},
+  "neglect":        {accent:"#C0392B",accent_light:"#E57373",accent_dim:"#8B1A1A",accent_faint:"#4A1010",bg:"#1A0A0A",bg_warm:"#220D0D",bg_card:"#2A1010",text_light:"#F0C4C4",text_mid:"#C48A8A",text_dim:"#8A5555",name:"Neglect",sub:"The Child Whose Needs Went Unmet"},
+  "emotional-abuse":{accent:"#2E6DB4",accent_light:"#6AABDF",accent_dim:"#1A4A80",accent_faint:"#0F2D50",bg:"#0A0F1A",bg_warm:"#0D1422",bg_card:"#101828",text_light:"#C4D8F0",text_mid:"#8AAED4",text_dim:"#557AA0",name:"Emotional Abuse",sub:"The Child Who Was Hurt With Words"},
+  "enmeshment":     {accent:"#C9A800",accent_light:"#E8CC4A",accent_dim:"#8A7200",accent_faint:"#4A3E00",bg:"#1A1700",bg_warm:"#221E00",bg_card:"#2A2500",text_light:"#F0E8B0",text_mid:"#C4B870",text_dim:"#8A8040",name:"Enmeshment",sub:"The Child Who Was Never Allowed to Be Themselves"},
+  "shame":          {accent:"#E07B20",accent_light:"#F0A855",accent_dim:"#A05010",accent_faint:"#4A2200",bg:"#1A0D00",bg_warm:"#221200",bg_card:"#2A1800",text_light:"#F0D4B0",text_mid:"#C4A070",text_dim:"#8A6840",name:"Shame",sub:"The Child Who Was Made to Feel Broken"},
+  "unsafe-home":    {accent:"#8B1A1A",accent_light:"#C0392B",accent_dim:"#5A1010",accent_faint:"#380808",bg:"#140808",bg_warm:"#1C0A0A",bg_card:"#240C0C",text_light:"#F0C0C0",text_mid:"#C48080",text_dim:"#8A5050",name:"Unsafe Home",sub:"The Child Who Never Felt Safe"},
+  "divorce":        {accent:"#C0527A",accent_light:"#E087A8",accent_dim:"#8A2A4A",accent_faint:"#4A1228",bg:"#1A0D10",bg_warm:"#221218",bg_card:"#2A1520",text_light:"#F0C4D4",text_mid:"#C488A0",text_dim:"#8A5568",name:"Divorce & Family Rupture",sub:"The Child Caught in the Middle"}
+};
+
+var params = new URLSearchParams(window.location.search);
+var woundId = params.get('wound') || sessionStorage.getItem('selectedWound') || 'abandonment';
+var p = PALETTES[woundId] || PALETTES['abandonment'];
+
+// Apply palette
+var r = document.documentElement;
+r.style.setProperty('--bg', p.bg);
+r.style.setProperty('--bg-warm', p.bg_warm);
+r.style.setProperty('--bg-card', p.bg_card);
+r.style.setProperty('--accent', p.accent);
+r.style.setProperty('--accent-light', p.accent_light);
+r.style.setProperty('--accent-dim', p.accent_dim);
+r.style.setProperty('--accent-faint', p.accent_faint);
+r.style.setProperty('--text-light', p.text_light);
+r.style.setProperty('--text-mid', p.text_mid);
+r.style.setProperty('--text-dim', p.text_dim);
+
+document.getElementById('payment-wound-name').textContent = p.name + ' Healing Video';
+document.title = 'Upload Your Photo — ' + p.name + ' — Love Little Me';
+
+// ── UPLOAD LOGIC ──
+var photoInput = document.getElementById('photo-input');
+var uploadZone = document.getElementById('upload-zone');
+var photoResult = document.getElementById('photo-result');
+var previewCard = document.getElementById('preview-card');
+var previewImg = document.getElementById('preview-img');
+var previewStatus = document.getElementById('preview-status');
+var previewMessage = document.getElementById('preview-message');
+var validationList = document.getElementById('validation-list');
+var previewChange = document.getElementById('preview-change');
+var payBtn = document.getElementById('pay-btn');
+var step1 = document.querySelector('.step-circle:nth-child(1)');
+
+var MAX_SIZE = 10 * 1024 * 1024; // 10MB
+var photoValid = false;
+
+function validateAndPreview(file) {
+  if (!file) return;
+
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var dataUrl = e.target.result;
+    previewImg.src = dataUrl;
+
+    var checks = [];
+    var allPass = true;
+
+    // Check file type
+    var validTypes = ['image/jpeg','image/png','image/heic','image/heif'];
+    var typeOk = validTypes.indexOf(file.type) !== -1 || file.name.toLowerCase().match(/\.(jpg|jpeg|png|heic|heif)$/);
+    checks.push({text: 'File format accepted (JPG, PNG, HEIC)', pass: typeOk});
+    if (!typeOk) allPass = false;
+
+    // Check file size
+    var sizeOk = file.size <= MAX_SIZE;
+    var sizeMB = (file.size / 1024 / 1024).toFixed(1);
+    checks.push({text: 'File size: ' + sizeMB + 'MB (max 10MB)', pass: sizeOk});
+    if (!sizeOk) allPass = false;
+
+    // Check image dimensions
+    var img = new Image();
+    img.onload = function() {
+      var dimOk = img.width >= 300 && img.height >= 300;
+      checks.push({text: 'Resolution: ' + img.width + 'x' + img.height + 'px (min 300x300)', pass: dimOk});
+      if (!dimOk) allPass = false;
+
+      renderResult(dataUrl, checks, allPass, file);
+    };
+    img.src = dataUrl;
+
+    sessionStorage.setItem('photoData', dataUrl);
+    sessionStorage.setItem('photoFileName', file.name);
+  };
+  reader.readAsDataURL(file);
+}
+
+function renderResult(dataUrl, checks, allPass, file) {
+  photoValid = allPass;
+  uploadZone.style.display = 'none';
+  photoResult.classList.add('visible');
+
+  previewCard.className = 'preview-card ' + (allPass ? 'success-card' : 'error-card');
+  previewStatus.className = 'preview-status ' + (allPass ? 'success' : 'error');
+  previewStatus.textContent = allPass ? 'Photo accepted' : 'Photo needs attention';
+  previewMessage.textContent = allPass
+    ? 'Your photo looks great. Complete your order below and your video will begin rendering.'
+    : 'Please review the issues below and upload a different photo.';
+
+  validationList.innerHTML = '';
+  checks.forEach(function(c) {
+    var item = document.createElement('div');
+    item.className = 'val-item';
+    item.innerHTML = '<div class="val-dot ' + (c.pass ? 'pass' : 'fail') + '"></div><span class="val-text ' + (c.pass ? 'pass' : '') + '">' + c.text + '</span>';
+    validationList.appendChild(item);
+  });
+
+  if (allPass) {
+    updatePayBtn();
+  } else {
+    payBtn.disabled = true;
+    payBtn.textContent = 'Fix photo issues to continue';
+  }
+}
+
+function updatePayBtn() {
+  var email = document.getElementById('email-input').value.trim();
+  if (photoValid && email && email.includes('@') && email.includes('.')) {
+    payBtn.disabled = false;
+    payBtn.textContent = 'Proceed to Payment — $29';
+  } else if (photoValid) {
+    payBtn.disabled = true;
+    payBtn.textContent = 'Enter your email to continue';
+  }
+}
+
+photoInput.addEventListener('change', function(e) {
+  if (e.target.files[0]) validateAndPreview(e.target.files[0]);
+});
+
+uploadZone.addEventListener('dragover', function(e) { e.preventDefault(); uploadZone.classList.add('dragover'); });
+uploadZone.addEventListener('dragleave', function() { uploadZone.classList.remove('dragover'); });
+uploadZone.addEventListener('drop', function(e) {
+  e.preventDefault(); uploadZone.classList.remove('dragover');
+  if (e.dataTransfer.files[0]) validateAndPreview(e.dataTransfer.files[0]);
+});
+
+previewChange.addEventListener('click', function() {
+  uploadZone.style.display = '';
+  photoResult.classList.remove('visible');
+  photoValid = false;
+  payBtn.disabled = true;
+  payBtn.textContent = 'Upload a photo to continue';
+  photoInput.value = '';
+  sessionStorage.removeItem('photoData');
+});
+
+document.getElementById('email-input').addEventListener('input', function() {
+  if (photoValid) updatePayBtn();
+});
+
+payBtn.addEventListener('click', function() {
+  if (!payBtn.disabled) {
+    sessionStorage.setItem('userEmail', document.getElementById('email-input').value.trim());
+    window.location.href = 'payment.html?wound=' + woundId;
+  }
+});
+</script>
 </body>
 </html>
