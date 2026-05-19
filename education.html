@@ -1,306 +1,1017 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Narrative Architecture - Love Little Me</title>
-    <style>
-        :root {
-            --bg-color: #fcf9f5;
-            --card-bg: #ffffff;
-            --text-main: #3c3530;
-            --text-muted: #7c726a;
-            --accent: #d4a373;
-            --accent-hover: #c39262;
-            --border: #e6dfd5;
-            --success: #a3b19b;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Healing — Love Little Me</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=DM+Sans:wght@300;400;500&display=swap');
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0;
-            padding: 40px 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+  :root {
+    --bg:         #FBF7EE;
+    --bg-warm:    #F5EDD8;
+    --bg-card:    #FEFAF3;
+    --gold:       #C9960C;
+    --gold-light: #E3B84A;
+    --gold-dim:   #A87A0A;
+    --gold-faint: #E8D5A0;
+    --dark:       #1C1408;
+    --text:       #2A1E08;
+    --text-mid:   #5C4A22;
+    --text-dim:   #8A7250;
+    --cream-line: rgba(201,150,12,0.15);
+    --shadow:     0 4px 40px rgba(44,28,8,0.08);
+  }
 
-        .dashboard-container {
-            background: var(--card-bg);
-            max-width: 900px;
-            width: 100%;
-            padding: 50px;
-            border-radius: 24px;
-            box-shadow: 0 10px 40px rgba(60, 53, 48, 0.03);
-            border: 1px solid var(--border);
-            box-sizing: border-box;
-        }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
 
-        .brand-header {
-            text-align: center;
-            margin-bottom: 40px;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 30px;
-        }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
 
-        .header-tag {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--accent);
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
+  /* Subtle grain */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 500;
+  }
 
-        h1 {
-            font-size: 2.2rem;
-            font-weight: 500;
-            line-height: 1.3;
-            margin: 0 0 16px 0;
-            letter-spacing: -0.5px;
-        }
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 1.5rem;
+    background: rgba(251,247,238,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--cream-line);
+  }
 
-        .subtitle {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--dark);
+    text-decoration: none;
+  }
 
-        /* Interactive Timeline Matrix Diagram */
-        .architecture-matrix {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            margin: 40px 0;
-            position: relative;
-        }
+  .nav-logo span { color: var(--gold); }
 
-        .matrix-row {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 30px;
-            background: #fffcf9;
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 30px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
+  .nav-back {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
 
-        .matrix-row:hover {
-            border-color: var(--accent);
-            box-shadow: 0 4px 20px rgba(212, 163, 115, 0.06);
-            transform: translateY(-2px);
-        }
+  .nav-back:hover { color: var(--gold); }
 
-        /* Left Column: Intake Mapping */
-        .input-vector-pane {
-            border-right: 1px dashed var(--border);
-            padding-right: 20px;
-        }
+  /* ── HERO ── */
+  .wound-hero {
+    padding: 7rem 1.5rem 4rem;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+  }
 
-        .vector-badge {
-            display: inline-block;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--accent);
-            margin-bottom: 8px;
-        }
+  .wound-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 1.5rem; right: 1.5rem;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-faint), transparent);
+  }
 
-        .vector-title {
-            font-size: 1.2rem;
-            font-weight: 500;
-            margin: 0 0 8px 0;
-        }
+  .wound-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 1.2rem;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.1s forwards;
+  }
 
-        .vector-science {
-            font-size: 0.88rem;
-            line-height: 1.5;
-            color: var(--text-muted);
-            margin: 0;
-        }
+  .wound-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(2.8rem, 9vw, 6rem);
+    font-weight: 300;
+    line-height: 1.0;
+    color: var(--dark);
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
 
-        /* Right Column: Output Blueprint */
-        .output-render-pane {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+  .wound-subtitle {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--gold-dim);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.35s forwards;
+  }
 
-        .output-badge {
-            display: inline-block;
-            align-self: flex-start;
-            background: #f4ebe0;
-            color: #a3704c;
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 4px 10px;
-            border-radius: 4px;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+  .wound-intro {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--text-mid);
+    max-width: 640px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.5s forwards;
+  }
 
-        .output-title {
-            font-size: 1.15rem;
-            font-weight: 500;
-            margin: 0 0 8px 0;
-            color: var(--text-main);
-        }
+  /* ── DEEPER SECTION ── */
+  .deeper-section {
+    background: var(--dark);
+    padding: 5rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
 
-        .output-details {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: var(--text-main);
-            margin: 0;
-        }
+  .deeper-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+  }
 
-        /* Technical Data Sync Bar */
-        .system-status-bar {
-            background: #f7f9f6;
-            border: 1px solid #e1e8df;
-            padding: 16px 24px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 40px;
-        }
+  .deeper-inner {
+    max-width: 700px;
+    margin: 0 auto;
+  }
 
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #6b8260;
-            border-radius: 50%;
-            display: inline-block;
-        }
+  .deeper-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 1.5rem;
+  }
 
-        .status-text {
-            font-size: 0.9rem;
-            color: #4d5749;
-            font-weight: 500;
-            margin: 0;
-        }
+  .deeper-text {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(1.2rem, 3.5vw, 1.7rem);
+    font-weight: 300;
+    line-height: 1.65;
+    color: #F5E4B0;
+    font-style: italic;
+  }
 
-        /* Bottom Action Panel */
-        .action-panel {
-            text-align: center;
-            margin-top: 50px;
-            border-top: 1px solid var(--border);
-            padding-top: 40px;
-        }
+  /* ── SIGNS SECTION ── */
+  .signs-section {
+    padding: 5rem 1.5rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
 
-        .btn-prime {
-            background-color: var(--accent);
-            color: white;
-            padding: 18px 44px;
-            font-size: 1.1rem;
-            font-weight: 500;
-            text-decoration: none;
-            border-radius: 12px;
-            display: inline-block;
-            box-shadow: 0 4px 15px rgba(212, 163, 115, 0.35);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            letter-spacing: 0.5px;
-            border: none;
-            cursor: pointer;
-        }
+  .section-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 0.8rem;
+  }
 
-        .btn-prime:hover {
-            background-color: var(--accent-hover);
-            box-shadow: 0 6px 20px rgba(212, 163, 115, 0.45);
-            transform: translateY(-1px);
-        }
+  .section-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 300;
+    color: var(--dark);
+    line-height: 1.15;
+    margin-bottom: 2.5rem;
+  }
 
-        @media (max-width: 768px) {
-            .matrix-row {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            .input-vector-pane {
-                border-right: none;
-                border-bottom: 1px dashed var(--border);
-                padding-right: 0;
-                padding-bottom: 20px;
-            }
-            .dashboard-container {
-                padding: 30px 20px;
-            }
-        }
-    </style>
+  .signs-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1px;
+    background: var(--cream-line);
+    border: 1px solid var(--cream-line);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .sign-item {
+    background: var(--bg-card);
+    padding: 1.4rem 1.8rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: background 0.2s;
+  }
+
+  .sign-item:hover { background: var(--bg-warm); }
+
+  .sign-dash {
+    color: var(--gold);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    flex-shrink: 0;
+  }
+
+  .sign-text {
+    font-size: 0.92rem;
+    color: var(--text-mid);
+    line-height: 1.7;
+  }
+
+  /* ── AFFIRMATIONS ── */
+  .affirmations-section {
+    background: var(--bg-warm);
+    padding: 5rem 1.5rem;
+    position: relative;
+  }
+
+  .affirmations-section::before,
+  .affirmations-section::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-faint), transparent);
+  }
+
+  .affirmations-section::before { top: 0; }
+  .affirmations-section::after { bottom: 0; }
+
+  .affirmations-inner {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .affirmations-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .affirmation-card {
+    background: var(--bg-card);
+    border: 1px solid var(--cream-line);
+    border-left: 3px solid var(--gold);
+    padding: 1.4rem 1.8rem;
+    border-radius: 0 4px 4px 0;
+    box-shadow: var(--shadow);
+  }
+
+  .affirmation-card p {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  /* ── WHAT YOU RECEIVE ── */
+  .receive-section {
+    padding: 5rem 1.5rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .receive-card {
+    background: var(--dark);
+    border-radius: 8px;
+    padding: 3rem 2rem;
+    position: relative;
+    overflow: hidden;
+    margin-top: 2rem;
+  }
+
+  .receive-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--gold), transparent);
+  }
+
+  .receive-text {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    font-weight: 300;
+    color: #F5E4B0;
+    line-height: 1.65;
+    margin-bottom: 1.5rem;
+  }
+
+  .receive-includes {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+    margin-top: 2rem;
+  }
+
+  .include-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 0.85rem;
+    color: #C4B48A;
+  }
+
+  .include-check {
+    width: 18px;
+    height: 18px;
+    border: 1px solid var(--gold-dim);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--gold);
+    font-size: 0.6rem;
+  }
+
+  /* ── UPLOAD + PAYMENT ── */
+  .action-section {
+    padding: 5rem 1.5rem 7rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .action-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .action-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 300;
+    color: var(--dark);
+    line-height: 1.15;
+    margin-bottom: 0.8rem;
+  }
+
+  .action-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  /* Steps indicator */
+  .steps-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 3rem;
+  }
+
+  .step-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    flex: 1;
+    max-width: 120px;
+  }
+
+  .step-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--cream-line);
+    background: var(--bg-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    transition: all 0.3s ease;
+  }
+
+  .step-circle.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: white;
+  }
+
+  .step-circle.done {
+    background: var(--dark);
+    border-color: var(--dark);
+    color: var(--gold);
+  }
+
+  .step-label-text {
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-align: center;
+  }
+
+  .step-connector {
+    flex: 1;
+    height: 1px;
+    background: var(--cream-line);
+    margin-bottom: 1.2rem;
+    max-width: 60px;
+  }
+
+  /* Upload dropzone */
+  .upload-zone {
+    border: 2px dashed var(--gold-faint);
+    border-radius: 8px;
+    padding: 3.5rem 2rem;
+    text-align: center;
+    background: var(--bg-card);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    margin-bottom: 2rem;
+  }
+
+  .upload-zone:hover,
+  .upload-zone.dragover {
+    border-color: var(--gold);
+    background: #FEF9EE;
+    box-shadow: 0 0 0 4px rgba(201,150,12,0.08);
+  }
+
+  .upload-zone input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+
+  .upload-icon {
+    width: 52px;
+    height: 52px;
+    border: 1px solid var(--gold-faint);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.2rem;
+    color: var(--gold-dim);
+    font-size: 1.4rem;
+    transition: all 0.3s ease;
+  }
+
+  .upload-zone:hover .upload-icon {
+    border-color: var(--gold);
+    background: rgba(201,150,12,0.06);
+  }
+
+  .upload-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.3rem;
+    color: var(--dark);
+    margin-bottom: 0.5rem;
+  }
+
+  .upload-desc {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    line-height: 1.65;
+    max-width: 320px;
+    margin: 0 auto 1rem;
+  }
+
+  .upload-formats {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  /* Preview */
+  .upload-preview {
+    display: none;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .upload-preview.visible { display: block; }
+
+  .preview-img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--gold);
+    margin: 0 auto 1rem;
+    display: block;
+  }
+
+  .preview-label {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+  }
+
+  .preview-change {
+    font-size: 0.72rem;
+    color: var(--gold-dim);
+    cursor: pointer;
+    text-decoration: underline;
+    margin-top: 0.3rem;
+    display: block;
+  }
+
+  /* Questions preview */
+  .questions-preview-box {
+    background: var(--bg-warm);
+    border: 1px solid var(--cream-line);
+    border-radius: 6px;
+    padding: 1.5rem 1.8rem;
+    margin-bottom: 2rem;
+  }
+
+  .qp-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 0.6rem;
+  }
+
+  .qp-text {
+    font-size: 0.88rem;
+    color: var(--text-mid);
+    line-height: 1.7;
+  }
+
+  /* Payment box */
+  .payment-box {
+    background: var(--dark);
+    border-radius: 8px;
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .payment-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold));
+  }
+
+  .payment-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .payment-wound-name {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.1rem;
+    color: #F5E4B0;
+    margin-bottom: 0.3rem;
+  }
+
+  .payment-desc {
+    font-size: 0.78rem;
+    color: #8A7250;
+    line-height: 1.6;
+  }
+
+  .payment-price-box {
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .payment-price {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--gold-light);
+    line-height: 1;
+  }
+
+  .payment-price-label {
+    font-size: 0.65rem;
+    color: #8A7250;
+    letter-spacing: 0.1em;
+  }
+
+  .payment-includes {
+    margin-bottom: 2rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .payment-include {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.82rem;
+    color: #C4B48A;
+  }
+
+  .payment-include::before {
+    content: '—';
+    color: var(--gold-dim);
+    font-size: 0.7rem;
+  }
+
+  .btn-pay {
+    display: block;
+    width: 100%;
+    background: var(--gold);
+    color: var(--dark);
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 1.2rem 2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .btn-pay:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 30px rgba(201,150,12,0.3);
+  }
+
+  .btn-pay:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .payment-security {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    font-size: 0.68rem;
+    color: #5C4A22;
+    letter-spacing: 0.08em;
+  }
+
+  /* Footer */
+  footer {
+    padding: 2rem 1.5rem;
+    text-align: center;
+    border-top: 1px solid var(--cream-line);
+    background: var(--bg-warm);
+  }
+
+  .footer-tagline {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--gold-dim);
+  }
+
+  /* Ornament */
+  .ornament {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin: 0 auto 2.5rem;
+    max-width: 160px;
+  }
+
+  .ornament-line {
+    flex: 1;
+    height: 1px;
+  }
+
+  .ornament-line.dark { background: linear-gradient(to right, transparent, #C4B48A); }
+  .ornament-line.dark:last-child { background: linear-gradient(to left, transparent, #C4B48A); }
+  .ornament-line.light { background: linear-gradient(to right, transparent, var(--gold-faint)); }
+  .ornament-line.light:last-child { background: linear-gradient(to left, transparent, var(--gold-faint)); }
+
+  .ornament-dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+  }
+
+  .ornament-dot.gold { background: var(--gold); }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Responsive */
+  @media (min-width: 600px) {
+    .affirmations-grid { grid-template-columns: 1fr 1fr; }
+    .receive-includes { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (min-width: 768px) {
+    nav { padding: 1.5rem 3rem; }
+    .wound-hero { padding: 8rem 3rem 5rem; }
+    .signs-section, .receive-section, .action-section { padding-left: 3rem; padding-right: 3rem; }
+    .deeper-section { padding: 6rem 3rem; }
+    .affirmations-section { padding: 6rem 3rem; }
+  }
+</style>
 </head>
 <body>
 
-    <div class="dashboard-container">
-        
-        <div class="brand-header">
-            <div class="header-tag">Narrative Architecture Blueprint</div>
-            <h1>Your story has been mapped.</h1>
-            <p class="subtitle">
-                We have bypassed systemic cognitive barriers to safely parse your responses into a high-fidelity cinematic framework[cite: 4, 21, 29]. Here is how your linguistic coordinates formulate your custom experience[cite: 28, 29].
-            </p>
-        </div>
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">Love <span>Little</span> Me</a>
+  <a href="templates.html" class="nav-back">← Choose a different wound</a>
+</nav>
 
-        <div class="system-status-bar">
-            <span class="status-dot"></span>
-            <p class="status-text">3 Primary Context Vectors Securely Analyzed. Ready for Generative Realization[cite: 29].</p>
-        </div>
+<!-- HERO — populated by JS -->
+<section class="wound-hero" id="wound-hero">
+  <p class="wound-eyebrow" id="wound-eyebrow">Your Wound</p>
+  <h1 class="wound-title" id="wound-title"></h1>
+  <p class="wound-subtitle" id="wound-subtitle"></p>
+  <p class="wound-intro" id="wound-intro"></p>
+</section>
 
-        <div class="architecture-matrix">
-            
-            <div class="matrix-row">
-                <div class="input-vector-pane">
-                    <span class="vector-badge">Vector 01 // Left Brain Anchor [cite: 6]</span>
-                    <h3 class="vector-title">The Event [cite: 6, 34]</h3>
-                    <p class="vector-science">Safely micro-samples objective environmental history to maintain stable cognitive processing boundaries[cite: 11, 12, 36].</p>
-                </div>
-                <div class="output-render-pane">
-                    <span class="output-badge">Cinematic Render: Act I [cite: 39]</span>
-                    <h4 class="output-title">The Visual Setup [cite: 39]</h4>
-                    <p class="output-details">Establishes the physical environmental spaces, background structural geometry, and concrete imagery representing early isolation loops[cite: 36, 39].</p>
-                </div>
-            </div>
+<!-- DEEPER -->
+<section class="deeper-section">
+  <div class="deeper-inner">
+    <p class="deeper-label reveal">Understanding your wound</p>
+    <p class="deeper-text reveal" id="deeper-text"></p>
+  </div>
+</section>
 
-            <div class="matrix-row">
-                <div class="input-vector-pane">
-                    <span class="vector-badge">Vector 02 // Somatic Connection [cite: 15]</span>
-                    <h3 class="vector-title">The Resonance [cite: 15, 35]</h3>
-                    <p class="vector-science">Circumnavigates defensive verbal locks by tracking physiological memory and current bodily stress responses[cite: 21, 37].</p>
-                </div>
-                <div class="output-render-pane">
-                    <span class="output-badge">Cinematic Render: Act II [cite: 40]</span>
-                    <h4 class="output-title">Emotional Tone & Color Grading [cite: 40]</h4>
-                    <p class="output-details">Calibrates custom background harmonic tension, specific character physics, color palettes, and custom light-and-shadow variations[cite: 40].</p>
-                </div>
-            </div>
+<!-- SIGNS -->
+<section class="signs-section">
+  <p class="section-label reveal">You might recognize this wound if...</p>
+  <h2 class="section-title reveal">Does this feel familiar?</h2>
+  <div class="signs-list reveal" id="signs-list"></div>
+</section>
 
-            <div class="matrix-row">
-                <div class="input-vector-pane">
-                    <span class="vector-badge">Vector 03 // Adult Protector [cite: 22, 27]</span>
-                    <h3 class="vector-title">The Integration [cite: 22, 41]</h3>
-                    <p class="vector-science">Interrupts historic cognitive loops by executing deep meaning-making shifts into an empowered role[cite: 27, 42].</p>
-                </div>
-                <div class="output-render-pane">
-                    <span class="output-badge">Cinematic Render: Act III [cite: 44]</span>
-                    <h4 class="output-title">Narrative Climax & Resolution Text [cite: 44]</h4>
-                    <p class="output-details">Supplies the exact therapeutic voiceover matrices, boundary assertions, and final resolution statements delivered directly to the child[cite: 24, 42, 44].</p>
-                </div>
-            </div>
+<!-- AFFIRMATIONS -->
+<section class="affirmations-section">
+  <div class="affirmations-inner">
+    <p class="section-label reveal">What you'll receive</p>
+    <h2 class="section-title reveal">The words your child-self<br>needed to hear</h2>
+    <div class="affirmations-grid reveal" id="affirmations-grid"></div>
+  </div>
+</section>
 
-        </div>
-
-        <div class="action-panel">
-            <a href="/upload.html" class="btn-prime">Continue to Photo Setup →</a>
-        </div>
-
+<!-- WHAT YOU RECEIVE -->
+<section class="receive-section">
+  <p class="section-label reveal">Your healing video</p>
+  <h2 class="section-title reveal">What we create for you</h2>
+  <div class="receive-card reveal">
+    <p class="receive-text" id="receive-text"></p>
+    <div class="receive-includes">
+      <div class="include-item"><div class="include-check">✓</div><span>Personalized healing script</span></div>
+      <div class="include-item"><div class="include-check">✓</div><span>Animated childhood scene</span></div>
+      <div class="include-item"><div class="include-check">✓</div><span>Your chosen guide voice</span></div>
+      <div class="include-item"><div class="include-check">✓</div><span>Delivered to your email</span></div>
+      <div class="include-item"><div class="include-check">✓</div><span>Yours to keep forever</span></div>
+      <div class="include-item"><div class="include-check">✓</div><span>One-time payment, no subscription</span></div>
     </div>
+  </div>
+</section>
+
+<!-- ACTION: UPLOAD + PAYMENT -->
+<section class="action-section">
+  <div class="action-header reveal">
+    <div class="ornament">
+      <div class="ornament-line light"></div>
+      <div class="ornament-dot gold"></div>
+      <div class="ornament-line light"></div>
+    </div>
+    <h2 class="action-title">Begin your healing</h2>
+    <p class="action-subtitle">Upload a childhood photo and complete your order. Your personalized video will be created and delivered to you.</p>
+  </div>
+
+  <!-- Step indicator -->
+  <div class="steps-indicator reveal">
+    <div class="step-item">
+      <div class="step-circle active" id="step1-circle">1</div>
+      <span class="step-label-text">Photo</span>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step-item">
+      <div class="step-circle" id="step2-circle">2</div>
+      <span class="step-label-text">Payment</span>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step-item">
+      <div class="step-circle" id="step3-circle">3</div>
+      <span class="step-label-text">Your Video</span>
+    </div>
+  </div>
+
+  <!-- Upload zone -->
+  <div class="upload-zone reveal" id="upload-zone">
+    <input type="file" accept="image/*" id="photo-input" aria-label="Upload childhood photo">
+    <div class="upload-icon">↑</div>
+    <p class="upload-title">Upload a childhood photo</p>
+    <p class="upload-desc">A photo of you as a child — the younger the better. This becomes the face in your healing video.</p>
+    <p class="upload-formats">JPG · PNG · HEIC · up to 20MB</p>
+  </div>
+
+  <!-- Preview (hidden until upload) -->
+  <div class="upload-preview" id="upload-preview">
+    <img src="" alt="Your childhood photo" class="preview-img" id="preview-img">
+    <p class="preview-label">Your photo is ready</p>
+    <span class="preview-change" id="preview-change">Choose a different photo</span>
+  </div>
+
+  <!-- Questions preview -->
+  <div class="questions-preview-box reveal">
+    <p class="qp-label">After payment</p>
+    <p class="qp-text" id="questions-preview-text"></p>
+  </div>
+
+  <!-- Payment box -->
+  <div class="payment-box reveal">
+    <div class="payment-top">
+      <div>
+        <p class="payment-wound-name" id="payment-wound-name"></p>
+        <p class="payment-desc">Personalized animated healing video · One time</p>
+      </div>
+      <div class="payment-price-box">
+        <p class="payment-price">$29</p>
+        <p class="payment-price-label">one time</p>
+      </div>
+    </div>
+    <div class="payment-includes">
+      <p class="payment-include">Guided question flow (5 questions)</p>
+      <p class="payment-include">AI-generated personalized healing script</p>
+      <p class="payment-include">Ghibli-style animated video</p>
+      <p class="payment-include">Your chosen voice guide</p>
+      <p class="payment-include">Delivered to your email</p>
+    </div>
+    <button class="btn-pay" id="pay-btn" disabled>Upload a photo to continue</button>
+    <p class="payment-security">🔒 Secure checkout · Powered by Stripe</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-tagline">"Because you always deserved to be loved."</p>
+</footer>
+
+<!-- Load wound data -->
+<script src="wounds-data.js"></script>
+<script>
+  // ── GET WOUND FROM URL ──
+  const params = new URLSearchParams(window.location.search);
+  const woundId = params.get('wound') || 'abandonment';
+  const wound = getWoundById(woundId);
+
+  if (!wound) {
+    window.location.href = 'templates.html';
+  }
+
+  // ── POPULATE PAGE ──
+  document.title = `${wound.name} — Love Little Me`;
+  document.getElementById('wound-eyebrow').textContent = 'Your Wound · ' + wound.name;
+  document.getElementById('wound-title').textContent = wound.name;
+  document.getElementById('wound-subtitle').textContent = wound.subtitle;
+  document.getElementById('wound-intro').textContent = wound.description;
+  document.getElementById('deeper-text').textContent = wound.deeper;
+  document.getElementById('receive-text').textContent = wound.what_you_receive;
+  document.getElementById('questions-preview-text').textContent = wound.questions_preview;
+  document.getElementById('payment-wound-name').textContent = wound.name + ' Healing Video';
+
+  // Signs
+  const signsList = document.getElementById('signs-list');
+  wound.signs.forEach(s => {
+    const item = document.createElement('div');
+    item.className = 'sign-item';
+    item.innerHTML = `<span class="sign-dash">—</span><span class="sign-text">${s}</span>`;
+    signsList.appendChild(item);
+  });
+
+  // Affirmations
+  const affGrid = document.getElementById('affirmations-grid');
+  wound.affirmations.forEach(a => {
+    const card = document.createElement('div');
+    card.className = 'affirmation-card';
+    card.innerHTML = `<p>${a}</p>`;
+    affGrid.appendChild(card);
+  });
+
+  // Store wound in session
+  sessionStorage.setItem('selectedWound', wound.id);
+  sessionStorage.setItem('selectedWoundName', wound.name);
+
+  // ── UPLOAD LOGIC ──
+  const photoInput = document.getElementById('photo-input');
+  const uploadZone = document.getElementById('upload-zone');
+  const uploadPreview = document.getElementById('upload-preview');
+  const previewImg = document.getElementById('preview-img');
+  const previewChange = document.getElementById('preview-change');
+  const payBtn = document.getElementById('pay-btn');
+  const step1 = document.getElementById('step1-circle');
+  const step2 = document.getElementById('step2-circle');
+
+  function handleFile(file) {
+    if (!file || !file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      previewImg.src = e.target.result;
+      uploadZone.style.display = 'none';
+      uploadPreview.classList.add('visible');
+      payBtn.disabled = false;
+      payBtn.textContent = 'Complete My Order — $29';
+      step1.classList.remove('active');
+      step1.classList.add('done');
+      step1.textContent = '✓';
+      step2.classList.add('active');
+      sessionStorage.setItem('photoData', e.target.result);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  photoInput.addEventListener('change', e => handleFile(e.target.files[0]));
+
+  // Drag and drop
+  uploadZone.addEventListener('dragover', e => {
+    e.preventDefault();
+    uploadZone.classList.add('dragover');
+  });
+  uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+  uploadZone.addEventListener('drop', e => {
+    e.preventDefault();
+    uploadZone.classList.remove('dragover');
+    handleFile(e.dataTransfer.files[0]);
+  });
+
+  // Change photo
+  previewChange.addEventListener('click', () => {
+    uploadZone.style.display = '';
+    uploadPreview.classList.remove('visible');
+    payBtn.disabled = true;
+    payBtn.textContent = 'Upload a photo to continue';
+    step1.classList.remove('done');
+    step1.classList.add('active');
+    step1.textContent = '1';
+    step2.classList.remove('active');
+    photoInput.value = '';
+  });
+
+  // Pay button — will connect to Stripe later
+  payBtn.addEventListener('click', () => {
+    if (!payBtn.disabled) {
+      // Save wound and redirect to questions
+      window.location.href = `questions.html?wound=${wound.id}`;
+    }
+  });
+
+  // ── SCROLL REVEAL ──
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
 
 </body>
 </html>
