@@ -1,40 +1,133 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Your Narrative - Love Little Me</title>
+    <style>
+        :root {
+            --bg-color: #fcf9f5;
+            --card-bg: #ffffff;
+            --text-main: #3c3530;
+            --text-muted: #7c726a;
+            --accent: #d4a373;
+            --accent-hover: #c39262;
+            --border: #e6dfd5;
+        }
 
-{% block title %}Understanding Your Wound - Love Little Me{% endblock %}
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
 
-{% block content %}
-<div class="w-full max-w-2xl mx-auto px-6 py-12 flex-grow flex flex-col justify-center space-y-8 animate-fade-in">
-    <div class="space-y-4">
-        <span class="font-sans text-xs uppercase tracking-widest text-accent font-semibold">The Core Wound Breakdown</span>
-        <!-- Dynamically injected title matching index pattern -->
-        <h1 class="font-sans font-light text-3xl md:text-4xl text-primary leading-tight">
-            {{ wound.title }}
-        </h1>
+        .education-container {
+            background: var(--card-bg);
+            max-width: 650px;
+            width: 90%;
+            padding: 50px 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid var(--border);
+            box-sizing: border-box;
+            margin: 40px 0;
+        }
+
+        .header-tag {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            line-height: 1.4;
+            margin-bottom: 24px;
+            color: var(--text-main);
+        }
+
+        p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--text-main);
+            margin-bottom: 20px;
+        }
+
+        .highlight-box {
+            background-color: #fffaf5;
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            margin: 30px 0;
+        }
+
+        .highlight-box p {
+            margin-bottom: 0;
+            font-style: italic;
+            color: var(--text-muted);
+        }
+
+        /* Redirect Button Layout */
+        .cta-wrapper {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .btn-continue {
+            background-color: var(--accent);
+            color: white;
+            padding: 16px 36px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 8px;
+            display: inline-block;
+            box-shadow: 0 2px 8px rgba(212, 163, 115, 0.3);
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .btn-continue:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .btn-continue:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="education-container">
+        <div class="header-tag">The Science of Renewal</div>
+        <h1>Your story holds the data map to your liberation.</h1>
+        
+        <p>By naming what happened and tracking how those memories live in your body right now, you have effectively stepped out of the old narrative loops that have kept you safe, but kept you small.</p>
+        
+        <p>What you just completed wasn't simply an intake questionnaire. It is a structured linguistic map. Your left brain anchored the objective reality of the event, your right brain reconnected with the raw somatic tone, and your adult self introduced the pattern-interrupting resolution statement.</p>
+
+        <div class="highlight-box">
+            <p>"Trauma isolates the child in time. Conscious narrative integration brings them home to the safety of the present."</p>
+        </div>
+
+        <p>Our narrative architecture engine takes these core data coordinates to mathematically reconstruct a three-act cinematic framework customized specifically to your emotional history. This will build the visual landscape, establish the light and shadows of your subconscious boundaries, and supply the healing vocal dialogue vectors needed for your integration video.</p>
+        
+        <p>The next phase is anchoring this framework visually. We are ready to bring the child into the room.</p>
+
+        <div class="cta-wrapper">
+            <a href="upload.html" class="btn-continue">Continue to Photo Setup →</a>
+        </div>
+
     </div>
 
-    <div class="space-y-6 text-base md:text-lg text-body leading-relaxed border-l-2 border-divider pl-6 italic">
-        <p>
-            "{{ wound.description_quote }}"
-        </p>
-        <p>
-            "{{ wound.impact_quote }}"
-        </p>
-    </div>
-
-    <div class="bg-card border border-divider rounded-xl p-6 space-y-3 shadow-sm">
-        <h3 class="font-sans font-semibold text-sm text-primary uppercase tracking-wide">How This Tool Helps</h3>
-        <p class="text-sm text-muted leading-relaxed">
-            By answering the next three reflective questions, we will safely pinpoint the exact landscape of this childhood memory. Our cinematic AI engine will then reconstruct this narrative, allowing your adult self to visually step back into the scene, break the silence, and offer the protection your younger self always needed.
-        </p>
-    </div>
-
-    <div class="pt-4 flex justify-end">
-        <a 
-            href="{{ url_for('questions') }}" 
-            class="btn btn-primary"
-        >
-            Begin Reflection &rarr;
-        </a>
-    </div>
-</div>
-{% endblock %}
+</body>
+</html>
