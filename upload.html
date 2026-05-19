@@ -432,7 +432,7 @@ document.getElementById('email-input').addEventListener('input', function() {
 payBtn.addEventListener('click', function() {
   if (!payBtn.disabled) {
     sessionStorage.setItem('userEmail', document.getElementById('email-input').value.trim());
-    window.location.href = 'payment.html?wound=' + woundId;
+    window.location.href = 'checkout.html?wound=' + woundId;
   }
 });
 </script>
