@@ -452,32 +452,50 @@ var WOUNDS = {
 function applyDynamicWoundTheme() {
   var urlParams = new URLSearchParams(window.location.search);
   var rawWoundKey = urlParams.get('wound');
-  var activeWoundKey = 'abandonment';
+  var activeWoundKey = null;
 
+  // 1. Try to read directly from the URL query parameter
   if (rawWoundKey) {
-    // Sanitize data formats, spaces, and casing variations
     var sanitized = rawWoundKey.trim().toLowerCase().replace(/\s+/g, '-');
     
-    // Safety matching maps for variants passed from quiz frameworks
-    if (sanitized === 'emotionalabuse' || sanitized === 'abuse') sanitized = 'emotional-abuse';
+    // Safety matching matrix map
+    if (sanitized === 'emotionalabuse' || sanitized === 'abuse' || sanitized === 'throat') sanitized = 'emotional-abuse';
     if (sanitized === 'solar-plexus' || sanitized === 'solarplexus') sanitized = 'enmeshment';
     if (sanitized === 'root') sanitized = 'neglect';
     if (sanitized === 'heart') sanitized = 'abandonment';
-    if (sanitized === 'sacral') sanitized = 'shame';
-    if (sanitized === 'throat') sanitized = 'emotional-abuse';
+    if (sanitized === 'sacral' || sanitized === 'shamed' || sanitized === 'shamed-child' || sanitized === 'shame-wound' || sanitized === 'shame') sanitized = 'shame';
 
     if (WOUNDS[sanitized]) {
       activeWoundKey = sanitized;
-      // Stash result inside window storage for session persistency
-      localStorage.setItem('selected_wound_fallback', sanitized);
-    }
-  } else {
-    // Fallback engine checks storage cache if raw URL param is blank
-    var savedFallback = localStorage.getItem('selected_wound_fallback');
-    if (savedFallback && WOUNDS[savedFallback]) {
-      activeWoundKey = savedFallback;
     }
   }
+
+  // 2. EMERGENCY OVERRIDE TRACK: If parameter failed, check deep storage or URL text fragments
+  if (!activeWoundKey || activeWoundKey === 'abandonment') {
+    var savedLocal = localStorage.getItem('selected_wound_fallback');
+    var savedSession = sessionStorage.getItem('selectedWound');
+    var backupKey = savedLocal || savedSession;
+    
+    if (backupKey && WOUNDS[backupKey] && backupKey !== 'abandonment') {
+      activeWoundKey = backupKey;
+    } else {
+      // Direct text-mapping inspection scanner
+      var currentHref = window.location.href.toLowerCase();
+      if (currentHref.includes('shame') || currentHref.includes('sacral')) activeWoundKey = 'shame';
+      else if (currentHref.includes('neglect') || currentHref.includes('root')) activeWoundKey = 'neglect';
+      else if (currentHref.includes('abuse') || currentHref.includes('emotional') || currentHref.includes('throat')) activeWoundKey = 'emotional-abuse';
+      else if (currentHref.includes('enmesh') || currentHref.includes('solar')) activeWoundKey = 'enmeshment';
+    }
+  }
+
+  // 3. Absolute structural fallback anchor
+  if (!activeWoundKey) {
+    activeWoundKey = 'abandonment';
+  }
+
+  // Double-lock results back down inside memory blocks
+  localStorage.setItem('selected_wound_fallback', activeWoundKey);
+  sessionStorage.setItem('selectedWound', activeWoundKey);
   
   var selectedProfile = WOUNDS[activeWoundKey];
   
