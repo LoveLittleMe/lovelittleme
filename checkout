@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Complete Your Order — Love Little Me</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=DM+Sans:wght@300;400;500&display=swap');
+  :root{--bg:#0E0A02;--bg-warm:#1C1408;--bg-card:#221A08;--accent:#C9960C;--accent-light:#E3B84A;--accent-dim:#8A650A;--accent-faint:#2A1E08;--text-light:#F5E4B0;--text-mid:#C4B48A;--text-dim:#7A6A50;--cream-line:rgba(255,255,255,0.08);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text-light);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.75;overflow-x:hidden;min-height:100vh;}
+  body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:0.04;pointer-events:none;z-index:500;}
+  .glow-bg{position:fixed;top:0;left:0;right:0;height:50vh;background:radial-gradient(ellipse 60% 50% at 50% 0%,var(--accent-faint) 0%,transparent 70%);pointer-events:none;z-index:0;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;background:rgba(0,0,0,0.5);backdrop-filter:blur(16px);border-bottom:1px solid var(--cream-line);}
+  .nav-logo{display:flex;align-items:center;text-decoration:none;}
+  .nav-logo img{height:120px;width:auto;object-fit:contain;}
+  .nav-back{font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--accent-light);}
+  .page{padding:10rem 1.5rem 6rem;max-width:680px;margin:0 auto;position:relative;z-index:1;}
+  .steps-indicator{display:flex;align-items:center;justify-content:center;margin-bottom:2.5rem;}
+  .step-item{display:flex;flex-direction:column;align-items:center;gap:0.4rem;flex:1;max-width:100px;}
+  .step-circle{width:34px;height:34px;border-radius:50%;border:1px solid var(--accent-faint);background:var(--bg-card);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',Georgia,serif;font-size:0.9rem;color:var(--text-dim);transition:all 0.3s;}
+  .step-circle.active{background:var(--accent);border-color:var(--accent);color:var(--bg);}
+  .step-circle.done{background:var(--accent-dim);border-color:var(--accent-dim);color:var(--text-light);}
+  .step-label-text{font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);text-align:center;}
+  .step-connector{flex:1;height:1px;background:var(--accent-faint);margin-bottom:1.2rem;max-width:50px;}
+  .page-eyebrow{font-size:0.62rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--accent);margin-bottom:0.8rem;}
+  .page-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(2.5rem,8vw,5rem);font-weight:300;line-height:1.0;color:var(--text-light);margin-bottom:0.5rem;}
+  .page-subtitle{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(1rem,2.5vw,1.2rem);font-style:italic;color:var(--accent);margin-bottom:2.5rem;}
+  .order-summary{background:var(--bg-card);border:1px solid var(--accent-faint);border-top:3px solid var(--accent);border-radius:8px;padding:2rem;margin-bottom:2rem;}
+  .summary-label{font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:1.2rem;}
+  .summary-row{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;padding-bottom:1.2rem;border-bottom:1px solid var(--accent-faint);margin-bottom:1.2rem;flex-wrap:wrap;}
+  .summary-wound-name{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.2rem;color:var(--text-light);margin-bottom:0.2rem;}
+  .summary-wound-sub{font-size:0.78rem;font-style:italic;color:var(--accent);font-family:'Cormorant Garamond',Georgia,serif;}
+  .summary-price{font-family:'Cormorant Garamond',Georgia,serif;font-size:2.2rem;font-weight:300;color:var(--accent-light);line-height:1;text-align:right;}
+  .summary-price-sub{font-size:0.62rem;color:var(--text-dim);letter-spacing:0.1em;text-align:right;}
+  .summary-includes{display:grid;gap:0.5rem;}
+  .summary-include{display:flex;align-items:center;gap:0.7rem;font-size:0.82rem;color:var(--text-mid);}
+  .summary-check{width:16px;height:16px;border:1px solid var(--accent-dim);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--accent);font-size:0.55rem;}
+  .photo-row{display:flex;align-items:center;gap:1.2rem;background:var(--bg-warm);border:1px solid var(--accent-faint);border-radius:8px;padding:1.2rem 1.5rem;margin-bottom:2rem;}
+  .photo-thumb{width:56px;height:56px;border-radius:50%;border:2px solid var(--accent);object-fit:cover;flex-shrink:0;}
+  .photo-placeholder{width:56px;height:56px;border-radius:50%;border:2px dashed var(--accent-faint);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--text-dim);font-size:0.65rem;text-align:center;line-height:1.3;}
+  .photo-label{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:0.2rem;}
+  .photo-status{font-size:0.85rem;color:var(--text-mid);}
+  .section-label{font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;margin-top:2rem;}
+  .form-label{display:block;font-size:0.78rem;color:var(--text-mid);margin-bottom:0.5rem;}
+  .form-input{width:100%;background:var(--bg-card);border:1px solid var(--accent-faint);border-radius:4px;padding:0.9rem 1.1rem;color:var(--text-light);font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:300;outline:none;transition:border-color 0.2s,box-shadow 0.2s;margin-bottom:0.5rem;}
+  .form-input::placeholder{color:var(--text-dim);}
+  .form-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-faint);}
+  .form-hint{font-size:0.72rem;color:var(--text-dim);margin-bottom:1.5rem;}
+  .card-placeholder{background:var(--bg-card);border:1px solid var(--accent-faint);border-radius:4px;padding:0.9rem 1.1rem;margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between;}
+  .card-placeholder-text{font-size:0.82rem;color:var(--text-dim);}
+  .card-icons{display:flex;gap:0.4rem;}
+  .card-icon{width:34px;height:22px;border:1px solid var(--accent-faint);border-radius:3px;background:var(--bg-warm);display:flex;align-items:center;justify-content:center;font-size:0.5rem;color:var(--text-dim);}
+  .card-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+  .stripe-note{background:var(--accent-faint);border-left:2px solid var(--accent-dim);border-radius:4px;padding:0.9rem 1.1rem;font-size:0.8rem;color:var(--text-dim);line-height:1.65;margin-bottom:1.5rem;}
+  .btn-submit{display:block;width:100%;background:var(--accent);color:var(--bg);border:none;font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:1.2rem 2rem;border-radius:4px;cursor:pointer;transition:all 0.3s;text-align:center;margin-bottom:1rem;}
+  .btn-submit:hover{background:var(--accent-light);transform:translateY(-1px);box-shadow:0 8px 30px rgba(0,0,0,0.3);}
+  .security-row{display:flex;align-items:center;justify-content:center;gap:1.2rem;flex-wrap:wrap;margin-bottom:3rem;}
+  .security-item{font-size:0.67rem;color:var(--text-dim);letter-spacing:0.08em;}
+  .ornament{display:flex;align-items:center;gap:0.8rem;margin:0 auto 2rem;max-width:160px;}
+  .ornament-line{flex:1;height:1px;background:linear-gradient(to right,transparent,var(--accent-dim));}
+  .ornament-line:last-child{background:linear-gradient(to left,transparent,var(--accent-dim));}
+  .ornament-dot{width:3px;height:3px;border-radius:50%;background:var(--accent);}
+  .next-steps{background:var(--bg-warm);border:1px solid var(--accent-faint);border-radius:8px;padding:2rem;margin-bottom:2rem;}
+  .next-label{font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:1.2rem;}
+  .next-list{display:grid;gap:1rem;}
+  .next-item{display:flex;align-items:flex-start;gap:1rem;}
+  .next-num{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.4rem;color:var(--accent-dim);line-height:1.2;flex-shrink:0;width:24px;}
+  .next-text{font-size:0.88rem;color:var(--text-mid);line-height:1.7;}
+  .next-text strong{color:var(--text-light);font-weight:400;}
+  .contact-note{text-align:center;font-size:0.8rem;color:var(--text-dim);margin-bottom:2rem;}
+  .contact-note a{color:var(--accent-dim);text-decoration:underline;}
+  footer{padding:2rem 1.5rem;text-align:center;border-top:1px solid var(--accent-faint);background:var(--bg-warm);}
+  .footer-tagline{font-family:'Cormorant Garamond',Georgia,serif;font-size:0.9rem;font-style:italic;color:var(--accent-dim);}
+  @media(min-width:768px){nav{padding:0 3rem;}.page{padding:11rem 3rem 7rem;}}
+</style>
+</head>
+<body>
+<div class="glow-bg"></div>
+<nav>
+  <a href="index.html" class="nav-logo"><img src="logo.jpg" alt="Love Little Me"></a>
+  <a href="javascript:history.back()" class="nav-back">← Go back</a>
+</nav>
+<div class="page">
+  <div class="steps-indicator">
+    <div class="step-item"><div class="step-circle done">✓</div><span class="step-label-text">Photo</span></div>
+    <div class="step-connector"></div>
+    <div class="step-item"><div class="step-circle active">2</div><span class="step-label-text">Payment</span></div>
+    <div class="step-connector"></div>
+    <div class="step-item"><div class="step-circle">3</div><span class="step-label-text">Your Video</span></div>
+  </div>
+  <p class="page-eyebrow">Step 2 of 3</p>
+  <h1 class="page-title">Complete your<br>order</h1>
+  <p class="page-subtitle" id="page-subtitle"></p>
+  <div class="order-summary">
+    <p class="summary-label">Your order</p>
+    <div class="summary-row">
+      <div><p class="summary-wound-name" id="summary-wound-name">Healing Video</p><p class="summary-wound-sub" id="summary-wound-sub"></p></div>
+      <div><p class="summary-price">$29</p><p class="summary-price-sub">one time</p></div>
+    </div>
+    <div class="summary-includes">
+      <div class="summary-include"><div class="summary-check">✓</div><span>3 guided questions — personalized healing script</span></div>
+      <div class="summary-include"><div class="summary-check">✓</div><span>Ghibli-style animated video</span></div>
+      <div class="summary-include"><div class="summary-check">✓</div><span>Your chosen guide voice</span></div>
+      <div class="summary-include"><div class="summary-check">✓</div><span>Delivered to your email · Yours to keep forever</span></div>
+    </div>
+  </div>
+  <div class="photo-row">
+    <div id="photo-thumb-wrap"><div class="photo-placeholder">Your<br>photo</div></div>
+    <div><p class="photo-label">Your childhood photo</p><p class="photo-status">Processing while you complete payment</p></div>
+  </div>
+  <p class="section-label">Delivery email</p>
+  <label class="form-label" for="email-input">Where should we send your video?</label>
+  <input class="form-input" type="email" id="email-input" placeholder="you@email.com" autocomplete="email">
+  <p class="form-hint">Please double-check your email. Your completed video will be delivered here.</p>
+  <p class="section-label">Payment details</p>
+  <div class="card-placeholder">
+    <span class="card-placeholder-text">Card number — Stripe connects here</span>
+    <div class="card-icons"><div class="card-icon">VISA</div><div class="card-icon">MC</div><div class="card-icon">AMEX</div></div>
+  </div>
+  <div class="card-row">
+    <div class="card-placeholder" style="margin-bottom:0;"><span class="card-placeholder-text">MM / YY</span></div>
+    <div class="card-placeholder" style="margin-bottom:0;"><span class="card-placeholder-text">CVC</span></div>
+  </div>
+  <div class="stripe-note">Payment processing will be connected by your developer via Stripe. This is a placeholder — no charges occur until Stripe is fully integrated.</div>
+  <button class="btn-submit" onclick="handleSubmit()">Complete Order — $29</button>
+  <div class="security-row">
+    <span class="security-item">Secure checkout</span>
+    <span class="security-item">Powered by Stripe</span>
+    <span class="security-item">No subscription</span>
+  </div>
+  <div class="ornament"><div class="ornament-line"></div><div class="ornament-dot"></div><div class="ornament-line"></div></div>
+  <div class="next-steps">
+    <p class="next-label">What happens after you order</p>
+    <div class="next-list">
+      <div class="next-item"><span class="next-num">1</span><p class="next-text"><strong>Your photo processes.</strong> While you complete payment, your childhood photo is being prepared for animation. You will be notified if we need a better photo.</p></div>
+      <div class="next-item"><span class="next-num">2</span><p class="next-text"><strong>Answer 3 guided questions.</strong> We will email you a short questionnaire so your healing script is written only for you.</p></div>
+      <div class="next-item"><span class="next-num">3</span><p class="next-text"><strong>Choose your guide voice.</strong> Select the voice that feels like the parent figure you needed — warm, steady, unconditional.</p></div>
+      <div class="next-item"><span class="next-num">4</span><p class="next-text"><strong>Receive your video.</strong> Your personalized animated healing video is delivered to your email. You can also download it directly from your confirmation page.</p></div>
+    </div>
+  </div>
+  <p class="contact-note">Questions or issues? Visit our <a href="faq.html">FAQ page</a> or <a href="faq.html#contact">contact us</a>.</p>
+</div>
+<footer><p class="footer-tagline">"Because you always deserved to be loved."</p></footer>
+<script>
+var PALETTES={abandonment:{accent:"#4CAF82",accent_light:"#7DD4A8",accent_dim:"#2E7A55",accent_faint:"#1E4D38",bg:"#0D1F1A",bg_warm:"#122620",bg_card:"#152E28",text_light:"#C8E6D8",text_mid:"#8FBFA8",text_dim:"#5A8A72",name:"Abandonment",sub:"The Child Who Was Left"},neglect:{accent:"#C0392B",accent_light:"#E57373",accent_dim:"#8B1A1A",accent_faint:"#4A1010",bg:"#1A0A0A",bg_warm:"#220D0D",bg_card:"#2A1010",text_light:"#F0C4C4",text_mid:"#C48A8A",text_dim:"#8A5555",name:"Neglect",sub:"The Child Whose Needs Went Unmet"},"emotional-abuse":{accent:"#2E6DB4",accent_light:"#6AABDF",accent_dim:"#1A4A80",accent_faint:"#0F2D50",bg:"#0A0F1A",bg_warm:"#0D1422",bg_card:"#101828",text_light:"#C4D8F0",text_mid:"#8AAED4",text_dim:"#557AA0",name:"Emotional Abuse",sub:"The Child Who Was Hurt With Words"},enmeshment:{accent:"#C9A800",accent_light:"#E8CC4A",accent_dim:"#8A7200",accent_faint:"#4A3E00",bg:"#1A1700",bg_warm:"#221E00",bg_card:"#2A2500",text_light:"#F0E8B0",text_mid:"#C4B870",text_dim:"#8A8040",name:"Enmeshment",sub:"The Child Who Was Never Allowed to Be Themselves"},shame:{accent:"#E07B20",accent_light:"#F0A855",accent_dim:"#A05010",accent_faint:"#4A2200",bg:"#1A0D00",bg_warm:"#221200",bg_card:"#2A1800",text_light:"#F0D4B0",text_mid:"#C4A070",text_dim:"#8A6840",name:"Shame",sub:"The Child Who Was Made to Feel Broken"},"unsafe-home":{accent:"#8B1A1A",accent_light:"#C0392B",accent_dim:"#5A1010",accent_faint:"#380808",bg:"#140808",bg_warm:"#1C0A0A",bg_card:"#240C0C",text_light:"#F0C0C0",text_mid:"#C48080",text_dim:"#8A5050",name:"Unsafe Home",sub:"The Child Who Never Felt Safe"},divorce:{accent:"#C0527A",accent_light:"#E087A8",accent_dim:"#8A2A4A",accent_faint:"#4A1228",bg:"#1A0D10",bg_warm:"#221218",bg_card:"#2A1520",text_light:"#F0C4D4",text_mid:"#C488A0",text_dim:"#8A5568",name:"Divorce & Family Rupture",sub:"The Child Caught in the Middle"}};
+var params=new URLSearchParams(window.location.search);
+var woundId=params.get('wound')||sessionStorage.getItem('selectedWound')||'abandonment';
+var p=PALETTES[woundId]||PALETTES['abandonment'];
+var r=document.documentElement;
+r.style.setProperty('--bg',p.bg);r.style.setProperty('--bg-warm',p.bg_warm);r.style.setProperty('--bg-card',p.bg_card);r.style.setProperty('--accent',p.accent);r.style.setProperty('--accent-light',p.accent_light);r.style.setProperty('--accent-dim',p.accent_dim);r.style.setProperty('--accent-faint',p.accent_faint);r.style.setProperty('--text-light',p.text_light);r.style.setProperty('--text-mid',p.text_mid);r.style.setProperty('--text-dim',p.text_dim);
+document.title=p.name+' — Complete Your Order — Love Little Me';
+document.getElementById('page-subtitle').textContent=p.sub;
+document.getElementById('summary-wound-name').textContent=p.name+' Healing Video';
+document.getElementById('summary-wound-sub').textContent=p.sub;
+var savedEmail=sessionStorage.getItem('userEmail');
+if(savedEmail)document.getElementById('email-input').value=savedEmail;
+var photoData=sessionStorage.getItem('photoData');
+if(photoData){var img=document.createElement('img');img.src=photoData;img.className='photo-thumb';img.alt='Your photo';document.getElementById('photo-thumb-wrap').innerHTML='';document.getElementById('photo-thumb-wrap').appendChild(img);}
+function handleSubmit(){
+var email=document.getElementById('email-input').value.trim();
+if(!email||!email.includes('@')||!email.includes('.')){document.getElementById('email-input').style.borderColor=p.accent;document.getElementById('email-input').focus();return;}
+sessionStorage.setItem('userEmail',email);
+// STRIPE INTEGRATION POINT — developer connects Stripe here
+window.location.href='confirmation.html?wound='+woundId;
+}
+</script>
+</body>
+</html>
