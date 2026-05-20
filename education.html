@@ -420,7 +420,7 @@ uploadZone.addEventListener('dragleave',function(){uploadZone.classList.remove('
 uploadZone.addEventListener('drop',function(e){e.preventDefault();uploadZone.classList.remove('dragover');handleFile(e.dataTransfer.files[0]);});
 previewChange.addEventListener('click',function(){uploadZone.style.display='';uploadPreview.classList.remove('visible');photoValid=false;payBtn.disabled=true;payBtn.textContent='Upload a photo to continue';photoInput.value='';});
 document.getElementById('email-input').addEventListener('input',function(){if(photoValid)updatePayBtn();});
-payBtn.addEventListener('click',function(){if(!payBtn.disabled){sessionStorage.setItem('userEmail',document.getElementById('email-input').value.trim());window.location.href='checkout.html?wound='+woundId;}});
+payBtn.addEventListener('click',function(){if(!payBtn.disabled){sessionStorage.setItem('userEmail',document.getElementById('email-input').value.trim());window.location.href='voice.html?wound='+woundId;}});
 </script>
 </body>
 </html>
