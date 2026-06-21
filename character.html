@@ -40,7 +40,7 @@
   .top-nav img{height:2rem;width:auto;}
   .top-nav .back-link{
     font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;
-    color:var(--gold-dim);text-decoration:none;display:flex;align-items:center;gap:0.4rem;
+    color:var(--gold-dim);text-decoration:none;
   }
   .top-nav .back-link:hover{color:var(--gold-light);}
 
@@ -49,6 +49,7 @@
     display:flex;align-items:center;justify-content:center;gap:1rem;
     padding:1rem 1.6rem;border-bottom:1px solid var(--cream-line);
     font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;
+    flex-wrap:wrap;
   }
   .step{color:var(--gold-dim);}
   .step.active{color:var(--gold-light);font-weight:500;}
@@ -113,13 +114,18 @@
     grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
     gap:clamp(0.8rem,1.6vw,1.4rem);
   }
+
+  /* TILE */
   .tile{
     position:relative;border:0;background:transparent;cursor:pointer;
     padding:0.5rem;border-radius:14px;
-    display:flex;align-items:flex-end;justify-content:center;
-    aspect-ratio:2/3;
+    display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
     transition:transform .35s cubic-bezier(.2,.7,.2,1);
     -webkit-tap-highlight-color:transparent;
+  }
+  .tile-img-wrap{
+    position:relative;width:100%;aspect-ratio:2/3;
+    display:flex;align-items:flex-end;justify-content:center;
   }
   .tile .halo{
     position:absolute;inset:auto 0 6%;margin:auto;width:78%;height:30%;
@@ -136,6 +142,7 @@
   .tile::after{
     content:"";position:absolute;inset:0;border-radius:14px;
     border:1px solid transparent;transition:border-color .3s ease, box-shadow .3s ease;
+    pointer-events:none;
   }
   .tile:hover{transform:translateY(-6px);}
   .tile:hover .halo{background:radial-gradient(ellipse at center, rgba(227,181,58,0.55) 0%, rgba(201,150,12,0.18) 45%, transparent 72%);}
@@ -147,10 +154,34 @@
   .tile .check{
     position:absolute;top:0.6rem;right:0.6rem;width:1.5rem;height:1.5rem;border-radius:50%;
     background:var(--gold);display:flex;align-items:center;justify-content:center;
-    opacity:0;transition:opacity .25s ease;pointer-events:none;
+    opacity:0;transition:opacity .25s ease;pointer-events:none;z-index:2;
   }
   .tile.selected .check{opacity:1;}
   .tile .check svg{width:0.75rem;height:0.75rem;stroke:#0E0A02;stroke-width:2.5;fill:none;}
+
+  /* EYE COLOR PICKER */
+  .eye-picker{
+    display:none;
+    gap:6px;justify-content:center;align-items:center;
+    margin-top:8px;padding:6px 0 2px;
+  }
+  .tile.selected .eye-picker{display:flex;}
+  .eye-dot{
+    width:16px;height:16px;border-radius:50%;cursor:pointer;
+    border:2px solid transparent;transition:all 0.2s ease;
+    position:relative;z-index:5;
+  }
+  .eye-dot:hover{transform:scale(1.2);}
+  .eye-dot.active{border-color:var(--gold-light);transform:scale(1.15);}
+  .eye-dot.blue{background:#5B8FD4;}
+  .eye-dot.green{background:#5B9B6A;}
+  .eye-dot.brown{background:#8B5E3C;}
+  .eye-label{
+    font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;
+    color:var(--gold-dim);text-align:center;margin-top:4px;
+    display:none;
+  }
+  .tile.selected .eye-label{display:block;}
 
   /* PREMIUM CALLOUT */
   .premium-callout{
@@ -170,16 +201,11 @@
   }
   .premium-link{
     display:inline-block;
-    border:1px solid var(--gold-dim);color:var(--gold-light);
+    border:1px dashed var(--gold-dim);color:rgba(243,236,217,0.4);
     font-family:'DM Sans',sans-serif;font-size:0.8rem;letter-spacing:0.14em;
-    text-transform:uppercase;text-decoration:none;
+    text-transform:uppercase;
     padding:0.65rem 1.6rem;border-radius:30px;
-    transition:all 0.25s ease;
-  }
-  .premium-link:hover{background:rgba(201,150,12,0.1);border-color:var(--gold-light);}
-  .premium-link.coming-soon{
-    opacity:0.5;cursor:default;pointer-events:none;
-    border-style:dashed;
+    pointer-events:none;opacity:0.5;
   }
 
   /* SELECTION BAR */
@@ -215,14 +241,11 @@
   }
   .continue-btn:hover{opacity:0.9;}
 
-  /* HIDDEN SECTION */
-  .section[data-gender]{transition:opacity 0.3s ease;}
   .section[data-gender].hidden{display:none;}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav class="top-nav">
   <a href="index.html" class="logo-wrap">
     <img src="logo.jpg" alt="Love Little Me">
@@ -230,7 +253,6 @@
   <a href="javascript:history.back()" class="back-link">← Back</a>
 </nav>
 
-<!-- PROGRESS -->
 <div class="progress-bar">
   <span class="step">1 — Template</span>
   <span class="step-divider">·</span>
@@ -250,267 +272,264 @@
     <p class="lede">Choose the character that feels most like you as a child. This is who will appear in your healing video — finally receiving the love they deserved.</p>
   </header>
 
-  <!-- FILTER -->
   <div class="filter-row">
     <button class="filter-btn active" data-filter="all">All Characters</button>
     <button class="filter-btn" data-filter="girls">Girls</button>
     <button class="filter-btn" data-filter="boys">Boys</button>
   </div>
 
-  <!-- GIRLS SECTION -->
+  <!-- GIRLS -->
   <section class="section" data-gender="girls" aria-labelledby="girls-head">
     <div class="section-head">
       <h2 id="girls-head">Girls</h2>
       <span class="rule"></span>
-      <span class="count">23 characters</span>
+      <span class="count">15 characters</span>
     </div>
-    <div class="grid">
-      <button type="button" class="tile" data-id="girl1" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/girl1_locs_ghibli_gallery_neutral_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+    <div class="grid" id="girls-grid">
+
+      <!-- Single files — no eye picker -->
+      <button type="button" class="tile" data-id="girl1" data-base="girl1" aria-label="Choose this child">
+        <div class="tile-img-wrap">
+          <span class="halo"></span>
+          <img src="characters/girl1.png" alt="">
+          <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+        </div>
       </button>
-      <button type="button" class="tile" data-id="girl2" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/girl2_curly_ghibli_gallery_neutral_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+      <button type="button" class="tile" data-id="girl2" data-base="girl2" aria-label="Choose this child">
+        <div class="tile-img-wrap">
+          <span class="halo"></span>
+          <img src="characters/girl2.png" alt="">
+          <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+        </div>
       </button>
-      <button type="button" class="tile" data-id="girl3" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/girl3_ghibli_gallery_neutral_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+      <button type="button" class="tile" data-id="girl3" data-base="girl3" aria-label="Choose this child">
+        <div class="tile-img-wrap">
+          <span class="halo"></span>
+          <img src="characters/girl3.png" alt="">
+          <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+        </div>
       </button>
-      <button type="button" class="tile" data-id="girl4" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/girl4_child_ghibli_gallery_neutral_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+      <button type="button" class="tile" data-id="girl4" data-base="girl4" aria-label="Choose this child">
+        <div class="tile-img-wrap">
+          <span class="halo"></span>
+          <img src="characters/girl4.png" alt="">
+          <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+        </div>
       </button>
-      <button type="button" class="tile" data-id="girl5" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/girl5_ghibli_gallery_neutral_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+      <button type="button" class="tile" data-id="girl5" data-base="girl5" aria-label="Choose this child">
+        <div class="tile-img-wrap">
+          <span class="halo"></span>
+          <img src="characters/girl5.png" alt="">
+          <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+        </div>
       </button>
-      <button type="button" class="tile" data-id="girl6" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/girl6_ghibli_gallery_neutral_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+      <button type="button" class="tile" data-id="girl6" data-base="girl6" aria-label="Choose this child">
+        <div class="tile-img-wrap">
+          <span class="halo"></span>
+          <img src="characters/girl6.png" alt="">
+          <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+        </div>
       </button>
-      <button type="button" class="tile" data-id="girl7" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/girl7_ghibli_gallery_neutral_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+      <button type="button" class="tile" data-id="girl7" data-base="girl7" aria-label="Choose this child">
+        <div class="tile-img-wrap">
+          <span class="halo"></span>
+          <img src="characters/girl7.png" alt="">
+          <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+        </div>
       </button>
-      <button type="button" class="tile" data-id="girl8" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/girl8_ghibli_gallery_neutral_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+      <button type="button" class="tile" data-id="girl8" data-base="girl8" aria-label="Choose this child">
+        <div class="tile-img-wrap">
+          <span class="halo"></span>
+          <img src="characters/girl8.png" alt="">
+          <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+        </div>
       </button>
-      <button type="button" class="tile" data-id="girl9" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/girl9_ghibli_gallery_neutral_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+      <button type="button" class="tile" data-id="girl9" data-base="girl9" aria-label="Choose this child">
+        <div class="tile-img-wrap">
+          <span class="halo"></span>
+          <img src="characters/girl9.png" alt="">
+          <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+        </div>
       </button>
-      <button type="button" class="tile" data-id="girl10" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/girl10_ghibli_gallery_neutral_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+      <button type="button" class="tile" data-id="girl10" data-base="girl10" aria-label="Choose this child">
+        <div class="tile-img-wrap">
+          <span class="halo"></span>
+          <img src="characters/girl10.png" alt="">
+          <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+        </div>
       </button>
-      <button type="button" class="tile" data-id="girl11_blue" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/girl11_ghibli_gallery_neutral_blue.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+      <button type="button" class="tile" data-id="girl15" data-base="girl15" aria-label="Choose this child">
+        <div class="tile-img-wrap">
+          <span class="halo"></span>
+          <img src="characters/girl15.png" alt="">
+          <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+        </div>
       </button>
-      <button type="button" class="tile" data-id="girl12_green" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/girl12_ghibli_gallery_neutral_green.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+
+      <!-- Eye color variants -->
+      <button type="button" class="tile" data-id="girl11-blue" data-base="girl11" data-has-eyes="true" aria-label="Choose this child">
+        <div class="tile-img-wrap">
+          <span class="halo"></span>
+          <img src="characters/girl11-blue.png" alt="">
+          <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+        </div>
+        <div class="eye-picker">
+          <span class="eye-dot blue active" data-color="blue" title="Blue eyes"></span>
+          <span class="eye-dot green" data-color="green" title="Green eyes"></span>
+          <span class="eye-dot brown" data-color="brown" title="Brown eyes"></span>
+        </div>
+        <div class="eye-label">Choose eye color</div>
       </button>
-      <button type="button" class="tile" data-id="girl13_brown" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/girl13_ghibli_gallery_neutral_brown.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+      <button type="button" class="tile" data-id="girl12-blue" data-base="girl12" data-has-eyes="true" aria-label="Choose this child">
+        <div class="tile-img-wrap">
+          <span class="halo"></span>
+          <img src="characters/girl12-blue.png" alt="">
+          <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+        </div>
+        <div class="eye-picker">
+          <span class="eye-dot blue active" data-color="blue" title="Blue eyes"></span>
+          <span class="eye-dot green" data-color="green" title="Green eyes"></span>
+          <span class="eye-dot brown" data-color="brown" title="Brown eyes"></span>
+        </div>
+        <div class="eye-label">Choose eye color</div>
       </button>
-      <button type="button" class="tile" data-id="girl14_blue" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/girl14_ghibli_gallery_neutral_blue.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+      <button type="button" class="tile" data-id="girl13-blue" data-base="girl13" data-has-eyes="true" aria-label="Choose this child">
+        <div class="tile-img-wrap">
+          <span class="halo"></span>
+          <img src="characters/girl13-blue.png" alt="">
+          <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+        </div>
+        <div class="eye-picker">
+          <span class="eye-dot blue active" data-color="blue" title="Blue eyes"></span>
+          <span class="eye-dot green" data-color="green" title="Green eyes"></span>
+          <span class="eye-dot brown" data-color="brown" title="Brown eyes"></span>
+        </div>
+        <div class="eye-label">Choose eye color</div>
       </button>
-      <button type="button" class="tile" data-id="girl15_green" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/girl15_ghibli_gallery_neutral_green.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+      <button type="button" class="tile" data-id="girl14-blue" data-base="girl14" data-has-eyes="true" aria-label="Choose this child">
+        <div class="tile-img-wrap">
+          <span class="halo"></span>
+          <img src="characters/girl14-blue.png" alt="">
+          <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+        </div>
+        <div class="eye-picker">
+          <span class="eye-dot blue active" data-color="blue" title="Blue eyes"></span>
+          <span class="eye-dot green" data-color="green" title="Green eyes"></span>
+          <span class="eye-dot brown" data-color="brown" title="Brown eyes"></span>
+        </div>
+        <div class="eye-label">Choose eye color</div>
       </button>
-      <button type="button" class="tile" data-id="girl16_brown" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/girl16_ghibli_gallery_neutral_brown.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
-      </button>
-      <button type="button" class="tile" data-id="girl17_blue" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/girl17_ghibli_gallery_neutral_blue.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
-      </button>
-      <button type="button" class="tile" data-id="girl18_green" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/girl18_ghibli_gallery_neutral_green.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
-      </button>
-      <button type="button" class="tile" data-id="girl19_brown" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/girl19_ghibli_gallery_neutral_brown.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
-      </button>
-      <button type="button" class="tile" data-id="girl20_blue" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/girl20_ghibli_gallery_neutral_blue.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
-      </button>
-      <button type="button" class="tile" data-id="girl21_green" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/girl21_ghibli_gallery_neutral_green.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
-      </button>
-      <button type="button" class="tile" data-id="girl22_brown" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/girl22_ghibli_gallery_neutral_brown.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
-      </button>
-      <button type="button" class="tile" data-id="afro4" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/afro4_child_ghibli_gallery_neutral_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
-      </button>
+
     </div>
   </section>
 
-  <!-- BOYS SECTION -->
+  <!-- BOYS -->
   <section class="section" data-gender="boys" aria-labelledby="boys-head">
     <div class="section-head">
       <h2 id="boys-head">Boys</h2>
       <span class="rule"></span>
-      <span class="count">24 characters</span>
+      <span class="count">10 characters</span>
     </div>
-    <div class="grid">
-      <button type="button" class="tile" data-id="boy1" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/boy1_ghibli_gallery_neutral_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+    <div class="grid" id="boys-grid">
+
+      <!-- Single files -->
+      <button type="button" class="tile" data-id="boy1" data-base="boy1" aria-label="Choose this child">
+        <div class="tile-img-wrap">
+          <span class="halo"></span>
+          <img src="characters/boy1.png" alt="">
+          <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+        </div>
       </button>
-      <button type="button" class="tile" data-id="boy2curly" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/boy2curly_ghibli_gallery_neutral_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+      <button type="button" class="tile" data-id="boy2" data-base="boy2" aria-label="Choose this child">
+        <div class="tile-img-wrap">
+          <span class="halo"></span>
+          <img src="characters/boy2.png" alt="">
+          <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+        </div>
       </button>
-      <button type="button" class="tile" data-id="boy3" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/boy3_ghibli_gallery_neutral_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+      <button type="button" class="tile" data-id="boy3" data-base="boy3" aria-label="Choose this child">
+        <div class="tile-img-wrap">
+          <span class="halo"></span>
+          <img src="characters/boy3.png" alt="">
+          <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+        </div>
       </button>
-      <button type="button" class="tile" data-id="boy4" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/boy4_ghibli_gallery_neutral_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+      <button type="button" class="tile" data-id="boy4" data-base="boy4" aria-label="Choose this child">
+        <div class="tile-img-wrap">
+          <span class="halo"></span>
+          <img src="characters/boy4.png" alt="">
+          <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+        </div>
       </button>
-      <button type="button" class="tile" data-id="boy5" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/boy5_ghibli_gallery_neutral_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+      <button type="button" class="tile" data-id="boy5" data-base="boy5" aria-label="Choose this child">
+        <div class="tile-img-wrap">
+          <span class="halo"></span>
+          <img src="characters/boy5.png" alt="">
+          <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+        </div>
       </button>
-      <button type="button" class="tile" data-id="boy6" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/boy6_ghibli_gallery_neutral_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+      <button type="button" class="tile" data-id="boy6" data-base="boy6" aria-label="Choose this child">
+        <div class="tile-img-wrap">
+          <span class="halo"></span>
+          <img src="characters/boy6.png" alt="">
+          <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+        </div>
       </button>
-      <button type="button" class="tile" data-id="boy7_blue" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/boy7_ghibli_gallery_neutral_blue.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+
+      <!-- Eye color variants -->
+      <button type="button" class="tile" data-id="boy7-blue" data-base="boy7" data-has-eyes="true" aria-label="Choose this child">
+        <div class="tile-img-wrap">
+          <span class="halo"></span>
+          <img src="characters/boy7-blue.png" alt="">
+          <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+        </div>
+        <div class="eye-picker">
+          <span class="eye-dot blue active" data-color="blue" title="Blue eyes"></span>
+          <span class="eye-dot green" data-color="green" title="Green eyes"></span>
+          <span class="eye-dot brown" data-color="brown" title="Brown eyes"></span>
+        </div>
+        <div class="eye-label">Choose eye color</div>
       </button>
-      <button type="button" class="tile" data-id="boy8_green" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/boy8_ghibli_gallery_neutral_green.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+      <button type="button" class="tile" data-id="boy8-blue" data-base="boy8" data-has-eyes="true" aria-label="Choose this child">
+        <div class="tile-img-wrap">
+          <span class="halo"></span>
+          <img src="characters/boy8-blue.png" alt="">
+          <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+        </div>
+        <div class="eye-picker">
+          <span class="eye-dot blue active" data-color="blue" title="Blue eyes"></span>
+          <span class="eye-dot green" data-color="green" title="Green eyes"></span>
+          <span class="eye-dot brown" data-color="brown" title="Brown eyes"></span>
+        </div>
+        <div class="eye-label">Choose eye color</div>
       </button>
-      <button type="button" class="tile" data-id="boy9_brown" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/boy9_ghibli_gallery_neutral_brown.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+      <button type="button" class="tile" data-id="boy9-blue" data-base="boy9" data-has-eyes="true" aria-label="Choose this child">
+        <div class="tile-img-wrap">
+          <span class="halo"></span>
+          <img src="characters/boy9-blue.png" alt="">
+          <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+        </div>
+        <div class="eye-picker">
+          <span class="eye-dot blue active" data-color="blue" title="Blue eyes"></span>
+          <span class="eye-dot green" data-color="green" title="Green eyes"></span>
+          <span class="eye-dot brown" data-color="brown" title="Brown eyes"></span>
+        </div>
+        <div class="eye-label">Choose eye color</div>
       </button>
-      <button type="button" class="tile" data-id="boy10_blue" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/boy10_ghibli_gallery_neutral_blue.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+      <button type="button" class="tile" data-id="boy10-blue" data-base="boy10" data-has-eyes="true" aria-label="Choose this child">
+        <div class="tile-img-wrap">
+          <span class="halo"></span>
+          <img src="characters/boy10-blue.png" alt="">
+          <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
+        </div>
+        <div class="eye-picker">
+          <span class="eye-dot blue active" data-color="blue" title="Blue eyes"></span>
+          <span class="eye-dot green" data-color="green" title="Green eyes"></span>
+          <span class="eye-dot brown" data-color="brown" title="Brown eyes"></span>
+        </div>
+        <div class="eye-label">Choose eye color</div>
       </button>
-      <button type="button" class="tile" data-id="boy11_green" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/boy11_ghibli_gallery_neutral_green.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
-      </button>
-      <button type="button" class="tile" data-id="boy12_brown" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/boy12_ghibli_gallery_neutral_brown.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
-      </button>
-      <button type="button" class="tile" data-id="boy13_blue" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/boy13_ghibli_gallery_neutral_blue_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
-      </button>
-      <button type="button" class="tile" data-id="boy14_green" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/boy14_ghibli_gallery_neutral_green_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
-      </button>
-      <button type="button" class="tile" data-id="boy15_brown" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/boy15_ghibli_gallery_neutral_brown_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
-      </button>
-      <button type="button" class="tile" data-id="boy16_blue" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/boy16_curlfair_ghibli_gallery_neutral_blue_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
-      </button>
-      <button type="button" class="tile" data-id="boy17_green" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/boy17_curlfair_ghibli_gallery_neutral_green_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
-      </button>
-      <button type="button" class="tile" data-id="boy18_brown" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/boy18_curlfair_ghibli_gallery_neutral_brown_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
-      </button>
-      <button type="button" class="tile" data-id="boy19_blue" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/boy19_curlfair_ghibli_gallery_neutral_blue_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
-      </button>
-      <button type="button" class="tile" data-id="boy20_green" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/boy20_curlfair_ghibli_gallery_neutral_green_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
-      </button>
-      <button type="button" class="tile" data-id="boy21_brown" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/boy21_curlfair_ghibli_gallery_neutral_brown_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
-      </button>
-      <button type="button" class="tile" data-id="boy22_blue" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/boy22_ghibli_gallery_neutral_blue_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
-      </button>
-      <button type="button" class="tile" data-id="boy23_green" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/boy23_ghibli_gallery_neutral_green_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
-      </button>
-      <button type="button" class="tile" data-id="boy24_brown" aria-label="Choose this child">
-        <span class="halo"></span>
-        <img src="characters/boy24_ghibli_gallery_neutral_brown_cutout.png" alt="">
-        <span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>
-      </button>
+
     </div>
   </section>
 
@@ -519,7 +538,7 @@
     <p class="eyebrow">Coming Soon</p>
     <h3>Want it to look more like you?</h3>
     <p>Upload your own childhood photo and our artists will create a custom animated character inspired by your unique likeness — the child you actually were.</p>
-    <span class="premium-link coming-soon">Coming Soon</span>
+    <span class="premium-link">Coming Soon</span>
   </div>
 
 </div>
@@ -530,51 +549,89 @@
     <img class="sel-thumb" id="selThumb" src="" alt="">
     <div>
       <div class="sel-label">Your child is chosen</div>
-      <div class="sel-sub">Ready to choose your guide voice</div>
+      <div class="sel-sub" id="selSub">Ready to choose your guide voice</div>
     </div>
   </div>
   <button class="continue-btn" id="continueBtn">Choose My Guide →</button>
 </div>
 
 <script>
-  // Read URL params
   const params = new URLSearchParams(window.location.search);
   const wound = params.get('wound') || '';
 
   let selectedId = null;
+  let selectedBase = null;
+  let selectedColor = null;
 
   // Tile selection
   document.querySelectorAll('.tile').forEach(tile => {
-    tile.addEventListener('click', () => {
+    tile.addEventListener('click', (e) => {
+      // Don't trigger tile selection when clicking eye dots
+      if (e.target.classList.contains('eye-dot')) return;
+
       document.querySelectorAll('.tile').forEach(t => t.classList.remove('selected'));
       tile.classList.add('selected');
-      selectedId = tile.dataset.id;
 
-      // Update selection bar
-      const img = tile.querySelector('img');
-      document.getElementById('selThumb').src = img.src;
-      document.getElementById('selBar').classList.add('visible');
+      selectedBase = tile.dataset.base;
+      const hasEyes = tile.dataset.hasEyes === 'true';
+
+      if (hasEyes) {
+        // Default to blue
+        selectedColor = 'blue';
+        selectedId = selectedBase + '-blue';
+      } else {
+        selectedColor = null;
+        selectedId = selectedBase;
+      }
+
+      updateSelectionBar(tile);
     });
   });
 
-  // Filter buttons
+  // Eye dot selection
+  document.querySelectorAll('.eye-dot').forEach(dot => {
+    dot.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const tile = dot.closest('.tile');
+      const color = dot.dataset.color;
+
+      // Update active dot
+      tile.querySelectorAll('.eye-dot').forEach(d => d.classList.remove('active'));
+      dot.classList.add('active');
+
+      // Update image
+      const img = tile.querySelector('img');
+      img.src = `characters/${tile.dataset.base}-${color}.png`;
+
+      // Update selection
+      selectedColor = color;
+      selectedId = tile.dataset.base + '-' + color;
+
+      // Update thumb
+      document.getElementById('selThumb').src = img.src;
+    });
+  });
+
+  function updateSelectionBar(tile) {
+    const img = tile.querySelector('img');
+    document.getElementById('selThumb').src = img.src;
+    document.getElementById('selBar').classList.add('visible');
+  }
+
+  // Filter
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-
       const filter = btn.dataset.filter;
       document.querySelectorAll('.section[data-gender]').forEach(section => {
-        if (filter === 'all') {
-          section.classList.remove('hidden');
-        } else {
-          section.classList.toggle('hidden', section.dataset.gender !== filter);
-        }
+        if (filter === 'all') section.classList.remove('hidden');
+        else section.classList.toggle('hidden', section.dataset.gender !== filter);
       });
     });
   });
 
-  // Continue button
+  // Continue
   document.getElementById('continueBtn').addEventListener('click', () => {
     if (!selectedId) return;
     const q = new URLSearchParams();
