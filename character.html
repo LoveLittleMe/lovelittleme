@@ -105,24 +105,31 @@
     <button class="filter-btn" data-filter="boys">Boys</button>
   </div>
 
-  <!-- GIRLS: 11 single + 4 eye-color groups = 15 tiles -->
+  <!-- GIRLS: 10 single + 4 eye-color groups = 14 tiles -->
   <section class="section" data-gender="girls">
     <div class="section-head">
-      <h2>Girls</h2><span class="rule"></span><span class="count">12 characters</span>
+      <h2>Girls</h2><span class="rule"></span><span class="count">14 characters</span>
     </div>
     <div class="grid">
-
       <button class="tile" data-id="girl1"><div class="tile-img-wrap"><span class="halo"></span><img src="characters/girl1_locs_ghibli_gallery_neutral_cutout.png" alt=""><span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span></div></button>
       <button class="tile" data-id="girl2"><div class="tile-img-wrap"><span class="halo"></span><img src="characters/girl2_curly_ghibli_gallery_neutral_cutout.png" alt=""><span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span></div></button>
       <button class="tile" data-id="girl3"><div class="tile-img-wrap"><span class="halo"></span><img src="characters/girl3_ghibli_gallery_neutral_cutout.png" alt=""><span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span></div></button>
+      <button class="tile" data-id="girl4"><div class="tile-img-wrap"><span class="halo"></span><img src="characters/girl4_child_ghibli_gallery_neutral_cutout.png" alt=""><span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span></div></button>
+      <button class="tile" data-id="girl5"><div class="tile-img-wrap"><span class="halo"></span><img src="characters/girl5_ghibli_gallery_neutral_cutout.png" alt=""><span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span></div></button>
+      <button class="tile" data-id="girl7"><div class="tile-img-wrap"><span class="halo"></span><img src="characters/girl7_ghibli_gallery_neutral_cutout.png" alt=""><span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span></div></button>
       <button class="tile" data-id="girl8"><div class="tile-img-wrap"><span class="halo"></span><img src="characters/girl8_ghibli_gallery_neutral_cutout.png" alt=""><span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span></div></button>
       <button class="tile" data-id="girl9"><div class="tile-img-wrap"><span class="halo"></span><img src="characters/girl9_ghibli_gallery_neutral_cutout.png" alt=""><span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span></div></button>
       <button class="tile" data-id="girl10"><div class="tile-img-wrap"><span class="halo"></span><img src="characters/girl10_ghibli_gallery_neutral_cutout.png" alt=""><span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span></div></button>
       <button class="tile" data-id="afro4"><div class="tile-img-wrap"><span class="halo"></span><img src="characters/afro4_child_ghibli_gallery_neutral_cutout.png" alt=""><span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span></div></button>
 
-      <!-- Eye color groups -->
+      <!-- Eye color groups — one tile each with color picker -->
       <button class="tile" data-id="girl11-blue" data-has-eyes="true" data-blue="characters/girl11_ghibli_gallery_neutral_blue.png" data-green="characters/girl12_ghibli_gallery_neutral_green.png" data-brown="characters/girl13_ghibli_gallery_neutral_brown.png">
         <div class="tile-img-wrap"><span class="halo"></span><img src="characters/girl11_ghibli_gallery_neutral_blue.png" alt=""><span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span></div>
+        <div class="eye-picker"><span class="eye-dot blue active" data-color="blue"></span><span class="eye-dot green" data-color="green"></span><span class="eye-dot brown" data-color="brown"></span></div>
+        <div class="eye-label">Eye color</div>
+      </button>
+      <button class="tile" data-id="girl14-blue" data-has-eyes="true" data-blue="characters/girl14_ghibli_gallery_neutral_blue.png" data-green="characters/girl15_ghibli_gallery_neutral_green.png" data-brown="characters/girl16_ghibli_gallery_neutral_brown.png">
+        <div class="tile-img-wrap"><span class="halo"></span><img src="characters/girl14_ghibli_gallery_neutral_blue.png" alt=""><span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span></div>
         <div class="eye-picker"><span class="eye-dot blue active" data-color="blue"></span><span class="eye-dot green" data-color="green"></span><span class="eye-dot brown" data-color="brown"></span></div>
         <div class="eye-label">Eye color</div>
       </button>
@@ -136,17 +143,15 @@
         <div class="eye-picker"><span class="eye-dot blue active" data-color="blue"></span><span class="eye-dot green" data-color="green"></span><span class="eye-dot brown" data-color="brown"></span></div>
         <div class="eye-label">Eye color</div>
       </button>
-
     </div>
   </section>
 
-  <!-- BOYS: 6 single + 5 eye-color groups = 11 tiles -->
+  <!-- BOYS: 6 single + 4 eye-color groups = 10 tiles -->
   <section class="section" data-gender="boys">
     <div class="section-head">
       <h2>Boys</h2><span class="rule"></span><span class="count">10 characters</span>
     </div>
     <div class="grid">
-
       <button class="tile" data-id="boy1"><div class="tile-img-wrap"><span class="halo"></span><img src="characters/boy1_ghibli_gallery_neutral_cutout.png" alt=""><span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span></div></button>
       <button class="tile" data-id="boy2curly"><div class="tile-img-wrap"><span class="halo"></span><img src="characters/boy2curly_ghibli_gallery_neutral_cutout.png" alt=""><span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span></div></button>
       <button class="tile" data-id="boy3"><div class="tile-img-wrap"><span class="halo"></span><img src="characters/boy3_ghibli_gallery_neutral_cutout.png" alt=""><span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span></div></button>
@@ -177,6 +182,8 @@
       </button>
     </div>
   </section>
+
+  <div class="premium-callout">
     <p class="eyebrow">Coming Soon</p>
     <h3>Want it to look more like you?</h3>
     <p>Upload your own childhood photo and our artists will create a custom animated character inspired by your unique likeness — the child you actually were.</p>
