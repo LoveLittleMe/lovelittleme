@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Your Healing Pathway — Love Little Me</title>
+<title>Your Words — Love Little Me</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -23,19 +23,19 @@
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body { 
-    background: var(--bg); 
-    color: var(--text-light); 
-    font-family: 'DM Sans', sans-serif; 
-    font-weight: 300; 
-    line-height: 1.75; 
-    overflow-x: hidden; 
+  body {
+    background: var(--bg);
+    color: var(--text-light);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.75;
+    overflow-x: hidden;
     transition: background 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   }
-  body::before { 
-    content: ''; position: fixed; inset: 0; 
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E"); 
-    opacity: 0.04; pointer-events: none; z-index: 500; 
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.04; pointer-events: none; z-index: 500;
   }
 
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; background: rgba(0,0,0,0.5); backdrop-filter: blur(16px); border-bottom: 1px solid var(--cream-line); }
@@ -46,38 +46,50 @@
 
   .glow-bg { position: fixed; top: 0; left: 0; right: 0; height: 70vh; background: radial-gradient(ellipse 70% 60% at 30% 40%, var(--accent-faint) 0%, transparent 70%); pointer-events: none; z-index: 0; transition: background 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
 
-  .dashboard-wrapper { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 10rem 1.5rem 6rem; }
+  .dashboard-wrapper { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 10rem 1.5rem 6rem; }
 
   .meta-tag { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.8rem; font-weight: 500; transition: color 0.3s; }
 
-  h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 300; line-height: 1.15; color: var(--text-light); margin-bottom: 1.5rem; }
+  h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(2.3rem, 5.5vw, 3.8rem); font-weight: 300; line-height: 1.15; color: var(--text-light); margin-bottom: 1.2rem; }
+  .wound-sub { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 1.15rem; color: var(--accent-light); margin-bottom: 1.5rem; }
 
-  .intro-text { font-size: 1.05rem; line-height: 1.85; color: var(--text-mid); max-width: 720px; margin-bottom: 3.5rem; }
+  .intro-text { font-size: 1.05rem; line-height: 1.85; color: var(--text-mid); max-width: 660px; margin-bottom: 2.5rem; }
 
   .system-verification { background: var(--bg-card); border: 1px solid var(--cream-line); padding: 1.2rem 1.8rem; border-radius: 8px; display: flex; align-items: center; gap: 12px; margin-bottom: 4rem; }
-  .status-pulse { width: 7px; height: 7px; background-color: var(--accent); border-radius: 50%; display: inline-block; box-shadow: 0 0 10px var(--accent); }
-  .status-message { font-size: 0.82rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-mid); }
+  .status-pulse { width: 7px; height: 7px; background-color: var(--accent); border-radius: 50%; display: inline-block; box-shadow: 0 0 10px var(--accent); flex-shrink: 0; }
+  .status-message { font-size: 0.82rem; letter-spacing: 0.04em; color: var(--text-mid); }
 
-  .archetype-callout-box { background: linear-gradient(145deg, var(--bg-warm), var(--bg-card)); border: 1px solid var(--cream-line); border-left: 4px solid var(--accent); padding: 2.5rem; border-radius: 0 12px 12px 0; margin-bottom: 5rem; transition: border-left-color 0.4s; }
-  .callout-label { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 0.6rem; }
-  .callout-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.8rem; font-weight: 400; margin-bottom: 1rem; color: var(--text-light); }
-  .callout-body { font-size: 0.95rem; line-height: 1.8; color: var(--text-mid); }
+  .questions-stack { display: flex; flex-direction: column; gap: 2.5rem; margin-bottom: 3.5rem; }
+  .question-card { background: linear-gradient(145deg, var(--bg-warm), var(--bg-card)); border: 1px solid var(--cream-line); border-left: 4px solid var(--accent); padding: 2.2rem 2.2rem 2rem; border-radius: 0 12px 12px 0; transition: border-left-color 0.4s; }
+  .question-phase { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 0.7rem; }
+  .question-text { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.5rem; font-weight: 400; line-height: 1.35; color: var(--text-light); margin-bottom: 1.3rem; }
+  textarea {
+    width: 100%;
+    min-height: 120px;
+    background: var(--bg);
+    border: 1px solid var(--cream-line);
+    border-radius: 8px;
+    color: var(--text-light);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 1rem;
+    line-height: 1.7;
+    padding: 1rem 1.1rem;
+    resize: vertical;
+    transition: border-color 0.25s, box-shadow 0.25s;
+  }
+  textarea::placeholder { color: var(--text-dim); opacity: 0.8; }
+  textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-faint); }
 
-  .divider { height: 1px; background: linear-gradient(to right, transparent, var(--cream-line), transparent); margin: 4rem 0; }
+  .how-to { background: var(--bg-card); border: 1px solid var(--cream-line); border-left: 3px solid var(--accent-light); padding: 1.5rem 1.8rem; border-radius: 0 8px 8px 0; margin-bottom: 3.5rem; }
+  .how-to-title { font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 0.6rem; font-weight: 500; }
+  .how-to-body { font-size: 0.92rem; line-height: 1.8; color: var(--text-mid); }
+  .how-to-body strong { color: var(--text-light); font-weight: 500; }
+  .question-hint { font-size: 0.8rem; line-height: 1.6; color: var(--text-dim); font-style: italic; margin-bottom: 0.95rem; }
 
-  .architecture-matrix { display: flex; flex-direction: column; gap: 2rem; margin: 3rem 0 5rem; }
-  .matrix-node { display: grid; grid-template-columns: 280px 1fr; gap: 2.5rem; border-bottom: 1px solid var(--cream-line); padding-bottom: 2.5rem; }
-  .matrix-node:last-child { border-bottom: none; }
-  .node-left { border-right: 1px solid var(--cream-line); padding-right: 1.5rem; }
-  .node-vector-id { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.4rem; }
-  .node-vector-name { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.4rem; font-weight: 400; color: var(--text-light); margin-bottom: 0.6rem; }
-  .node-vector-meta { font-size: 0.85rem; line-height: 1.6; color: var(--text-dim); }
-  .node-right { display: flex; flex-direction: column; justify-content: center; }
-  .render-tag { align-self: flex-start; background: var(--accent-faint); color: var(--accent-light); font-size: 0.65rem; font-weight: 500; padding: 4px 10px; border-radius: 4px; margin-bottom: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; }
-  .render-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.25rem; font-weight: 400; color: var(--text-light); margin-bottom: 0.5rem; }
-  .render-details { font-size: 0.9rem; line-height: 1.7; color: var(--text-mid); }
+  .reassurance { font-size: 0.85rem; line-height: 1.7; color: var(--text-dim); font-style: italic; border-top: 1px solid var(--cream-line); padding-top: 2rem; margin-bottom: 1rem; text-align: center; }
 
-  .steps-indicator { display: flex; align-items: center; justify-content: center; margin: 6rem 0 3rem; }
+  .steps-indicator { display: flex; align-items: center; justify-content: center; margin: 4rem 0 3rem; }
   .step-item { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; flex: 1; max-width: 100px; }
   .step-circle { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--cream-line); background: var(--bg-card); display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 0.9rem; color: var(--text-dim); transition: all 0.3s ease; }
   .step-circle.done { background: var(--bg-warm); border-color: var(--cream-line); color: var(--text-mid); }
@@ -94,11 +106,10 @@
   .footer-tagline { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 0.9rem; font-style: italic; color: var(--text-dim); }
 
   @media(max-width: 768px) {
-    .architecture-matrix { gap: 1.5rem; }
-    .matrix-node { grid-template-columns: 1fr; gap: 1.2rem; }
-    .node-left { border-right: none; border-bottom: 1px solid var(--cream-line); padding-right: 0; padding-bottom: 1.2rem; }
     nav { padding: 0 1rem; }
     .dashboard-wrapper { padding-top: 8rem; }
+    .question-card { padding: 1.8rem 1.5rem; }
+    .question-text { font-size: 1.3rem; }
   }
 </style>
 </head>
@@ -108,92 +119,57 @@
 
 <nav>
   <a href="index.html" class="nav-logo"><img src="logo.jpg" alt="Love Little Me"></a>
-  <a href="javascript:history.back()" class="nav-back">← Back to Reflection</a>
+  <a href="javascript:history.back()" class="nav-back">&larr; Back</a>
 </nav>
 
 <div class="dashboard-wrapper">
-  
+
   <div class="meta-tag" id="dynamic-chakra">Heart Chakra</div>
-  <h1 id="dynamic-headline">Understanding this wound</h1>
-  
-  <div class="intro-text" id="dynamic-description">
-    Preparing your space...
+  <h1 id="dynamic-headline">Your words to little you</h1>
+  <div class="wound-sub" id="dynamic-sub"></div>
+
+  <div class="intro-text" id="dynamic-intro">
+    Before you choose your child, take a moment with these three questions. They are shaped around your wound, and your answers help us build your video around your story. There are no right answers, and you can write as little or as much as you like. Whatever you share stays private and is used only to create your video.
   </div>
 
   <div class="system-verification">
     <span class="status-pulse"></span>
-    <div class="status-message">Your reflection is held safely. Your healing blueprint is preparing below.</div>
+    <div class="status-message">Your reflection is held safely. Your answers save automatically as you write.</div>
   </div>
 
-  <div class="archetype-callout-box">
-    <div class="callout-label" id="profile-badge-label">Where it comes from</div>
-    <div class="callout-title" id="dynamic-wound-title">Origins</div>
-    <div class="callout-body" id="dynamic-where-from">
-      Mapping developmental pathways...
+  <div class="how-to">
+    <div class="how-to-title">How to answer these</div>
+    <div class="how-to-body">
+      There are no right answers, and you don't need perfect words. Write a full paragraph, a few phrases, or a single line &mdash; whatever comes honestly. <strong>If a question feels too hard, or you're not sure what to say, it's completely okay to skip it and keep going.</strong> Nothing here is graded, and nothing is ever shared.
     </div>
   </div>
 
-  <div class="divider"></div>
+  <div class="questions-stack" id="questions-stack"></div>
 
-  <div class="architecture-matrix">
-    <div class="matrix-node">
-      <div class="node-left">
-        <div class="node-vector-id">Phase 01 // Gentle Awareness</div>
-        <div class="node-vector-name">Honoring the Past</div>
-        <div class="node-vector-meta">We look back at your childhood stories safely, so your adult self can see what really happened without getting overwhelmed.</div>
-      </div>
-      <div class="node-right">
-        <div class="render-tag">Step One // Re-envisioning</div>
-        <div class="render-title">Remembering the Environment</div>
-        <div class="render-details">We gently look at the physical spaces, distances, and memories of your early home life to understand the patterns that shaped your child heart.</div>
-      </div>
-    </div>
-    <div class="matrix-node">
-      <div class="node-left">
-        <div class="node-vector-id">Phase 02 // Heart Connection</div>
-        <div class="node-vector-name">Feeling the Body</div>
-        <div class="node-vector-meta">We listen closely to where your body holds tight or empty feelings when these old family memories come up.</div>
-      </div>
-      <div class="node-right">
-        <div class="render-tag">Step Two // Safe Space</div>
-        <div class="render-title">Holding Room for Heavy Emotions</div>
-        <div class="render-details">We create a calm, warm environment to gently acknowledge and release the deep weight or shadows that have been carried for so long.</div>
-      </div>
-    </div>
-    <div class="matrix-node">
-      <div class="node-left">
-        <div class="node-vector-id">Phase 03 // Loving Protection</div>
-        <div class="node-vector-name">Reclaiming Your Voice</div>
-        <div class="node-vector-meta">Your adult self steps in as a guardian to give your inner child the safety, boundaries, and care they always deserved.</div>
-      </div>
-      <div class="node-right">
-        <div class="render-tag">Step Three // Deep Truths</div>
-        <div class="render-title">Healing Words For Little You</div>
-        <div class="render-details">We bring loving truths, clear boundaries, and reassuring protection straight to your younger self, letting them know they are completely safe now.</div>
-      </div>
-    </div>
+  <div class="reassurance">
+    Take your time. If a question feels like too much right now, you can leave it and keep going &mdash; even a single sentence helps us hold your story with care.
   </div>
 
   <div class="steps-indicator">
     <div class="step-item">
-      <div class="step-circle done">✓</div>
-      <span class="step-label-text">Intake</span>
+      <div class="step-circle done">&check;</div>
+      <span class="step-label-text">Reflection</span>
     </div>
     <div class="step-connector"></div>
     <div class="step-item">
       <div class="step-circle active">2</div>
-      <span class="step-label-text">Photo Setup</span>
+      <span class="step-label-text">Your Words</span>
     </div>
     <div class="step-connector"></div>
     <div class="step-item">
       <div class="step-circle">3</div>
-      <span class="step-label-text">Your Video</span>
+      <span class="step-label-text">Your Child</span>
     </div>
   </div>
 
   <div class="action-container">
-    <a href="character.html" id="continue-link" class="btn-prime">Continue to Choose Your Child →</a>
-    <div class="security-disclaimer">Your privacy is completely protected · Love Little Me</div>
+    <a href="character.html" id="continue-link" class="btn-prime">Continue to Choose Your Child &rarr;</a>
+    <div class="security-disclaimer">Your privacy is completely protected &middot; Love Little Me</div>
   </div>
 
 </div>
@@ -203,52 +179,87 @@
 </footer>
 
 <script>
+/* Each wound: color theming + its own three questions on a Locate -> Recognize -> Reparent arc. */
 var WOUNDS = {
   "abandonment": {
-    name: "The Child Who Was Left", subtitle: "Abandonment Wound", chakra: "Heart Chakra",
+    name:"The Child Who Was Left", subtitle:"Abandonment Wound", chakra:"Heart Chakra",
     bg:"#0D1F1A",bg_warm:"#122620",bg_card:"#152E28",accent:"#4CAF82",accent_light:"#7DD4A8",accent_dim:"#2E7A55",accent_faint:"#1E4D38",text_light:"#C8E6D8",text_mid:"#8FBFA8",text_dim:"#5A8A72",
-    description: "You learned early that people leave. Not as a concept — as a fact you lived in your body. Whether a parent walked out, emotionally checked out, or was physically present but completely unreachable, the message was the same: you were not enough to make them stay.",
-    where_it_comes_from: "It comes from parents who left — literally or emotionally. The father who walked out and never came back. The mother who was physically present but emotionally elsewhere, numbed by depression or consumed by her own pain. It comes from the moments you needed someone and no one came."
+    questions: [
+      "Who was the person whose leaving \u2014 through distance, divorce, death, or just being unreachable \u2014 taught you that people don't stay, and what do you remember of it?",
+      "When that fear of being left rises now, where do you feel it in your body \u2014 your chest, your gut, a tightening \u2014 and what does it pull you to do?",
+      "What did that child need to hear to know they were worth staying for, and what do you want to promise them now?"
+    ]
   },
   "neglect": {
-    name: "The Child Whose Needs Went Unmet", subtitle: "Neglect Wound", chakra: "Root Chakra",
+    name:"The Child Whose Needs Went Unmet", subtitle:"Neglect Wound", chakra:"Root Chakra",
     bg:"#1A0A0A",bg_warm:"#220D0D",bg_card:"#2A1010",accent:"#C0392B",accent_light:"#E57373",accent_dim:"#8B1A1A",accent_faint:"#4A1010",text_light:"#F0C4C4",text_mid:"#C48A8A",text_dim:"#8A5555",
-    description: "Nothing dramatic happened to you. No one hit you. No one screamed. But no one showed up either. No one noticed when you were hungry, scared, sick, or sad. Your needs existed — and were consistently met with absence. That absence did as much damage as any violence.",
-    where_it_comes_from: "It comes from parents who were overwhelmed, absent, checked out, mentally ill, or simply not equipped to meet a child's needs. It comes from households where survival consumed everything and emotional attunement was a luxury no one had. It comes from being the child who learned to go quiet, stop asking, and figure it out alone."
+    questions: [
+      "What did you need as a child \u2014 to be noticed, comforted, fed, kept safe \u2014 that simply went unmet, with no one stepping in?",
+      "When a need surfaces today \u2014 for comfort, rest, closeness \u2014 what happens in your body, and do you let yourself feel it or push it down?",
+      "What would it have meant for someone to truly see and tend to that child \u2014 and what do you want them to know they always deserved?"
+    ]
   },
   "emotional-abuse": {
-    name: "The Child Who Was Hurt With Words", subtitle: "Emotional Abuse Wound", chakra: "Throat Chakra",
+    name:"The Child Who Was Hurt With Words", subtitle:"Emotional Abuse Wound", chakra:"Throat Chakra",
     bg:"#0A0F1A",bg_warm:"#0D1422",bg_card:"#101828",accent:"#2E6DB4",accent_light:"#6AABDF",accent_dim:"#1A4A80",accent_faint:"#0F2D50",text_light:"#C4D8F0",text_mid:"#8AAED4",text_dim:"#557AA0",
-    description: "The words became a voice inside you. One that sounds like your own but is not. It tells you that you are stupid, worthless, too sensitive, a burden, a disappointment. You believe it because a child always believes what the people who are supposed to love them say. Those words were a lie. But they are still running.",
-    where_it_comes_from: "It comes from parents who weaponized language. Who criticized everything. Who held love hostage to performance. Who said things like 'I'll give you something to cry about.' Who called you stupid, fat, lazy, or dramatic, and who made you feel their unhappiness was your fault."
+    questions: [
+      "What words or messages were aimed at you as a child \u2014 the ones that became the voice you still hear inside?",
+      "When that inner voice turns on you now, where does it land in your body \u2014 a tight throat, a sinking stomach, a held breath \u2014 and what does it make you want to do?",
+      "What is the truth that child needed to hear instead \u2014 the thing you most want to say back to them now?"
+    ]
   },
   "enmeshment": {
-    name: "The Child Who Was Never Allowed to Be Themselves", subtitle: "Enmeshment Wound", chakra: "Solar Plexus Chakra",
+    name:"The Child Who Was Never Allowed to Be Themselves", subtitle:"Enmeshment Wound", chakra:"Solar Plexus Chakra",
     bg:"#1A1700",bg_warm:"#221E00",bg_card:"#2A2500",accent:"#C9A800",accent_light:"#E8CC4A",accent_dim:"#8A7200",accent_faint:"#4A3E00",text_light:"#F0E8B0",text_mid:"#C4B870",text_dim:"#8A8040",
-    description: "You were never allowed to be a separate person. Your feelings were managed, your preferences overridden, your identity absorbed. You were made responsible for your parent's emotional or practical life, becoming the caretaker before you ever got to be a child.",
-    where_it_comes_from: "It comes from parents who could not distinguish their own emotions from their child's, or who treated their child as an emotional partner, confidant, or functional caretaker. It happens when you are forced to grow up too fast to keep the home steady, responding to the parent's vulnerabilities with quiet compliance."
+    questions: [
+      "What role were you handed too early \u2014 caretaker, peacekeeper, a parent's confidant \u2014 before you ever got to just be a child?",
+      "When someone close to you needs something now, what stirs in your body before you even feel your own \u2014 and where does your own voice go?",
+      "What would you give that child full permission to finally have \u2014 their own feelings, their own life, their own self \u2014 and how would you say it?"
+    ]
   },
   "shame": {
-    name: "The Child Who Was Made to Feel Broken", subtitle: "Shame Wound", chakra: "Sacral Chakra",
+    name:"The Child Who Was Made to Feel Broken", subtitle:"Shame Wound", chakra:"Sacral Chakra",
     bg:"#1A0D00",bg_warm:"#221200",bg_card:"#2A1800",accent:"#E07B20",accent_light:"#F0A855",accent_dim:"#A05010",accent_faint:"#4A2200",text_light:"#F0D4B0",text_mid:"#C4A070",text_dim:"#8A6840",
-    description: "This is not guilt — guilt says you did something bad. Shame says you are bad. It targets your identity, not your behavior. And it was taught to you. Through humiliation, through punishment of your natural feelings, through words and silences that told you something about you — at your core — was wrong.",
-    where_it_comes_from: "It comes from being humiliated — publicly or privately. From parents who shamed your body, your emotions, your curiosity, or your mistakes. From households where certain feelings were treated as forbidden, or where being laughed at or pushed away taught you that your true self was unsafe to show."
+    questions: [
+      "What were you taught was wrong with you \u2014 not something you did, but who you are \u2014 and how was that message delivered (words, looks, silence, comparison)?",
+      "When that 'I'm bad' feeling rises today, where do you feel it \u2014 a flush of heat, a wish to disappear, a heaviness \u2014 and what does your body want to do?",
+      "If your adult self could stand between that child and the shame, what truth about their worth would you make sure they finally believed?"
+    ]
   },
   "unsafe-home": {
-    name: "The Child Who Never Felt Safe", subtitle: "Unsafe Home Wound", chakra: "Root Chakra",
+    name:"The Child Who Never Felt Safe", subtitle:"Unsafe Home Wound", chakra:"Root Chakra",
     bg:"#140808",bg_warm:"#1C0A0A",bg_card:"#240C0C",accent:"#8B1A1A",accent_light:"#C0392B",accent_dim:"#5A1010",accent_faint:"#380808",text_light:"#F0C0C0",text_mid:"#C48080",text_dim:"#8A5050",
-    description: "Home was supposed to be the one place in the world you could exhale. It was not. Whether it was violence, addiction, chaos, or the specific terror of not knowing which version of a parent you would come home to — your nervous system learned that safety was not something you got to have.",
-    where_it_comes_from: "It comes from homes where you walked on eggshells. Where you learned to read a parent's footsteps on the stairs and know within seconds what kind of night it was going to be. Where violence — or the threat of it — shaped every moment. Where chaos was the only constant and safety was a thing other people had."
+    questions: [
+      "What did you have to watch for as a child to stay safe \u2014 a parent's footsteps, a tone, a mood that could turn \u2014 and what was home like to live inside?",
+      "How does your body still stand guard today, even when you are somewhere perfectly safe?",
+      "If your adult self could become the safety that child never had, what would you do to protect them \u2014 and what do you want to promise them now?"
+    ]
   },
   "divorce": {
-    name: "The Child Caught in the Middle", subtitle: "Divorce & Family Rupture Wound", chakra: "Heart Chakra",
+    name:"The Child Caught in the Middle", subtitle:"Divorce & Family Rupture Wound", chakra:"Heart Chakra",
     bg:"#1A0D10",bg_warm:"#221218",bg_card:"#2A1520",accent:"#C0527A",accent_light:"#E087A8",accent_dim:"#8A2A4A",accent_faint:"#4A1228",text_light:"#F0C4D4",text_mid:"#C488A0",text_dim:"#8A5568",
-    description: "You were too young to understand what was happening and too aware not to feel every bit of it. You loved people who could not be in the same room. And somewhere in the chaos of their ending, your own needs — your grief, your confusion, your loss — went largely unwitnessed.",
-    where_it_comes_from: "It comes from being put in the middle — explicitly or implicitly. From being used as a messenger between two people who could not speak. From having to manage a devastated parent's emotions. From feeling guilty for loving the other parent. From having to choose, over and over, in ways no child should ever have to choose."
+    questions: [
+      "When your family came apart, what were you pulled into the middle of \u2014 messages, loyalty, a parent's grief \u2014 that was never a child's to carry?",
+      "When old loyalty or guilt stirs now, where do you feel the pull in your body \u2014 a knot, a tightness, a heaviness \u2014 and which way does it tug you?",
+      "What does the child caught in the middle most need to hear \u2014 that none of it was theirs to fix, and what else?"
+    ]
   }
 };
 
-function applyDynamicWoundTheme() {
+var PHASE_LABELS = [
+  "Phase 01 \u00B7 Gentle Awareness",
+  "Phase 02 \u00B7 Heart Connection",
+  "Phase 03 \u00B7 Loving Protection"
+];
+
+/* Gentle "how to answer" hint for each beat, so no one freezes on a blank box. */
+var PHASE_HINTS = [
+  "Not sure where to start? A single memory, an age, a name, or even just the feeling it leaves you with is enough. You can skip this if it's too much.",
+  "Notice where it lands physically \u2014 a tight chest, a sinking stomach, a held breath. Even naming one sensation is enough, and skipping is okay.",
+  "Speak to them simply, the way you'd comfort a real child sitting beside you. A few words is plenty. If nothing comes, you can leave it and continue."
+];
+
+function resolveWoundKey() {
   var urlParams = new URLSearchParams(window.location.search);
   var rawWoundKey = urlParams.get('wound');
   var activeWoundKey = null;
@@ -260,8 +271,8 @@ function applyDynamicWoundTheme() {
     if (sanitized === 'root' || sanitized === 'invisible' || sanitized === 'invisible-child') sanitized = 'neglect';
     if (sanitized === 'heart' || sanitized === 'left' || sanitized === 'left-child') sanitized = 'abandonment';
     if (sanitized === 'sacral' || sanitized === 'shamed') sanitized = 'shame';
-    if (sanitized === 'unsafe' || sanitized === 'unsafe-home' || sanitized === 'home') sanitized = 'unsafe-home';
-    if (sanitized === 'divorce' || sanitized === 'family' || sanitized === 'rupture') sanitized = 'divorce';
+    if (sanitized === 'unsafe' || sanitized === 'home') sanitized = 'unsafe-home';
+    if (sanitized === 'family' || sanitized === 'rupture') sanitized = 'divorce';
     if (WOUNDS[sanitized]) activeWoundKey = sanitized;
   }
 
@@ -271,11 +282,10 @@ function applyDynamicWoundTheme() {
   }
 
   if (!activeWoundKey) activeWoundKey = 'abandonment';
+  return activeWoundKey;
+}
 
-  localStorage.setItem('selected_wound_fallback', activeWoundKey);
-  sessionStorage.setItem('selectedWound', activeWoundKey);
-
-  var w = WOUNDS[activeWoundKey];
+function applyTheme(w) {
   var root = document.documentElement;
   root.style.setProperty('--bg', w.bg);
   root.style.setProperty('--bg-warm', w.bg_warm);
@@ -287,17 +297,81 @@ function applyDynamicWoundTheme() {
   root.style.setProperty('--text-light', w.text_light);
   root.style.setProperty('--text-mid', w.text_mid);
   root.style.setProperty('--text-dim', w.text_dim);
+}
+
+function answerKey(woundKey, i) { return 'answer_' + woundKey + '_' + i; }
+
+function saveAnswers(woundKey, questions) {
+  var qa = [];
+  for (var i = 0; i < questions.length; i++) {
+    var el = document.getElementById('q-input-' + i);
+    var val = el ? el.value.trim() : '';
+    qa.push({ question: questions[i], answer: val });
+    sessionStorage.setItem(answerKey(woundKey, i), val);
+    localStorage.setItem(answerKey(woundKey, i), val);
+  }
+  var bundle = JSON.stringify({ wound: woundKey, responses: qa });
+  sessionStorage.setItem('questionAnswers', bundle);
+  localStorage.setItem('questionAnswers', bundle);
+}
+
+function buildForm() {
+  var woundKey = resolveWoundKey();
+  var w = WOUNDS[woundKey];
+
+  localStorage.setItem('selected_wound_fallback', woundKey);
+  sessionStorage.setItem('selectedWound', woundKey);
+
+  applyTheme(w);
 
   document.getElementById('dynamic-chakra').innerText = w.chakra;
   document.getElementById('dynamic-headline').innerText = w.name;
-  document.getElementById('dynamic-description').innerText = w.description;
-  document.getElementById('dynamic-wound-title').innerText = w.subtitle;
-  document.getElementById('dynamic-where-from').innerText = w.where_it_comes_from;
-  document.getElementById('continue-link').href = 'character.html?wound=' + activeWoundKey;
-  document.title = w.name + ' — Love Little Me';
+  document.getElementById('dynamic-sub').innerText = w.subtitle;
+  document.title = 'Your Words \u00B7 ' + w.subtitle + ' \u2014 Love Little Me';
+  document.getElementById('continue-link').href = 'character.html?wound=' + woundKey;
+
+  var stack = document.getElementById('questions-stack');
+  stack.innerHTML = '';
+
+  for (var i = 0; i < w.questions.length; i++) {
+    var card = document.createElement('div');
+    card.className = 'question-card';
+
+    var phase = document.createElement('div');
+    phase.className = 'question-phase';
+    phase.innerText = PHASE_LABELS[i] || ('Question ' + (i + 1));
+
+    var qtext = document.createElement('div');
+    qtext.className = 'question-text';
+    qtext.innerText = w.questions[i];
+
+    var hint = document.createElement('div');
+    hint.className = 'question-hint';
+    hint.innerText = PHASE_HINTS[i] || '';
+
+    var ta = document.createElement('textarea');
+    ta.id = 'q-input-' + i;
+    ta.setAttribute('placeholder', 'Write as much or as little as feels right\u2026 or skip if you\u2019re not ready.');
+    ta.setAttribute('aria-label', w.questions[i]);
+
+    var prior = sessionStorage.getItem(answerKey(woundKey, i)) || localStorage.getItem(answerKey(woundKey, i));
+    if (prior) ta.value = prior;
+
+    ta.addEventListener('input', function () { saveAnswers(woundKey, w.questions); });
+
+    card.appendChild(phase);
+    card.appendChild(qtext);
+    if (PHASE_HINTS[i]) card.appendChild(hint);
+    card.appendChild(ta);
+    stack.appendChild(card);
+  }
+
+  document.getElementById('continue-link').addEventListener('click', function () {
+    saveAnswers(woundKey, w.questions);
+  });
 }
 
-window.addEventListener('DOMContentLoaded', applyDynamicWoundTheme);
+window.addEventListener('DOMContentLoaded', buildForm);
 </script>
 
 </body>
