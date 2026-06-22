@@ -1,265 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Complete Your Order — Love Little Me</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Choose Your Child — Love Little Me</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=DM+Sans:wght@300;400;500&display=swap');
-  :root{--bg:#0E0A02;--bg-warm:#1C1408;--bg-card:#221A08;--accent:#C9960C;--accent-light:#E3B84A;--accent-dim:#8A650A;--accent-faint:#2A1E08;--text-light:#F5E4B0;--text-mid:#C4B48A;--text-dim:#7A6A50;--cream-line:rgba(255,255,255,0.08);}
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{--bg-deep:#0E0A02;--gold:#C9960C;--gold-light:#E3B53A;--gold-dim:#8a6c25;--cream:#F3ECD9;--cream-line:rgba(201,150,12,0.18);}
+  *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
-  body{background:var(--bg);color:var(--text-light);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.75;overflow-x:hidden;min-height:100vh;}
-  body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:0.04;pointer-events:none;z-index:500;}
-  .glow-bg{position:fixed;top:0;left:0;right:0;height:50vh;background:radial-gradient(ellipse 60% 50% at 50% 0%,var(--accent-faint) 0%,transparent 70%);pointer-events:none;z-index:0;}
-  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;background:rgba(0,0,0,0.5);backdrop-filter:blur(16px);border-bottom:1px solid var(--cream-line);}
-  .nav-logo{display:flex;align-items:center;text-decoration:none;}
-  .nav-logo img{height:120px;width:auto;object-fit:contain;}
-  .nav-back{font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color 0.2s;}
-  .nav-back:hover{color:var(--accent-light);}
-  .page{padding:10rem 1.5rem 6rem;max-width:680px;margin:0 auto;position:relative;z-index:1;}
-  .steps-indicator{display:flex;align-items:center;justify-content:center;margin-bottom:2.5rem;}
-  .step-item{display:flex;flex-direction:column;align-items:center;gap:0.4rem;flex:1;max-width:110px;}
-  .step-circle{width:34px;height:34px;border-radius:50%;border:1px solid var(--accent-faint);background:var(--bg-card);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',Georgia,serif;font-size:0.9rem;color:var(--text-dim);transition:all 0.3s;}
-  .step-circle.active{background:var(--accent);border-color:var(--accent);color:var(--bg);}
-  .step-circle.done{background:var(--accent-dim);border-color:var(--accent-dim);color:var(--text-light);}
-  .step-label-text{font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);text-align:center;}
-  .step-connector{flex:1;height:1px;background:var(--accent-faint);margin-bottom:1.2rem;max-width:50px;}
-  .page-eyebrow{font-size:0.62rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--accent);margin-bottom:0.8rem;}
-  .page-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(2.5rem,8vw,5rem);font-weight:300;line-height:1.0;color:var(--text-light);margin-bottom:0.5rem;}
-  .page-subtitle{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(1rem,2.5vw,1.2rem);font-style:italic;color:var(--accent);margin-bottom:2.5rem;}
-  .order-summary{background:var(--bg-card);border:1px solid var(--accent-faint);border-top:3px solid var(--accent);border-radius:8px;padding:2rem;margin-bottom:2rem;}
-  .summary-label{font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:1.2rem;}
-  .summary-row{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;padding-bottom:1.2rem;border-bottom:1px solid var(--accent-faint);margin-bottom:1.2rem;flex-wrap:wrap;}
-  .summary-wound-name{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.2rem;color:var(--text-light);margin-bottom:0.2rem;}
-  .summary-wound-sub{font-size:0.78rem;font-style:italic;color:var(--accent);font-family:'Cormorant Garamond',Georgia,serif;}
-  .summary-price{font-family:'Cormorant Garamond',Georgia,serif;font-size:2.2rem;font-weight:300;color:var(--accent-light);line-height:1;text-align:right;}
-  .summary-price-sub{font-size:0.62rem;color:var(--text-dim);letter-spacing:0.1em;text-align:right;}
-  .summary-includes{display:grid;gap:0.6rem;}
-  .summary-include{display:flex;align-items:flex-start;gap:0.7rem;font-size:0.85rem;color:var(--text-mid);}
-  .summary-include strong{color:var(--text-light);font-weight:400;}
-  .summary-check{width:16px;height:16px;border:1px solid var(--accent-dim);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--accent);font-size:0.55rem;margin-top:2px;}
-  .section-label{font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;margin-top:2rem;}
-  .form-label{display:block;font-size:0.78rem;color:var(--text-mid);margin-bottom:0.5rem;}
-  .form-input{width:100%;background:var(--bg-card);border:1px solid var(--accent-faint);border-radius:4px;padding:0.9rem 1.1rem;color:var(--text-light);font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:300;outline:none;transition:border-color 0.2s,box-shadow 0.2s;margin-bottom:0.5rem;}
-  .form-input::placeholder{color:var(--text-dim);}
-  .form-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-faint);}
-  .form-hint{font-size:0.72rem;color:var(--text-dim);margin-bottom:1.5rem;}
-  .form-error{font-size:0.72rem;color:#E08A8A;margin-bottom:1rem;min-height:1rem;}
-  .stripe-note{background:var(--accent-faint);border-left:2px solid var(--accent-dim);border-radius:4px;padding:1rem 1.2rem;font-size:0.82rem;color:var(--text-mid);line-height:1.7;margin-bottom:1.5rem;}
-  .btn-submit{display:block;width:100%;background:var(--accent);color:var(--bg);border:none;font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:1.2rem 2rem;border-radius:4px;cursor:pointer;transition:all 0.3s;text-align:center;margin-bottom:1rem;}
-  .btn-submit:hover{background:var(--accent-light);transform:translateY(-1px);box-shadow:0 8px 30px rgba(0,0,0,0.3);}
-  .security-row{display:flex;align-items:center;justify-content:center;gap:1.2rem;flex-wrap:wrap;margin-bottom:3rem;}
-  .security-item{font-size:0.67rem;color:var(--text-dim);letter-spacing:0.08em;}
-  .ornament{display:flex;align-items:center;gap:0.8rem;margin:0 auto 2rem;max-width:160px;}
-  .ornament-line{flex:1;height:1px;background:linear-gradient(to right,transparent,var(--accent-dim));}
-  .ornament-line:last-child{background:linear-gradient(to left,transparent,var(--accent-dim));}
-  .ornament-dot{width:3px;height:3px;border-radius:50%;background:var(--accent);}
-  .next-steps{background:var(--bg-warm);border:1px solid var(--accent-faint);border-radius:8px;padding:2rem;margin-bottom:2rem;}
-  .next-label{font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:1.2rem;}
-  .next-list{display:grid;gap:1rem;}
-  .next-item{display:flex;align-items:flex-start;gap:1rem;}
-  .next-num{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.4rem;color:var(--accent-dim);line-height:1.2;flex-shrink:0;width:24px;}
-  .next-text{font-size:0.88rem;color:var(--text-mid);line-height:1.7;}
-  .next-text strong{color:var(--text-light);font-weight:400;}
-  .contact-note{text-align:center;font-size:0.8rem;color:var(--text-dim);margin-bottom:2rem;}
-  .contact-note a{color:var(--accent-dim);text-decoration:underline;}
-  footer{padding:2rem 1.5rem;text-align:center;border-top:1px solid var(--accent-faint);background:var(--bg-warm);}
-  .footer-tagline{font-family:'Cormorant Garamond',Georgia,serif;font-size:0.9rem;font-style:italic;color:var(--accent-dim);}
-  @media(min-width:768px){nav{padding:0 3rem;}.page{padding:11rem 3rem 7rem;}}
+  body{background:var(--bg-deep);color:var(--cream);font-family:'DM Sans',sans-serif;font-weight:300;-webkit-font-smoothing:antialiased;min-height:100vh;background-image:radial-gradient(120% 70% at 50% -10%, rgba(201,150,12,0.10) 0%, rgba(201,150,12,0.03) 32%, transparent 60%);background-repeat:no-repeat;}
+  .top-nav{display:flex;align-items:center;justify-content:space-between;padding:1.4rem 1.6rem;border-bottom:1px solid var(--cream-line);position:sticky;top:0;background:var(--bg-deep);z-index:10;}
+  .top-nav img{height:2rem;width:auto;}
+  .back-link{font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-dim);text-decoration:none;}
+  .back-link:hover{color:var(--gold-light);}
+  .progress-bar{display:flex;align-items:center;justify-content:center;gap:1rem;padding:1rem 1.6rem;border-bottom:1px solid var(--cream-line);font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;flex-wrap:wrap;}
+  .step{color:var(--gold-dim);}
+  .step.active{color:var(--gold-light);font-weight:500;}
+  .step-divider{color:var(--cream-line);}
+  .wrap{max-width:980px;margin:0 auto;padding:clamp(2.5rem,5vw,5rem) 1.4rem 10rem;}
+  header{text-align:center;margin-bottom:clamp(2rem,4vw,3rem);}
+  .eyebrow{font-family:'DM Sans',sans-serif;font-weight:500;font-size:0.72rem;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:1.1rem;}
+  h1{font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;font-size:clamp(2.2rem,5.4vw,3.5rem);line-height:1.08;color:var(--cream);letter-spacing:0.01em;}
+  h1 em{font-style:italic;color:var(--gold-light);}
+  .lede{max-width:34rem;margin:1.5rem auto 0;font-size:1rem;line-height:1.7;color:rgba(243,236,217,0.62);font-weight:300;}
+
+  .filter-row{display:flex;align-items:center;justify-content:center;gap:0.8rem;margin-bottom:2.5rem;flex-wrap:wrap;}
+  .filter-btn{background:transparent;border:1px solid var(--cream-line);color:rgba(243,236,217,0.55);font-family:'DM Sans',sans-serif;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;padding:0.5rem 1.4rem;border-radius:30px;cursor:pointer;transition:all 0.25s ease;}
+  .filter-btn:hover{border-color:var(--gold-dim);color:var(--gold-light);}
+  .filter-btn.active{background:var(--gold);color:var(--bg-deep);border-color:var(--gold);font-weight:500;}
+
+  .section{margin-top:clamp(1.5rem,3vw,2.5rem);}
+  .section-head{display:flex;align-items:center;gap:1.2rem;margin-bottom:1.5rem;}
+  .section-head h2{font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;font-style:italic;font-size:1.7rem;color:var(--gold-light);letter-spacing:0.02em;white-space:nowrap;}
+  .rule{flex:1;height:1px;background:var(--cream-line);}
+  .section.hidden{display:none;}
+
+  .child-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1rem;}
+
+  .child-card{position:relative;background:rgba(255,255,255,0.03);border:1px solid var(--cream-line);border-radius:16px;padding:0.6rem;cursor:pointer;transition:all 0.25s ease;-webkit-tap-highlight-color:transparent;display:flex;flex-direction:column;}
+  .child-card:hover{border-color:var(--gold-dim);background:rgba(201,150,12,0.05);}
+  .child-card.selected{border-color:var(--gold);background:rgba(201,150,12,0.08);box-shadow:0 0 0 1px rgba(201,150,12,0.35),0 0 38px rgba(201,150,12,0.28);}
+  .child-imgwrap{position:relative;width:100%;aspect-ratio:3/4;border-radius:11px;overflow:hidden;background:radial-gradient(70% 60% at 50% 38%, rgba(201,150,12,0.16) 0%, rgba(201,150,12,0.04) 45%, rgba(255,255,255,0.015) 75%);display:flex;align-items:center;justify-content:center;}
+  .child-imgwrap img{width:100%;height:100%;object-fit:contain;display:block;}
+  .child-card .check{position:absolute;top:0.7rem;right:0.7rem;width:1.5rem;height:1.5rem;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.2s ease;z-index:3;box-shadow:0 2px 8px rgba(0,0,0,0.4);}
+  .child-card.selected .check{opacity:1;}
+  .check svg{width:0.8rem;height:0.8rem;stroke:#0E0A02;stroke-width:2.5;fill:none;}
+
+  .eyedots{display:flex;align-items:center;justify-content:center;gap:0.5rem;margin-top:0.6rem;min-height:1.1rem;}
+  .eyedot{width:1.05rem;height:1.05rem;border-radius:50%;cursor:pointer;border:2px solid rgba(243,236,217,0.25);transition:all 0.18s ease;-webkit-tap-highlight-color:transparent;}
+  .eyedot:hover{transform:scale(1.15);}
+  .eyedot.active{border-color:var(--gold-light);box-shadow:0 0 0 2px rgba(201,150,12,0.35);}
+  .eyedot.blue{background:#5a86b8;}
+  .eyedot.green{background:#6f9466;}
+  .eyedot.brown{background:#8a6a44;}
+  .eyelabel{font-size:0.66rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold-dim);text-align:center;margin-top:0.35rem;min-height:0.8rem;}
+
+  .disclaimer{margin-top:2.2rem;padding:1.2rem 1.4rem;border:1px solid var(--cream-line);border-radius:12px;font-size:0.8rem;color:rgba(243,236,217,0.5);line-height:1.6;text-align:center;}
+
+  .sel-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(14,10,2,0.96);border-top:1px solid var(--cream-line);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:1rem 1.6rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;transform:translateY(100%);transition:transform 0.4s cubic-bezier(.2,.8,.2,1);z-index:100;}
+  .sel-bar.visible{transform:translateY(0);}
+  .sel-label{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.05rem;color:var(--cream);font-style:italic;}
+  .sel-sub{font-size:0.75rem;color:var(--gold-dim);letter-spacing:0.08em;margin-top:0.2rem;}
+  .continue-btn{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-light) 100%);color:var(--bg-deep);border:none;font-family:'DM Sans',sans-serif;font-weight:500;font-size:0.85rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.85rem 2rem;border-radius:30px;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:opacity 0.2s ease;}
+  .continue-btn:hover{opacity:0.9;}
 </style>
 </head>
 <body>
-<div class="glow-bg"></div>
-<nav>
-  <a href="index.html" class="nav-logo"><img src="logo.jpg" alt="Love Little Me"></a>
-  <a href="javascript:history.back()" class="nav-back">&larr; Go back</a>
+
+<nav class="top-nav">
+  <a href="index.html"><img src="logo.jpg" alt="Love Little Me"></a>
+  <a href="javascript:history.back()" class="back-link">← Back</a>
 </nav>
-<div class="page">
-  <div class="steps-indicator">
-    <div class="step-item"><div class="step-circle done">&check;</div><span class="step-label-text">Your Selections</span></div>
-    <div class="step-connector"></div>
-    <div class="step-item"><div class="step-circle active">2</div><span class="step-label-text">Payment</span></div>
-    <div class="step-connector"></div>
-    <div class="step-item"><div class="step-circle">3</div><span class="step-label-text">Your Video</span></div>
-  </div>
-  <p class="page-eyebrow">Final step</p>
-  <h1 class="page-title">Complete your<br>order</h1>
-  <p class="page-subtitle" id="page-subtitle"></p>
 
-  <div class="order-summary">
-    <p class="summary-label">Your order</p>
-    <div class="summary-row">
-      <div><p class="summary-wound-name" id="summary-wound-name">Healing Video</p><p class="summary-wound-sub" id="summary-wound-sub"></p></div>
-      <div><p class="summary-price">$29</p><p class="summary-price-sub">one time</p></div>
-    </div>
-    <div class="summary-includes">
-      <div class="summary-include"><div class="summary-check">&check;</div><span><strong>Your reflections</strong> &mdash; the words you shared, woven into a healing script written only for you</span></div>
-      <div class="summary-include"><div class="summary-check">&check;</div><span><strong>Your chosen child</strong> &mdash; the character you selected<span id="summary-child"></span></span></div>
-      <div class="summary-include"><div class="summary-check">&check;</div><span><strong>Your guide voice</strong><span id="summary-voice"></span></span></div>
-      <div class="summary-include"><div class="summary-check">&check;</div><span>A Ghibli-style animated video, delivered to your email &middot; yours to keep forever</span></div>
-    </div>
-  </div>
-
-  <p class="section-label">Delivery email</p>
-  <label class="form-label" for="email-input">Where should we send your finished video?</label>
-  <input class="form-input" type="email" id="email-input" placeholder="you@email.com" autocomplete="email">
-  <p class="form-hint">Please double-check your email &mdash; your completed video is delivered here.</p>
-  <p class="form-error" id="email-error"></p>
-
-  <p class="section-label">Payment</p>
-  <div class="stripe-note">
-    When you continue, you'll be taken to our secure checkout, powered by Stripe, to enter your card details and complete your $29 payment. Your card information is handled entirely by Stripe &mdash; we never see or store it. This is a one-time payment, with no subscription.
-  </div>
-  <button class="btn-submit" id="pay-btn" onclick="handlePay()">Continue to secure payment &mdash; $29</button>
-  <div class="security-row">
-    <span class="security-item">Secure checkout</span>
-    <span class="security-item">Powered by Stripe</span>
-    <span class="security-item">No subscription</span>
-  </div>
-
-  <div class="ornament"><div class="ornament-line"></div><div class="ornament-dot"></div><div class="ornament-line"></div></div>
-
-  <div class="next-steps">
-    <p class="next-label">What happens after you pay</p>
-    <div class="next-list">
-      <div class="next-item"><span class="next-num">1</span><p class="next-text"><strong>Your payment is confirmed.</strong> Stripe securely processes your one-time $29 payment and emails you a receipt.</p></div>
-      <div class="next-item"><span class="next-num">2</span><p class="next-text"><strong>Your video is created.</strong> Your reflections, your chosen child, and your guide voice are gently woven into a personalized animated healing video, made only for you.</p></div>
-      <div class="next-item"><span class="next-num">3</span><p class="next-text"><strong>It arrives in your inbox.</strong> Your finished video is delivered to the email above &mdash; yours to keep and return to whenever you need it.</p></div>
-    </div>
-  </div>
-
-  <p class="contact-note">Questions or issues? Visit our <a href="faq.html">FAQ page</a> or <a href="faq.html#contact">contact us</a>.</p>
+<div class="progress-bar">
+  <span class="step">1 — Template</span><span class="step-divider">·</span>
+  <span class="step">2 — Reflection</span><span class="step-divider">·</span>
+  <span class="step active">3 — Your Child</span><span class="step-divider">·</span>
+  <span class="step">4 — Your Guide</span><span class="step-divider">·</span>
+  <span class="step">5 — Your Video</span>
 </div>
-<footer><p class="footer-tagline">"Because you always deserved to be loved."</p></footer>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Step 3 of 5 · Choose Your Child</p>
+    <h1>Which child<br><em>feels like you?</em></h1>
+    <p class="lede">Choose the little one who feels like the child inside you. There's no wrong choice — trust the face your heart goes to.</p>
+  </header>
+
+  <div class="filter-row">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="girl">Girls</button>
+    <button class="filter-btn" data-filter="boy">Boys</button>
+  </div>
+
+  <section class="section" data-gender="girl">
+    <div class="section-head"><h2>Girls</h2><span class="rule"></span></div>
+    <div class="child-grid" id="grid-girl"></div>
+  </section>
+
+  <section class="section" data-gender="boy">
+    <div class="section-head"><h2>Boys</h2><span class="rule"></span></div>
+    <div class="child-grid" id="grid-boy"></div>
+  </section>
+
+  <div class="disclaimer">
+    Some children can be shown with different eye colors — tap a color dot beneath them to change. Your finished video features the child you choose here.
+  </div>
+</div>
+
+<div class="sel-bar" id="selBar">
+  <div>
+    <div class="sel-label" id="selLabel">Your child is chosen</div>
+    <div class="sel-sub">Next, choose the voice that will hold your healing</div>
+  </div>
+  <button class="continue-btn" id="continueBtn">Continue to Your Guide →</button>
+</div>
 
 <script>
-/* ============================================================
-   STRIPE PAYMENT LINK  —  edit this one line if the link changes
-   ============================================================ */
-var STRIPE_LINK = 'https://buy.stripe.com/6oU5kw5CZdws4j542HdQQ00';
+  var CHILDREN = [{"g": "girl", "t": "single", "id": "afro4_child_ghibli_gallery_neutral_cutout", "img": "afro4_child_ghibli_gallery_neutral_cutout.png"}, {"g": "girl", "t": "single", "id": "girl1_locs_ghibli_gallery_neutral_cutout", "img": "girl1_locs_ghibli_gallery_neutral_cutout.png"}, {"g": "girl", "t": "single", "id": "girl2_curly_ghibli_gallery_neutral_cutout", "img": "girl2_curly_ghibli_gallery_neutral_cutout.png"}, {"g": "girl", "t": "single", "id": "girl3_ghibli_gallery_neutral_cutout", "img": "girl3_ghibli_gallery_neutral_cutout.png"}, {"g": "girl", "t": "single", "id": "girl4_child_ghibli_gallery_neutral_cutout", "img": "girl4_child_ghibli_gallery_neutral_cutout.png"}, {"g": "girl", "t": "single", "id": "girl5_ghibli_gallery_neutral_cutout", "img": "girl5_ghibli_gallery_neutral_cutout.png"}, {"g": "girl", "t": "single", "id": "girl6_ghibli_gallery_neutral_cutout", "img": "girl6_ghibli_gallery_neutral_cutout.png"}, {"g": "girl", "t": "single", "id": "girl7_ghibli_gallery_neutral_cutout", "img": "girl7_ghibli_gallery_neutral_cutout.png"}, {"g": "girl", "t": "single", "id": "girl8_ghibli_gallery_neutral_cutout", "img": "girl8_ghibli_gallery_neutral_cutout.png"}, {"g": "girl", "t": "single", "id": "girl9_ghibli_gallery_neutral_cutout", "img": "girl9_ghibli_gallery_neutral_cutout.png"}, {"g": "girl", "t": "single", "id": "girl10_ghibli_gallery_neutral_cutout", "img": "girl10_ghibli_gallery_neutral_cutout.png"}, {"g": "girl", "t": "triple", "blue": {"id": "girl11_ghibli_gallery_neutral_blue", "img": "girl11_ghibli_gallery_neutral_blue.png"}, "green": {"id": "girl12_ghibli_gallery_neutral_green", "img": "girl12_ghibli_gallery_neutral_green.png"}, "brown": {"id": "girl13_ghibli_gallery_neutral_brown", "img": "girl13_ghibli_gallery_neutral_brown.png"}}, {"g": "girl", "t": "triple", "blue": {"id": "girl14_ghibli_gallery_neutral_blue", "img": "girl14_ghibli_gallery_neutral_blue.png"}, "green": {"id": "girl15_ghibli_gallery_neutral_green", "img": "girl15_ghibli_gallery_neutral_green.png"}, "brown": {"id": "girl16_ghibli_gallery_neutral_brown", "img": "girl16_ghibli_gallery_neutral_brown.png"}}, {"g": "girl", "t": "triple", "blue": {"id": "girl17_ghibli_gallery_neutral_blue", "img": "girl17_ghibli_gallery_neutral_blue.png"}, "green": {"id": "girl18_ghibli_gallery_neutral_green", "img": "girl18_ghibli_gallery_neutral_green.png"}, "brown": {"id": "girl19_ghibli_gallery_neutral_brown", "img": "girl19_ghibli_gallery_neutral_brown.png"}}, {"g": "girl", "t": "triple", "blue": {"id": "girl20_ghibli_gallery_neutral_blue", "img": "girl20_ghibli_gallery_neutral_blue.png"}, "green": {"id": "girl21_ghibli_gallery_neutral_green", "img": "girl21_ghibli_gallery_neutral_green.png"}, "brown": {"id": "girl22_ghibli_gallery_neutral_brown", "img": "girl22_ghibli_gallery_neutral_brown.png"}}, {"g": "boy", "t": "single", "id": "boy1_ghibli_gallery_neutral_cutout", "img": "boy1_ghibli_gallery_neutral_cutout.png"}, {"g": "boy", "t": "single", "id": "boy2curly_ghibli_gallery_neutral_cutout", "img": "boy2curly_ghibli_gallery_neutral_cutout.png"}, {"g": "boy", "t": "single", "id": "boy3_ghibli_gallery_neutral_cutout", "img": "boy3_ghibli_gallery_neutral_cutout.png"}, {"g": "boy", "t": "single", "id": "boy4_ghibli_gallery_neutral_cutout", "img": "boy4_ghibli_gallery_neutral_cutout.png"}, {"g": "boy", "t": "single", "id": "boy5_ghibli_gallery_neutral_cutout", "img": "boy5_ghibli_gallery_neutral_cutout.png"}, {"g": "boy", "t": "single", "id": "boy6_ghibli_gallery_neutral_cutout", "img": "boy6_ghibli_gallery_neutral_cutout.png"}, {"g": "boy", "t": "triple", "blue": {"id": "boy7_ghibli_gallery_neutral_blue", "img": "boy7_ghibli_gallery_neutral_blue.png"}, "green": {"id": "boy8_ghibli_gallery_neutral_green", "img": "boy8_ghibli_gallery_neutral_green.png"}, "brown": {"id": "boy9_ghibli_gallery_neutral_brown", "img": "boy9_ghibli_gallery_neutral_brown.png"}}, {"g": "boy", "t": "triple", "blue": {"id": "boy10_ghibli_gallery_neutral_blue", "img": "boy10_ghibli_gallery_neutral_blue.png"}, "green": {"id": "boy11_ghibli_gallery_neutral_green", "img": "boy11_ghibli_gallery_neutral_green.png"}, "brown": {"id": "boy12_ghibli_gallery_neutral_brown", "img": "boy12_ghibli_gallery_neutral_brown.png"}}, {"g": "boy", "t": "triple", "blue": {"id": "boy13_ghibli_gallery_neutral_blue_cutout", "img": "boy13_ghibli_gallery_neutral_blue_cutout.png"}, "green": {"id": "boy14_ghibli_gallery_neutral_green_cutout", "img": "boy14_ghibli_gallery_neutral_green_cutout.png"}, "brown": {"id": "boy15_ghibli_gallery_neutral_brown_cutout", "img": "boy15_ghibli_gallery_neutral_brown_cutout.png"}}, {"g": "boy", "t": "triple", "blue": {"id": "boy16_curlfair_ghibli_gallery_neutral_blue_cutout", "img": "boy16_curlfair_ghibli_gallery_neutral_blue_cutout.png"}, "green": {"id": "boy17_curlfair_ghibli_gallery_neutral_green_cutout", "img": "boy17_curlfair_ghibli_gallery_neutral_green_cutout.png"}, "brown": {"id": "boy18_curlfair_ghibli_gallery_neutral_brown_cutout", "img": "boy18_curlfair_ghibli_gallery_neutral_brown_cutout.png"}}, {"g": "boy", "t": "triple", "blue": {"id": "boyC26_curly_green_ghibli_gallery_neutral_blue", "img": "boyC26_curly_green_ghibli_gallery_neutral_blue.png"}, "green": {"id": "boyC25_curly_green_ghibli_gallery_neutral_green", "img": "boyC25_curly_green_ghibli_gallery_neutral_green.png"}, "brown": {"id": "boyC27_curly_green_ghibli_gallery_neutral_brown", "img": "boyC27_curly_green_ghibli_gallery_neutral_brown.png"}}];
+  var params = new URLSearchParams(window.location.search);
+  var wound = params.get('wound') || sessionStorage.getItem('selectedWound') || '';
+  if(wound) sessionStorage.setItem('selectedWound', wound);
+  var selectedId = null;
 
-var PALETTES={abandonment:{accent:"#4CAF82",accent_light:"#7DD4A8",accent_dim:"#2E7A55",accent_faint:"#1E4D38",bg:"#0D1F1A",bg_warm:"#122620",bg_card:"#152E28",text_light:"#C8E6D8",text_mid:"#8FBFA8",text_dim:"#5A8A72",name:"Abandonment",sub:"The Child Who Was Left"},neglect:{accent:"#C0392B",accent_light:"#E57373",accent_dim:"#8B1A1A",accent_faint:"#4A1010",bg:"#1A0A0A",bg_warm:"#220D0D",bg_card:"#2A1010",text_light:"#F0C4C4",text_mid:"#C48A8A",text_dim:"#8A5555",name:"Neglect",sub:"The Child Whose Needs Went Unmet"},"emotional-abuse":{accent:"#2E6DB4",accent_light:"#6AABDF",accent_dim:"#1A4A80",accent_faint:"#0F2D50",bg:"#0A0F1A",bg_warm:"#0D1422",bg_card:"#101828",text_light:"#C4D8F0",text_mid:"#8AAED4",text_dim:"#557AA0",name:"Emotional Abuse",sub:"The Child Who Was Hurt With Words"},enmeshment:{accent:"#C9A800",accent_light:"#E8CC4A",accent_dim:"#8A7200",accent_faint:"#4A3E00",bg:"#1A1700",bg_warm:"#221E00",bg_card:"#2A2500",text_light:"#F0E8B0",text_mid:"#C4B870",text_dim:"#8A8040",name:"Enmeshment",sub:"The Child Who Was Never Allowed to Be Themselves"},shame:{accent:"#E07B20",accent_light:"#F0A855",accent_dim:"#A05010",accent_faint:"#4A2200",bg:"#1A0D00",bg_warm:"#221200",bg_card:"#2A1800",text_light:"#F0D4B0",text_mid:"#C4A070",text_dim:"#8A6840",name:"Shame",sub:"The Child Who Was Made to Feel Broken"},"unsafe-home":{accent:"#8B1A1A",accent_light:"#C0392B",accent_dim:"#5A1010",accent_faint:"#380808",bg:"#140808",bg_warm:"#1C0A0A",bg_card:"#240C0C",text_light:"#F0C0C0",text_mid:"#C48080",text_dim:"#8A5050",name:"Unsafe Home",sub:"The Child Who Never Felt Safe"},divorce:{accent:"#C0527A",accent_light:"#E087A8",accent_dim:"#8A2A4A",accent_faint:"#4A1228",bg:"#1A0D10",bg_warm:"#221218",bg_card:"#2A1520",text_light:"#F0C4D4",text_mid:"#C488A0",text_dim:"#8A5568",name:"Divorce & Family Rupture",sub:"The Child Caught in the Middle"}};
+  var CHECK = '<span class="check"><svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg></span>';
 
-/* voice id -> what the customer saw (label) + your internal name + ElevenLabs id */
-var VOICES={
-  female1:{label:"Female 1",name:"Amara",elevenId:"fOHhBwjTJaMPR3NdVGeP"},
-  female2:{label:"Female 2",name:"Violet",elevenId:"j7KV53NgP8U4LRS2k2Gs"},
-  female3:{label:"Female 3",name:"Bella",elevenId:"ZMcTJJGIY9EuxIahNGel"},
-  female4:{label:"Female 4",name:"Luna",elevenId:"6rOxfAnZpbM3VIEhFaeV"},
-  female5:{label:"Female 5",name:"Vivian",elevenId:"BKy54CdI9KEYxRNAQAsk"},
-  female6:{label:"Female 6",name:"Anna",elevenId:"7HfCp66bLqlkSw1ebj0I"},
-  male1:{label:"Male 1",name:"Marco",elevenId:"CXAc4DNZL6wonQQNlNgZ"},
-  male2:{label:"Male 2",name:"Marc",elevenId:"eE1wxhUj3eTk2goTCsix"},
-  male3:{label:"Male 3",name:"Mike",elevenId:"ewxUvnyvvOehYjKjUVKC"},
-  male4:{label:"Male 4",name:"John",elevenId:"j0jBf06B5YHDbCWVmlmr"},
-  male5:{label:"Male 5",name:"Sergio",elevenId:"Noo2D0uxFyzbTIA6RY8t"},
-  male6:{label:"Male 6",name:"Neuris",elevenId:"sna352rzGLIHt6M1TuiH"}
-};
+  function makeCard(c){
+    var card = document.createElement('div');
+    card.className = 'child-card';
+    var firstImg, firstId;
+    if(c.t === 'single'){ firstImg = c.img; firstId = c.id; }
+    else { firstImg = c.blue.img; firstId = c.blue.id; }
+    card.dataset.id = firstId;
 
-var params=new URLSearchParams(window.location.search);
-var woundId=params.get('wound')||sessionStorage.getItem('selectedWound')||'abandonment';
-var childId=params.get('child')||sessionStorage.getItem('selectedChild')||'';
-var voiceId=params.get('voice')||sessionStorage.getItem('selectedVoice')||'';
-var p=PALETTES[woundId]||PALETTES['abandonment'];
+    var html = CHECK +
+      '<div class="child-imgwrap"><img src="characters/'+firstImg+'" alt="Choose this child" loading="lazy"></div>';
+    if(c.t === 'triple'){
+      html += '<div class="eyedots">'+
+        '<span class="eyedot blue active" data-color="blue" data-id="'+c.blue.id+'" data-img="'+c.blue.img+'" title="Blue eyes"></span>'+
+        '<span class="eyedot green" data-color="green" data-id="'+c.green.id+'" data-img="'+c.green.img+'" title="Green eyes"></span>'+
+        '<span class="eyedot brown" data-color="brown" data-id="'+c.brown.id+'" data-img="'+c.brown.img+'" title="Brown eyes"></span>'+
+        '</div><div class="eyelabel">Blue eyes</div>';
+    } else {
+      html += '<div class="eyedots"></div><div class="eyelabel"></div>';
+    }
+    card.innerHTML = html;
 
-/* theme */
-var r=document.documentElement;
-r.style.setProperty('--bg',p.bg);r.style.setProperty('--bg-warm',p.bg_warm);r.style.setProperty('--bg-card',p.bg_card);r.style.setProperty('--accent',p.accent);r.style.setProperty('--accent-light',p.accent_light);r.style.setProperty('--accent-dim',p.accent_dim);r.style.setProperty('--accent-faint',p.accent_faint);r.style.setProperty('--text-light',p.text_light);r.style.setProperty('--text-mid',p.text_mid);r.style.setProperty('--text-dim',p.text_dim);
+    // eye-color dots
+    card.querySelectorAll('.eyedot').forEach(function(dot){
+      dot.addEventListener('click', function(e){
+        e.stopPropagation();
+        card.querySelectorAll('.eyedot').forEach(function(d){ d.classList.remove('active'); });
+        dot.classList.add('active');
+        card.querySelector('img').src = 'characters/' + dot.dataset.img;
+        card.dataset.id = dot.dataset.id;
+        var lbl = card.querySelector('.eyelabel');
+        if(lbl) lbl.textContent = dot.dataset.color.charAt(0).toUpperCase()+dot.dataset.color.slice(1)+' eyes';
+        // if this card is the selected one, update the live selection
+        if(card.classList.contains('selected')) selectChild(card);
+      });
+    });
 
-document.title=p.name+' — Complete Your Order — Love Little Me';
-document.getElementById('page-subtitle').textContent=p.sub;
-document.getElementById('summary-wound-name').textContent=p.name+' Healing Video';
-document.getElementById('summary-wound-sub').textContent=p.sub;
-
-/* voice label in summary */
-var voice=VOICES[voiceId]||null;
-if(voice){document.getElementById('summary-voice').textContent=' \u2014 '+voice.label;}
-
-/* persist selections so they survive the trip to Stripe and back */
-sessionStorage.setItem('selectedWound',woundId);
-if(childId)sessionStorage.setItem('selectedChild',childId);
-if(voiceId)sessionStorage.setItem('selectedVoice',voiceId);
-
-/* prefill email if we have it */
-var savedEmail=sessionStorage.getItem('userEmail');
-if(savedEmail)document.getElementById('email-input').value=savedEmail;
-
-/* read the reflections the customer typed earlier */
-function getAnswers(){
-  try{
-    var raw=sessionStorage.getItem('questionAnswers')||localStorage.getItem('questionAnswers');
-    return raw?JSON.parse(raw):null;
-  }catch(e){return null;}
-}
-
-/* build a stable order id for matching the Stripe payment to this order */
-function makeOrderId(){
-  var existing=sessionStorage.getItem('orderId');
-  if(existing)return existing;
-  var id='LLM-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,8);
-  sessionStorage.setItem('orderId',id);
-  return id;
-}
-
-/* ============================================================
-   ORDER CAPTURE HOOK
-   This is where each order's full details get sent to YOU.
-   Right now it just saves the order in the browser + console.
-   When your capture method is ready (Google Sheet / Formspree /
-   email endpoint), paste its URL into CAPTURE_ENDPOINT below and
-   this will POST every order automatically. No other changes needed.
-   ============================================================ */
-var CAPTURE_ENDPOINT=''; // <-- paste your capture URL here when ready
-
-function captureOrder(order){
-  // always keep a local copy
-  try{
-    sessionStorage.setItem('llm_order',JSON.stringify(order));
-    localStorage.setItem('llm_order_'+order.orderId,JSON.stringify(order));
-  }catch(e){}
-  console.log('LLM ORDER',order);
-  // if an endpoint is set, send it there too (fire-and-forget)
-  if(CAPTURE_ENDPOINT){
-    try{
-      fetch(CAPTURE_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(order),keepalive:true});
-    }catch(e){}
+    card.addEventListener('click', function(){ selectChild(card); });
+    return card;
   }
-}
 
-function handlePay(){
-  var emailEl=document.getElementById('email-input');
-  var errEl=document.getElementById('email-error');
-  var email=emailEl.value.trim();
-  if(!email||!email.includes('@')||!email.includes('.')){
-    errEl.textContent='Please enter a valid email so we can deliver your video.';
-    emailEl.style.borderColor=p.accent;emailEl.focus();return;
+  function selectChild(card){
+    document.querySelectorAll('.child-card').forEach(function(c){ c.classList.remove('selected'); });
+    card.classList.add('selected');
+    selectedId = card.dataset.id;
+    sessionStorage.setItem('selectedChild', selectedId);
+    localStorage.setItem('selected_child_fallback', selectedId);
+    document.getElementById('selBar').classList.add('visible');
+    card.scrollIntoView({block:'nearest', behavior:'smooth'});
   }
-  errEl.textContent='';
-  sessionStorage.setItem('userEmail',email);
 
-  var orderId=makeOrderId();
-  var answers=getAnswers();
-  var order={
-    orderId:orderId,
-    createdAt:new Date().toISOString(),
-    email:email,
-    wound:woundId,
-    woundName:p.name,
-    child:childId,
-    voice:voiceId,
-    voiceName:voice?voice.name:'',
-    voiceElevenId:voice?voice.elevenId:'',
-    answers:answers?answers.responses:[]
-  };
-  captureOrder(order);
+  var gridG = document.getElementById('grid-girl');
+  var gridB = document.getElementById('grid-boy');
+  CHILDREN.forEach(function(c){ (c.g === 'girl' ? gridG : gridB).appendChild(makeCard(c)); });
 
-  /* hand off to Stripe's secure checkout, tagged with this order */
-  var url=STRIPE_LINK
-    +'?client_reference_id='+encodeURIComponent(orderId)
-    +'&prefilled_email='+encodeURIComponent(email);
-  window.location.href=url;
-}
+  // filter
+  document.querySelectorAll('.filter-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      var f = btn.dataset.filter;
+      document.querySelectorAll('.section[data-gender]').forEach(function(s){
+        s.classList.toggle('hidden', f !== 'all' && s.dataset.gender !== f);
+      });
+    });
+  });
+
+  // continue
+  document.getElementById('continueBtn').addEventListener('click', function(){
+    if(!selectedId) return;
+    var q = new URLSearchParams();
+    if(wound) q.set('wound', wound);
+    q.set('child', selectedId);
+    window.location.href = 'voice.html?' + q.toString();
+  });
 </script>
 </body>
 </html>
