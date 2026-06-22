@@ -46,6 +46,10 @@
   .form-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-faint);}
   .form-hint{font-size:0.72rem;color:var(--text-dim);margin-bottom:1.5rem;}
   .form-error{font-size:0.72rem;color:#E08A8A;margin-bottom:1rem;min-height:1rem;}
+  .consent-row{display:flex;align-items:flex-start;gap:0.7rem;margin-top:0.5rem;margin-bottom:0.5rem;}
+  .consent-check{margin-top:0.2rem;width:18px;height:18px;flex-shrink:0;accent-color:var(--accent);cursor:pointer;}
+  .consent-label{font-size:0.8rem;line-height:1.6;color:var(--text-mid);cursor:pointer;}
+  .consent-label a{color:var(--accent-light);text-decoration:underline;}
   .stripe-note{background:var(--accent-faint);border-left:2px solid var(--accent-dim);border-radius:4px;padding:1rem 1.2rem;font-size:0.82rem;color:var(--text-mid);line-height:1.7;margin-bottom:1.5rem;}
   .btn-submit{display:block;width:100%;background:var(--accent);color:var(--bg);border:none;font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:1.2rem 2rem;border-radius:4px;cursor:pointer;transition:all 0.3s;text-align:center;margin-bottom:1rem;}
   .btn-submit:hover{background:var(--accent-light);transform:translateY(-1px);box-shadow:0 8px 30px rgba(0,0,0,0.3);}
@@ -111,6 +115,11 @@
   <div class="stripe-note">
     When you continue, you'll be taken to our secure checkout, powered by Stripe, to enter your card details and complete your $29 payment. Your card information is handled entirely by Stripe &mdash; we never see or store it. This is a one-time payment, with no subscription.
   </div>
+  <div class="consent-row">
+    <input type="checkbox" id="consent-check" class="consent-check">
+    <label for="consent-check" class="consent-label">I understand that Love Little Me is a personal reflection experience and not therapy or a substitute for professional mental-health support, and I agree to the <a href="terms.html" target="_blank" rel="noopener">Terms of Service</a> and <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</label>
+  </div>
+  <p class="form-error" id="consent-error"></p>
   <button class="btn-submit" id="pay-btn" onclick="handlePay()">Continue to secure payment &mdash; $29</button>
   <div class="security-row">
     <span class="security-item">Secure checkout</span>
@@ -247,6 +256,15 @@ function handlePay(){
     emailEl.style.borderColor=p.accent;emailEl.focus();return;
   }
   errEl.textContent='';
+
+  var consentEl=document.getElementById('consent-check');
+  var consentErrEl=document.getElementById('consent-error');
+  if(!consentEl.checked){
+    consentErrEl.textContent='Please check the box to agree before continuing.';
+    consentEl.focus();return;
+  }
+  consentErrEl.textContent='';
+
   sessionStorage.setItem('userEmail',email);
 
   var orderId=makeOrderId();
@@ -261,7 +279,9 @@ function handlePay(){
     voice:voiceId,
     voiceName:voice?voice.name:'',
     voiceElevenId:voice?voice.elevenId:'',
-    answers:answers?answers.responses:[]
+    answers:answers?answers.responses:[],
+    consentAgreed:true,
+    consentAt:new Date().toISOString()
   };
   captureOrder(order);
 
