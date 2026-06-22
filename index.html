@@ -175,35 +175,42 @@
       <div class="step-num">01</div>
       <div class="step-body">
         <h3 class="step-title">Choose your wound</h3>
-        <p class="step-desc">Select the childhood experience that shaped you most. Each template holds its own healing script, affirmations, and emotional landscape.</p>
+        <p class="step-desc">Select the childhood experience that shaped you most. Each one holds its own healing script, affirmations, and emotional landscape.</p>
       </div>
     </div>
     <div class="step reveal">
       <div class="step-num">02</div>
       <div class="step-body">
-        <h3 class="step-title">Upload a childhood photo</h3>
-        <p class="step-desc">A single image of you as a child. We animate it into a warm, Ghibli-inspired scene — the child you were, finally receiving what they deserved.</p>
+        <h3 class="step-title">Answer a few honest questions</h3>
+        <p class="step-desc">A handful of gentle, guided questions about your story. There are no right answers, and you can skip any that feel like too much. Your words shape a healing script written only for you.</p>
       </div>
     </div>
     <div class="step reveal">
       <div class="step-num">03</div>
+      <div class="step-body">
+        <h3 class="step-title">Choose your child</h3>
+        <p class="step-desc">Select the animated child who will stand in for your younger self — the child you were, finally receiving what they deserved.</p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">04</div>
       <div class="step-body">
         <h3 class="step-title">Choose your guide voice</h3>
         <p class="step-desc">Select the voice that feels like the parent figure you needed — warm, steady, and unconditional. Your script, their voice, your healing.</p>
       </div>
     </div>
     <div class="step reveal">
-      <div class="step-num">04</div>
+      <div class="step-num">05</div>
       <div class="step-body">
         <h3 class="step-title">Complete your order</h3>
-        <p class="step-desc">One-time payment of $29. No subscription, no recurring charges. Your healing video is created and delivered to your email.</p>
+        <p class="step-desc">One-time payment of $29. No subscription, no recurring charges.</p>
       </div>
     </div>
     <div class="step reveal">
-      <div class="step-num">05</div>
+      <div class="step-num">06</div>
       <div class="step-body">
         <h3 class="step-title">Receive your video</h3>
-        <p class="step-desc">A fully personalized animated healing video — yours to keep and revisit whenever your inner child needs to be held.</p>
+        <p class="step-desc">A fully personalized, Ghibli-inspired animated healing video, delivered to your email — yours to keep and revisit whenever your inner child needs to be held.</p>
       </div>
     </div>
   </div>
@@ -224,7 +231,7 @@
   <div class="voices-inner">
     <p class="section-label reveal">Your Guide Voice</p>
     <h2 class="section-title reveal">Choose the voice that<br>feels like home.</h2>
-    <p class="section-subtitle reveal">After uploading your photo, you'll select the guide voice that speaks your healing script. Each voice is a different kind of loving presence — choose the one you needed most.</p>
+    <p class="section-subtitle reveal">When you reach this step, you'll preview a range of guide voices and choose the one that speaks your healing script. Each voice is a different kind of loving presence — choose the one you needed most.</p>
     <div class="voices-grid" id="voices-grid"></div>
   </div>
 </section>
@@ -315,12 +322,12 @@ wounds.forEach(function(w,i) {
 
 // VOICES
 var voices = [
-  {id:"sage",name:"Sage",archetype:"The Wise, Steady Father",desc:"Deep, calm, and unhurried. The voice of a father who sees you clearly — and chooses to stay."},
-  {id:"luna",name:"Luna",archetype:"The Tender, Unconditional Mother",desc:"Soft and enveloping. The voice that says you are enough, and means every word."},
-  {id:"river",name:"River",archetype:"The Gentle, Present Father",desc:"Gentle but grounded. The kind of voice that sits beside you and doesn't need anything from you."},
-  {id:"nova",name:"Nova",archetype:"The Strong, Protective Mother",desc:"Clear and strong. The voice of a mother who fights for you — with love, not fear."},
-  {id:"oak",name:"Oak",archetype:"The Anchor — Steady Through Everything",desc:"Unshakeable and warm. Still here, still choosing you, still certain of your worth."},
-  {id:"dawn",name:"Dawn",archetype:"The Joyful, Celebrating Parent",desc:"Bright and affirming. The voice that lights up when you walk into the room."}
+  {tone:"Feminine voice",desc:"Soft and enveloping. The voice that says you are enough, and means every word."},
+  {tone:"Masculine voice",desc:"Deep, calm, and unhurried. The voice that sees you clearly — and chooses to stay."},
+  {tone:"Feminine voice",desc:"Clear and strong. The voice that fights for you — with love, not fear."},
+  {tone:"Masculine voice",desc:"Gentle but grounded. The kind of voice that sits beside you and asks nothing of you."},
+  {tone:"Feminine voice",desc:"Bright and affirming. The voice that lights up when you walk into the room."},
+  {tone:"Masculine voice",desc:"Unshakeable and warm. Still here, still choosing you, still certain of your worth."}
 ];
 
 var vgrid = document.getElementById('voices-grid');
@@ -329,8 +336,7 @@ voices.forEach(function(v,i) {
   card.className = 'voice-preview-card reveal';
   card.style.transitionDelay = (i * 0.07) + 's';
   card.innerHTML =
-    '<div class="voice-preview-name">'+v.name+'</div>'+
-    '<div class="voice-preview-archetype">'+v.archetype+'</div>'+
+    '<div class="voice-preview-archetype">'+v.tone+'</div>'+
     '<p class="voice-preview-desc">'+v.desc+'</p>'+
     '<span class="voice-coming">Preview available after selecting your wound</span>';
   vgrid.appendChild(card);
