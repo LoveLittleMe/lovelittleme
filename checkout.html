@@ -210,7 +210,7 @@ function makeOrderId(){
    email endpoint), paste its URL into CAPTURE_ENDPOINT below and
    this will POST every order automatically. No other changes needed.
    ============================================================ */
-var CAPTURE_ENDPOINT=''; // <-- paste your capture URL here when ready
+var CAPTURE_ENDPOINT='https://script.google.com/macros/s/AKfycbyEE8GsOjmk-AkjyN-NgRSM0gZIl_RVhUo3OSPHbHpM6DBnkTDWfnAgDfUTKWtGZfKb/exec';
 
 function captureOrder(order){
   // always keep a local copy
@@ -219,11 +219,22 @@ function captureOrder(order){
     localStorage.setItem('llm_order_'+order.orderId,JSON.stringify(order));
   }catch(e){}
   console.log('LLM ORDER',order);
-  // if an endpoint is set, send it there too (fire-and-forget)
+  // send to the capture endpoint (sent as text/plain to avoid a CORS preflight
+  // that Google Apps Script rejects; sendBeacon survives the page navigating to Stripe)
   if(CAPTURE_ENDPOINT){
+    var payload=JSON.stringify(order);
+    var sent=false;
     try{
-      fetch(CAPTURE_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(order),keepalive:true});
-    }catch(e){}
+      if(navigator.sendBeacon){
+        var blob=new Blob([payload],{type:'text/plain;charset=utf-8'});
+        sent=navigator.sendBeacon(CAPTURE_ENDPOINT,blob);
+      }
+    }catch(e){sent=false;}
+    if(!sent){
+      try{
+        fetch(CAPTURE_ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:payload,keepalive:true});
+      }catch(e){}
+    }
   }
 }
 
