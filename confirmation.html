@@ -20,7 +20,7 @@
 
   /* STEPS */
   .steps-indicator{display:flex;align-items:center;justify-content:center;margin-bottom:2.5rem;}
-  .step-item{display:flex;flex-direction:column;align-items:center;gap:0.4rem;flex:1;max-width:100px;}
+  .step-item{display:flex;flex-direction:column;align-items:center;gap:0.4rem;flex:1;max-width:110px;}
   .step-circle{width:34px;height:34px;border-radius:50%;border:1px solid var(--accent-faint);background:var(--bg-card);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',Georgia,serif;font-size:0.9rem;color:var(--text-dim);}
   .step-circle.done{background:var(--accent-dim);border-color:var(--accent-dim);color:var(--text-light);}
   .step-circle.active{background:var(--accent);border-color:var(--accent);color:var(--bg);}
@@ -39,28 +39,11 @@
   .email-label{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:0.2rem;}
   .email-address{font-size:0.95rem;color:var(--text-light);}
 
-  /* PHOTO STATUS */
-  .photo-status-card{border-radius:8px;padding:1.5rem 1.8rem;margin-bottom:2rem;border:1px solid;}
-  .photo-status-card.processing{background:var(--bg-warm);border-color:var(--accent-faint);}
-  .photo-status-card.success{background:rgba(76,175,130,0.08);border-color:var(--success);}
-  .photo-status-card.needs-reupload{background:rgba(192,57,43,0.08);border-color:var(--error);}
-  .status-header{display:flex;align-items:center;gap:0.8rem;margin-bottom:0.8rem;}
-  .status-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
-  .status-dot.processing{background:var(--accent);animation:pulse 1.5s ease-in-out infinite;}
-  .status-dot.success{background:var(--success);}
-  .status-dot.error{background:var(--error);}
-  .status-title{font-size:0.82rem;font-weight:500;color:var(--text-light);}
-  .status-body{font-size:0.88rem;color:var(--text-mid);line-height:1.7;}
-  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
-
-  /* DOWNLOAD */
+  /* VIDEO STATUS */
   .download-section{background:var(--bg-card);border:1px solid var(--accent-faint);border-top:3px solid var(--accent);border-radius:8px;padding:2rem;margin-bottom:2rem;}
   .download-label{font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:0.8rem;}
   .download-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.3rem;color:var(--text-light);margin-bottom:0.5rem;}
-  .download-desc{font-size:0.85rem;color:var(--text-mid);line-height:1.65;margin-bottom:1.5rem;}
-  .btn-download{display:inline-flex;align-items:center;gap:0.6rem;background:var(--accent);color:var(--bg);border:none;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:1rem 1.8rem;border-radius:4px;cursor:pointer;transition:all 0.3s;text-decoration:none;opacity:0.4;pointer-events:none;}
-  .btn-download.ready{opacity:1;pointer-events:all;}
-  .btn-download.ready:hover{background:var(--accent-light);transform:translateY(-1px);}
+  .download-desc{font-size:0.85rem;color:var(--text-mid);line-height:1.65;margin-bottom:0.8rem;}
   .download-note{font-size:0.72rem;color:var(--text-dim);margin-top:0.8rem;line-height:1.6;}
 
   /* NEXT STEPS */
@@ -98,7 +81,7 @@
 
   <!-- STEPS -->
   <div class="steps-indicator">
-    <div class="step-item"><div class="step-circle done">✓</div><span class="step-label-text">Photo</span></div>
+    <div class="step-item"><div class="step-circle done">✓</div><span class="step-label-text">Your Order</span></div>
     <div class="step-connector"></div>
     <div class="step-item"><div class="step-circle done">✓</div><span class="step-label-text">Payment</span></div>
     <div class="step-connector"></div>
@@ -115,37 +98,27 @@
   <div class="email-confirm">
     <span class="email-icon">✉</span>
     <div>
-      <p class="email-label">Confirmation sent to</p>
+      <p class="email-label">Your video will be sent to</p>
       <p class="email-address" id="email-display">your email address</p>
     </div>
   </div>
 
-  <!-- PHOTO STATUS -->
-  <div class="photo-status-card processing" id="photo-status-card">
-    <div class="status-header">
-      <div class="status-dot processing" id="status-dot"></div>
-      <p class="status-title" id="status-title">Your photo is processing</p>
-    </div>
-    <p class="status-body" id="status-body">We are preparing your childhood photo for animation. This usually takes a few minutes. If we need a clearer photo, we will email you with simple instructions for resubmitting.</p>
-  </div>
-
-  <!-- DOWNLOAD -->
+  <!-- VIDEO STATUS -->
   <div class="download-section">
     <p class="download-label">Your video</p>
-    <p class="download-title">Your personalized healing video</p>
-    <p class="download-desc">Once your video is complete, it will be delivered to your email and available to download here. This page will update automatically — you can bookmark it and return anytime.</p>
-    <a href="#" class="btn-download" id="download-btn">↓ Download Your Video</a>
-    <p class="download-note">Videos are typically delivered within 24–48 hours of your order. You will receive an email notification the moment yours is ready.</p>
+    <p class="download-title">Your personalized healing video is being made</p>
+    <p class="download-desc">Everything you chose — your reflections, your child, and your guide voice — is now with us. Your finished animated video will be delivered straight to the email above. There's nothing else you need to do.</p>
+    <p class="download-note">Videos are typically delivered within 24–48 hours of your order. You'll receive an email the moment yours is ready.</p>
+    <p class="download-note"><strong style="color:var(--text-mid);">Don't see it?</strong> Please check your spam or junk folder, and add us to your contacts so it lands in your inbox.</p>
   </div>
 
   <!-- WHAT HAPPENS NEXT -->
   <div class="next-section">
     <p class="next-label">What happens next</p>
     <div class="next-list">
-      <div class="next-item"><span class="next-num">1</span><p class="next-text"><strong>Check your email.</strong> A confirmation has been sent. Keep an eye on your inbox — we will be in touch with your guided questions shortly.</p></div>
-      <div class="next-item"><span class="next-num">2</span><p class="next-text"><strong>Answer 3 questions.</strong> You will receive a short questionnaire by email so we can write your healing script specifically for you.</p></div>
-      <div class="next-item"><span class="next-num">3</span><p class="next-text"><strong>Choose your guide voice.</strong> We will send you a link to select the voice that feels like the parent figure you needed.</p></div>
-      <div class="next-item"><span class="next-num">4</span><p class="next-text"><strong>Receive your video.</strong> Your personalized animated healing video will be emailed to you and available to download on this page. Yours to keep forever.</p></div>
+      <div class="next-item"><span class="next-num">1</span><p class="next-text"><strong>Your order is saved.</strong> The reflections you shared, along with the child and guide voice you chose, are with us and ready to shape your healing script.</p></div>
+      <div class="next-item"><span class="next-num">2</span><p class="next-text"><strong>Your video is created.</strong> Your story is gently woven into a personalized, Ghibli-style animated healing video, made only for you.</p></div>
+      <div class="next-item"><span class="next-num">3</span><p class="next-text"><strong>It arrives in your inbox.</strong> Your finished video is delivered to the email above within 24–48 hours — yours to keep and return to whenever you need it.</p></div>
     </div>
   </div>
 
