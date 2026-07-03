@@ -68,6 +68,17 @@
   .section-label{font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;}
   .section-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(2rem,6vw,3.5rem);font-weight:300;line-height:1.15;color:var(--cream);margin-bottom:1rem;}
   .section-subtitle{font-size:0.95rem;color:var(--cream-dim);max-width:480px;margin-bottom:3.5rem;line-height:1.8;}
+  /* sample video */
+  .sample-section{padding:4.5rem 1.5rem 2rem;max-width:900px;margin:0 auto;text-align:center;}
+  .sample-section .section-subtitle{margin-left:auto;margin-right:auto;margin-bottom:0;}
+  .sample-player{position:relative;margin:2.5rem auto 1.4rem;max-width:620px;border-radius:8px;overflow:hidden;background:#000;border:1px solid var(--gold-dim);box-shadow:0 24px 60px rgba(0,0,0,0.55),0 0 55px rgba(201,150,12,0.12);cursor:pointer;line-height:0;}
+  .sample-player video{width:100%;height:auto;max-height:78vh;display:block;background:#000;}
+  .sample-overlay{position:absolute;inset:0;width:100%;height:100%;border:none;padding:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.1rem;background:radial-gradient(ellipse at center,rgba(14,10,2,0.30) 0%,rgba(14,10,2,0.72) 100%);cursor:pointer;transition:opacity 0.35s ease;}
+  .play-btn{width:78px;height:78px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px rgba(201,150,12,0.45);transition:transform 0.25s ease,background 0.25s ease;}
+  .sample-overlay:hover .play-btn{transform:scale(1.08);background:var(--gold-light);}
+  .play-btn svg{width:30px;height:30px;margin-left:5px;fill:var(--bg-deep);}
+  .play-caption{font-family:'DM Sans',sans-serif;font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--cream);text-shadow:0 1px 8px rgba(0,0,0,0.7);}
+  .sample-note{font-size:0.82rem;color:var(--cream-dim);font-style:italic;max-width:430px;margin:0 auto 2.2rem;line-height:1.6;}
 
   /* STEPS */
   .steps{display:grid;grid-template-columns:1fr;gap:0;}
@@ -159,7 +170,7 @@
 <body>
 
 <nav>
-  <a href="index.html" class="nav-logo">Love <span>Little</span> Me</a>
+  <a href="index.html" class="nav-logo">Love <span>Little</span> Me<sup style="font-size:0.5em;vertical-align:super;letter-spacing:0;">™</sup></a>
   <div class="nav-links">
     <a href="about.html" class="nav-link">About</a>
     <a href="faq.html" class="nav-link">FAQ</a>
@@ -183,6 +194,39 @@
     <div class="scroll-line"></div>
   </div>
 </section>
+
+<!-- SAMPLE VIDEO -->
+<section class="sample-section">
+  <p class="section-label">A Glimpse</p>
+  <h2 class="section-title">See what you'll<br>receive.</h2>
+  <p class="section-subtitle">A short look at a healing video — the wound, the words, and the moment a loving presence arrives. Press play.</p>
+  <div class="sample-player" id="samplePlayer">
+    <video id="sampleVideo" preload="metadata" playsinline>
+      <source src="sample.mp4#t=0.1" type="video/mp4">
+    </video>
+    <button class="sample-overlay" id="sampleOverlay" aria-label="Play sample video">
+      <span class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+      <span class="play-caption">Watch a glimpse</span>
+    </button>
+  </div>
+  <p class="sample-note">A sample — your finished video is personalized to your story, your chosen child, and your guide voice.</p>
+  <a href="templates.html" class="btn-primary" style="max-width:300px;display:inline-block;">Create My Healing Video</a>
+</section>
+<script>
+  (function(){
+    var ov=document.getElementById('sampleOverlay');
+    var vid=document.getElementById('sampleVideo');
+    if(ov&&vid){
+      ov.addEventListener('click',function(){
+        ov.style.opacity='0';
+        setTimeout(function(){ov.style.display='none';},350);
+        vid.controls=true;
+        var p=vid.play();
+        if(p&&p.catch){p.catch(function(){});}
+      });
+    }
+  })();
+</script>
 
 <!-- HOW IT WORKS -->
 <section id="how" class="section">
@@ -298,7 +342,7 @@
 
 <!-- FOOTER -->
 <footer>
-  <p class="footer-logo">Love Little Me</p>
+  <p class="footer-logo">Love Little Me<sup style="font-size:0.5em;vertical-align:super;letter-spacing:0;">™</sup></p>
   <div class="ornament" style="margin:0.8rem auto;">
     <div class="ornament-line"></div>
     <div class="ornament-dot"></div>
@@ -310,6 +354,7 @@
     <a href="faq.html" class="footer-link">FAQ & Support</a>
     <a href="privacy.html" class="footer-link">Privacy & Terms</a>
   </div>
+  <p style="margin-top:1.5rem;font-size:0.7rem;letter-spacing:0.05em;color:var(--gold-dim);">&copy; 2026 Love Little Me&trade;. All rights reserved.</p>
 </footer>
 
 <script>
